@@ -304,6 +304,9 @@ Les objectifs généraux du projet sont de créer une plateforme fonctionnelle e
 <ins>Acteur principal</ins> : L'administrateur web <br>
 <ins>Intervenants et intérêt</ins> : Les administrateurs web, les libellés<br>
 
+Voici le diagramme des cas d'utilisation :
+![diagramme_CU](poiss21.png)
+
 ## IV. Chapitre 4 – La Technologie Employée
 
 ### (a) Exigences Technologiques
@@ -416,4 +419,4 @@ Aucune question non résolue ou reportée à ce stade.
 
 ---
 
-**Remarque :** Ce cahier des charges est basé sur les informations fournies. Il peut être modifié ou étendu en fonction de l'évolution du projet.
+**Remarque :** Ce recueil des besoins est basé sur les informations fournies. Il peut être amené à être modifié à l'avenir.

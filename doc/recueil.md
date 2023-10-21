@@ -305,7 +305,7 @@ Les objectifs généraux du projet sont de créer une plateforme fonctionnelle e
 <ins>Intervenants et intérêt</ins> : Les administrateurs web, les libellés<br>
 
 Voici le diagramme des cas d'utilisation :
-![diagramme_CU](poiss21.png)
+![diagramme_CU](img/diagramme_CU.png)
 
 ## IV. Chapitre 4 – La Technologie Employée
 

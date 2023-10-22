@@ -19,7 +19,9 @@ Dans notre diagramme de package nous utilisons l'architechture MVC (Modèle Vue 
 * Un dossier media stocke les images, vidéos et autres médias qui servent aux différentes composantes de la vue.<br><br>
 Diagramme de package :
 <br>
+
 ![Diagramme de package](img/diagramme_package.png)
+
 <br>
 <br>
 

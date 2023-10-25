@@ -42,14 +42,31 @@ INFI2-B
 | 31         | Un membre de l'équipe oublie ses identifiants                                                  | Improbable      | Faible           |
 | 32         | L’appariteur n’ouvre pas la salle G21                                                          | Vraisemblable   | Faible           |
 | 33         | De l'eau tombe du toit de la salle et eteint un ordinateur sans que le travail soit sauvegardé | Improbable      | Faible           |
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 ### Voici la matrice liée aux risques ci-dessus : 
 ![Matrice des risques](img/matrice.jpg)
-<br>
-<br>
-<br>
-<br>
-<br>
 
 ## Le contrôle des risques
 **Un membre de l’équipe meurt :**

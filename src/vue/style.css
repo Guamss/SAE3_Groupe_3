@@ -88,25 +88,24 @@
   background-color: #ffe68e;
 }
 
-.profil
+.nav_profil
 {
   margin: 0 0;
-  padding: 20px 0px;
+  padding: 20px 20px;
   display: inline-block;
 }
 
 .lien_profil
 {
   color:#ECE5D8;
-  font-weight:bold;
-  font-size: 14px;
-  text-transform: uppercase;
+
   text-decoration: none;
-  padding: 20px 0px;
-  margin: 0;
+  padding: 5px 0px;
+  margin-right: 2%;
   display: flex;
   flex-direction: column;
 }
+
 
 header img,
 header h1 {
@@ -148,47 +147,55 @@ margin-left:1em;
   margin-top: 20px;
 }
 
-.deconnexion
+
+
+.profile
 {
-  width: 310px;
-  background-color: #454D5C;
-  display: inline-block;
-  outline: none;
-  cursor: pointer;
-  font-size: 16px;
-  line-height: 20px;
-  font-weight: 600;
-  border-radius: 8px;
-  padding: 13px 23px;
-  border: 1px solid #222222;
+  height: auto;
+  width: 400px;
+  background-color: rgba(255,255,255,0.13);
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 50px;
+  border: 2px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 40px rgba(8,7,16,0.6);
+  padding: 50px 35px;
 }
+.profile *{
+  font-family: 'Poppins',sans-serif;
+  color: #444c5b;
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
+}
+.profile h3{
+  
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 42px;
+  text-align: center;
+}
+.profile .button{
+  background-color: #454d5c;
+  color: #ECE5D8;
+}
+
 #bouton-deco
 {
   text-decoration: none;
   color: #ECE5D8;
 }
 
-.profil_div
-{
-  display: flex;
-  border:2px solid #525B6B;
-  border-radius: 25px;
-  height: 200px;
-  justify-content: center;
-  align-items: center;
-  padding-top: 20%;
-  justify-content: center;
-  align-items: center;
-  padding-left: 30%;
-  padding-right: 30%;
-}
-
 .list{
   flex-basis: 80%;
+  scrollbar-width: thin; /* "auto" or "thin" */
+  scrollbar-color: #444c5b rgba(255,255,255,0.13); /* scroll thumb and track */
 }
 
 .table{
-  width: 100%;
+  width: 99%;
   height: 550px;
   background-color: rgba(255,255,255,0.13);
   padding: 10px 20px;
@@ -332,7 +339,6 @@ body{
     top: 50%;
     left: 50%;
     border-radius: 10px;
-    backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
     padding: 50px 35px;
@@ -381,6 +387,18 @@ input{
   font-weight: 600;
   border-radius: 5px;
   cursor: pointer;
+}
+
+footer{
+  position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #454D5C;
+   text-align: center;
+}
+footer p{
+  color: #ECE5D8;
 }
 
 

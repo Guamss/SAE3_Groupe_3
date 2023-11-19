@@ -21,21 +21,32 @@
 </head>
 <body>
   <header>
-    <nav class="navbar ligne">
-        <div class="name-logo">
-          <img src="../medias/LOGO_TicketOpia.svg" alt="TickeOpia logo">
-          <h1>TicketOpia</h1>
-        </div>
-
-        <div class="liens" id="clickable-items">
-            <a class="nav-item" href="login.html">Login</a>
-            <a class="nav-item" href="index.html">Accueil</a>
+  
+  <div class="topnav">
+    <nav class="navbar ligne" id="Navbar">
+        <a href="index.html" class="logo-accueil">
+          <div class="name-logo">
+            <img src="../medias/LOGO_TicketOpia.svg" alt="TickeOpia logo">
+            <h1>TicketOpia</h1>
+          </div>
+        </a>
+        <div id="myLinks">
+          <div class="liens" id="clickable-items">
             <a class="nav-item" href="#">Vidéo de démonstration</a>
+          </div>
+          <div class="liens" id="clickable-items">
+            <a class="nav-item" href="#">Statistiques</a>
+          </div>
+          <div class="nav_profil">
+            <a class="lien_profil material-symbols-outlined" href="profil.html" style="font-size: 30px;">account_circle</a>
+          </div>
         </div>
-        <div class="nav_profil">
-          <a class="lien_profil material-symbols-outlined" href="profil.html" style="font-size:40px;">account_circle</a>
-        </div>
+        
+        <a href="javascript:void(0);" class="icon" onclick="mobile_nav()">
+          <i class="fa fa-bars"></i>
+        </a>
     </nav>
+  </div>
   </header>
 
 
@@ -50,7 +61,7 @@
               <tr>
                 <th>ID</th>
                 <th>Titre</th>
-                <th>Description</th>
+                <th class="description-column">Description</th>
                 <th>Demandeur</th>
                 <th>Date de création</th>
                 <th>Etat</th>
@@ -60,7 +71,7 @@
               <tr>
                 <td>1</td>
                 <td>Lorem, ipsum.</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
                 <td>Lorem, ipsum.</td>
                 <td>12/10/2023</td>
                 <td>En cours</td>
@@ -69,7 +80,7 @@
               <tr>
                 <td>2</td>
                 <td>Lorem, ipsum.</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
                 <td>Lorem, ipsum.</td>
                 <td>12/10/2023</td>
                 <td>En cours</td>
@@ -77,7 +88,7 @@
               <tr>
                 <td>3</td>
                 <td>Lorem, ipsum.</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
                 <td>Lorem, ipsum.</td>
                 <td>12/10/2023</td>
                 <td>En cours</td>
@@ -85,7 +96,7 @@
               <tr>
                 <td>4</td>
                 <td>Lorem, ipsum.</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
                 <td>Lorem, ipsum.</td>
                 <td>12/10/2023</td>
                 <td>En cours</td>
@@ -93,7 +104,7 @@
               <tr>
                 <td>5</td>
                 <td>Lorem, ipsum.</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
                 <td>Lorem, ipsum.</td>
                 <td>12/10/2023</td>
                 <td>En cours</td>
@@ -101,7 +112,7 @@
               <tr>
                 <td>6</td>
                 <td>Lorem, ipsum.</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
                 <td>Lorem, ipsum.</td>
                 <td>12/10/2023</td>
                 <td>En cours</td>
@@ -109,7 +120,7 @@
               <tr>
                 <td>7</td>
                 <td>Lorem, ipsum.</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
                 <td>Lorem, ipsum.</td>
                 <td>12/10/2023</td>
                 <td>En cours</td>
@@ -117,7 +128,7 @@
               <tr>
                 <td>8</td>
                 <td>Lorem, ipsum.</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
                 <td>Lorem, ipsum.</td>
                 <td>12/10/2023</td>
                 <td>En cours</td>
@@ -125,7 +136,7 @@
               <tr>
                 <td>9</td>
                 <td>Lorem, ipsum.</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
                 <td>Lorem, ipsum.</td>
                 <td>12/10/2023</td>
                 <td>En cours</td>
@@ -133,7 +144,7 @@
               <tr>
                 <td>10</td>
                 <td>Lorem, ipsum.</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
                 <td>Lorem, ipsum.</td>
                 <td>12/10/2023</td>
                 <td>En cours</td>
@@ -141,7 +152,79 @@
               <tr>
                 <td>11</td>
                 <td>Lorem, ipsum.</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td>Lorem, ipsum.</td>
+                <td>12/10/2023</td>
+                <td>En cours</td>
+              </tr>          
+              <tr>
+                <td>12</td>
+                <td>Lorem, ipsum.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td>Lorem, ipsum.</td>
+                <td>12/10/2023</td>
+                <td>En cours</td>
+              </tr>          
+              <tr>
+                <td>13</td>
+                <td>Lorem, ipsum.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td>Lorem, ipsum.</td>
+                <td>12/10/2023</td>
+                <td>En cours</td>
+              </tr>          
+              <tr>
+                <td>14</td>
+                <td>Lorem, ipsum.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td>Lorem, ipsum.</td>
+                <td>12/10/2023</td>
+                <td>En cours</td>
+              </tr>          
+              <tr>
+                <td>15</td>
+                <td>Lorem, ipsum.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td>Lorem, ipsum.</td>
+                <td>12/10/2023</td>
+                <td>En cours</td>
+              </tr>          
+              <tr>
+                <td>16</td>
+                <td>Lorem, ipsum.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td>Lorem, ipsum.</td>
+                <td>12/10/2023</td>
+                <td>En cours</td>
+              </tr>          
+              <tr>
+                <td>17</td>
+                <td>Lorem, ipsum.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td>Lorem, ipsum.</td>
+                <td>12/10/2023</td>
+                <td>En cours</td>
+              </tr>          
+              <tr>
+                <td>18</td>
+                <td>Lorem, ipsum.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td>Lorem, ipsum.</td>
+                <td>12/10/2023</td>
+                <td>En cours</td>
+              </tr>          
+              <tr>
+                <td>19</td>
+                <td>Lorem, ipsum.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
+                <td>Lorem, ipsum.</td>
+                <td>12/10/2023</td>
+                <td>En cours</td>
+              </tr>          
+              <tr>
+                <td>20</td>
+                <td>Lorem, ipsum.</td>
+                <td class="description-column">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere in eveniet ex molestiae sed commodi quisquam nisi maxime nulla, pariatur, asperiores dolores. Asperiores, excepturi quisquam.</td>
                 <td>Lorem, ipsum.</td>
                 <td>12/10/2023</td>
                 <td>En cours</td>
@@ -153,7 +236,7 @@
 
 
     <!--Colonne des informations-->
-    <div class="element-flexible pannel" style="overflow-y: scroll; height:700px;">
+    <div class="element-flexible pannel">
         <h1>Informations</h1>
 
         <div class="infos">
@@ -198,12 +281,62 @@
 
 
   <footer>
-    <div>
+    <div class="copyright">
       <p>Copyright© 2023 Monsters Master's. Tous droits réservés.</p>
     </div>
   </footer>
 
   </div>
+
+  <script>
+    window.onload
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Définissez la valeur maximale pour la longueur du texte
+        var maxLength = 50;
+
+        // Sélectionnez toutes les cellules du tableau
+        var cells = document.querySelectorAll('.table td, .table th');
+
+        // Parcourez chaque cellule et limitez la longueur du texte
+        cells.forEach(function (cell) {
+            var originalText = cell.textContent.trim();
+
+            // Vérifiez si la longueur du texte dépasse la valeur maximale
+            if (originalText.length > maxLength) {
+                // Limitez le texte et ajoutez une indication de troncature
+                var truncatedText = originalText.substring(0, maxLength) + '...';
+                cell.textContent = truncatedText;
+            }
+        });
+
+
+    });
+
+    window.addEventListener('resize', function() {
+      var x = document.getElementById("myLinks");
+      var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+      if (screenWidth > 845 && getComputedStyle(x).display === "none") {
+          x.style.display = "flex";
+      }
+      if (screenWidth < 845 && getComputedStyle(x).display === "flex") {
+          x.style.display = "none";
+      }
+    });
+
+    function mobile_nav() {
+      var x = document.getElementById("myLinks");
+      var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+      if (x.style.display === "none") {
+        x.style.display = "flex";
+      }
+      else {
+        x.style.display = "none";
+      }
+    }
+</script>
 
 </body>
 </html>

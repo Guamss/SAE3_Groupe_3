@@ -1,0 +1,3 @@
+<h1>Bienvenue sur TicketOpia</h1>
+
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur sapiente sed ex ipsum nobis architecto vel, quidem tempora ducimus veniam saepe perspiciatis nulla similique repudiandae alias id cupiditate inventore, fugit quia, optio excepturi! Eligendi nulla sed, laudantium error, eos veniam culpa recusandae, vitae quae suscipit eius quos corporis est totam!</p>

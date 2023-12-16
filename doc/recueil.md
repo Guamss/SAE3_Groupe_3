@@ -11,7 +11,7 @@ DEGAT Teddy
 ### (a) Portée et Objectifs Généraux
 
 #### Portée
-Le projet vise à concevoir et développer une application web en PHP et MySQL pour la gestion des demandes de dépannage des utilisateurs, y compris les professeurs, dans les salles machines. L'application sera hébergée sur un serveur web installé sur un Raspberry Pi 4, accessible en connexion SSH depuis les salles machines et en tunnel SSH depuis l'extérieur.
+Le projet vise à concevoir et développer une application web en PHP et MySQL pour la gestion des demandes de dépannage des utilisateurs, y compris les professeurs, dans les salles machines. L'application sera hébergée sur un serveur web installé sur un Raspberry Pi 4, accessible en connexion SSH depuis les salles machines et en tunnel SSH depuis le réseau local à l'IUT.
 
 #### Objectifs Généraux
 Les objectifs généraux du projet sont de créer une plateforme fonctionnelle et sécurisée qui permettra la soumission, la gestion et le suivi des demandes de dépannage. Les fonctionnalités devront être accessibles à quatre types d'utilisateurs : administrateur système, administrateur web (technicien(s)), utilisateur inscrit et visiteur.
@@ -314,7 +314,7 @@ Voici le diagramme des cas d'utilisation :
 - Langages : PHP, MySQL
 - Serveur Web : Apache
 - Plateforme : Raspberry Pi 4
-- Protocole : SSH
+- Protocoles : SSH, HTTP
 - Materiel : Carte SD
 
 ### (b) Interfaçage avec d'Autres Systèmes
@@ -367,7 +367,7 @@ Ce système sera stocké sur le Raspberry Pi 4 et sera interactif avec l'utilisa
 - Enregistrement des activités dans le journal
 
 #### Sécurité
-- Tentatives de Connexion Ratées : Enregistrement des données
+- Tentatives de Connexion Ratées au moins 3 fois en 10 minutes : Bannissement temporaire de l'adresse IP
 
 #### Documentation
 - Documentation Technique pour le Développement et la Maintenance
@@ -383,11 +383,11 @@ Ce système sera stocké sur le Raspberry Pi 4 et sera interactif avec l'utilisa
 - Suivi des Tickets Fermés (Historique)
 
 #### Portabilité
-- Accès en Connexion SSH depuis les Salles Machines et en Tunnel SSH depuis l'Extérieur
+- Accès en Connexion SSH depuis les Salles Machines
 
 ### (g) Questions Non Résolues ou Reportées à Plus Tard
 
-Aucune question non résolue ou reportée à ce stade.
+- Des doutes sur une conception durable de la base de donnée donc celle-ci serait peut être amenée à être modifiée à l'avenir
 
 ## VI. Chapitre 6 – Recours Humain, Questions Juridiques, Politiques, Organisationnelles
 
@@ -402,6 +402,7 @@ Aucune question non résolue ou reportée à ce stade.
 
 #### Confidentialité
 - Respect de la Confidentialité des Données Utilisateurs
+- Tout est expliqué clairement dans notre rendu de Droit et notre charte informatique
 
 ### (c) Conséquences Humaines
 

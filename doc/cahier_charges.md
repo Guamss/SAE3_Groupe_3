@@ -16,7 +16,12 @@ Le document est divisé en quatre sections principales :
 - Priorités
 
 ### 1.4 Documents Référencés
-Aucun document référencé pour le moment.
+Nous avons différents documents référencés tel que :
+- La charte informatique 
+- La gestion des risques du projet
+- La documentation de l'installation du serveur
+- Le dossier de conception
+- L'explication du choix de notre logo ainsi que la charte graphique de notre site
 
 ## II. Enoncé
 
@@ -24,7 +29,7 @@ Aucun document référencé pour le moment.
 Le projet vise à mettre en place une application web en PHP et MySQL permettant de collecter les demandes de dépannage émanant des utilisateurs dans les salles informatiques. L'application devra gérer quatre types d'utilisateurs : l'administrateur système, l'administrateur web, des techniciens, l'utilisateur inscrit et le visiteur.
 
 ### 2.2 Contexte
-L'application sera hébergée sur un serveur web installé sur un Raspberry Pi 4, accessible en connexion SSH depuis les salles machines et en tunnel SSH depuis l'extérieur.
+L'application sera hébergée sur un serveur web installé sur un Raspberry Pi 4, accessible en connexion SSH depuis les salles machines.
 
 ### 2.3 Objectifs du Projet
 L'objectif principal du projet est de développer une plateforme fonctionnelle et sécurisée permettant la gestion des demandes de dépannage. Les fonctionnalités principales incluent la création de comptes, la soumission de demandes, la visualisation de l'état des demandes et la gestion des tickets par les différents types d'utilisateurs.
@@ -36,7 +41,8 @@ Les compétences nécessaires pour mener à bien ce projet incluent une maîtris
 
 ### 3.2 Ressources Matérielles et Logicielles
 - Serveur web hébergé sur un Raspberry Pi 4
-- Connexion SSH depuis les salles machines et en tunnel SSH depuis l'extérieur
+- Connexion SSH depuis les salles machines.
+- Connexion au serveur web grâce à des requêtes HTTP
 
 ### 3.3 Compétences Nécessaires
 - Développement web (PHP, MySQL)

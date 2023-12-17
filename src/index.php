@@ -1,33 +1,28 @@
 <?php
 ob_start();
 session_start();
-include "vues/header.php";
-include "modeles/Ticket.php";
-//include "modeles/Nationalite.php";
-//include "modeles/Auteur.php";
-//include "modeles/Genre.php";
-//include "modeles/Livre.php";
-include "modeles/connexionPdo.php";
-//include "vues/messagesFlash.php";
+include "Vues/header.php";
+include "Modeles/Ticket.php";
+include "Modeles/connexionPdo.php";
 
 $uc =empty($_GET['uc']) ?  "accueil" : $_GET['uc'];
 
 switch($uc){
   case 'accueil' :
-    include('vues/accueil.php');
+    include('Vues/accueil.php');
     break;
   case 'dashboard' :
-    include('controllers/dasboardController.php');
+    include('controllers/dashboardController.php');
     break;
   case 'profile' :
     include('controllers/profileController.php');
     break;
   case 'video' :
-    include('vues/video.php');
+    include('Vues/video.php');
     break;
   case 'stats' :
-    include('vues/stats.php');
+    include('Vues/stats.php');
     break;
 }
 
-include "vues/footer.php";?>
+include "Vues/footer.php";?>

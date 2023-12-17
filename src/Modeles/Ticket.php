@@ -21,7 +21,7 @@ class Ticket{
      *  Id du technicien assigné au ticket
      * @var string
      */
-    private $technicien_ID;
+    private $technician_ID;
 
     /**
      *  niveau d'urgence du ticket
@@ -65,15 +65,6 @@ class Ticket{
         return $this->ticket_ID;
     }
 
-    /**
-     * Set the value of Ticket_ID
-     */
-    public function setID($ticket_ID): self
-    {
-        $this->ticket_ID = $ticket_ID;
-
-        return $this;
-    }
 
     /**
      * Get the value of UID
@@ -84,29 +75,19 @@ class Ticket{
     }
 
     /**
-     * Set the value of UID
-     */
-    public function setUID($UID): self
-    {
-        $this->UID = $UID;
-
-        return $this;
-    }
-
-    /**
      * Get Technicien_ID du ticket
      */
-    public function getTechnicien(): string
+    public function getTechnician(): string
     {
-        return $this->technicien_ID;
+        return $this->technician_ID;
     }
 
     /**
      * Set Technicien_ID du ticket
      */
-    public function setTechnicien(string $technicien_ID): self
+    public function setTechnician(string $argtechnician_ID): self
     {
-        $this->technicien_ID = $technicien_ID;
+        $this->technician_ID = $argtechnician_ID;
 
         return $this;
     }
@@ -261,23 +242,22 @@ class Ticket{
      */
     public static function add(Ticket $ticket) : int
     {
-        $req=MonPdo::getInstance()->prepare("INSERT INTO ticket(isbn, titre, prix, editeur, annee, langue, numAuteur, numGenre) VALUES(:isbn, :titre, :prix, :editeur, :annee, :langue, :numAuteur, :numGenre)");
-        $isbn = $ticket->getIsbn();
-        $titre = $ticket->getTitre();
-        $prix = $ticket->getPrix();
-        $editeur = $ticket->getEditeur();
-        $annee = $ticket->getAnnee();
-        $langue = $ticket->getLangue();
-        $numAuteur = $ticket->getNumAuteur();
-        $numGenre = $ticket->getNumGenre();
-        $req->bindParam(':isbn', $isbn);
-        $req->bindParam(':titre', $titre);
-        $req->bindParam(':prix', $prix);
-        $req->bindParam(':editeur', $editeur);
-        $req->bindParam(':annee', $annee);
-        $req->bindParam(':langue', $langue);
-        $req->bindParam(':numAuteur', $numAuteur);
-        $req->bindParam(':numGenre', $numGenre);
+        $req=MonPdo::getInstance()->prepare("INSERT INTO ticket(uid, Technician_ID, urgence_level, title, creation_date, status, description) 
+                                    VALUES(:uid, :Technician_ID, :urgence_level, :title, :creation_date, :status, :desc)");
+        $uid = $ticket->getUID();
+        $title = $ticket->getTitle();
+        $date = $ticket->getDate();
+        $technician = $ticket->getTechnician();
+        $desc = $ticket->getDescription();
+        $status = $ticket->getStatus();
+        $urgence = $ticket->getUrgence();
+        $req->bindParam(':uid', $uid);
+        $req->bindParam(':Technician_ID', $technician);
+        $req->bindParam(':creation_date', $date);
+        $req->bindParam(':title', $title);
+        $req->bindParam(':desc', $desc);
+        $req->bindParam(':status', $status);
+        $req->bindParam(':urgence_level', $urgence);
         $nb=$req->execute();
         return $nb;
     }
@@ -291,25 +271,15 @@ class Ticket{
      */
     public static function update(Ticket $ticket) : int
     {
-        $req=MonPdo::getInstance()->prepare("Update ticket set isbn= :isbn, titre= :titre, prix= :prix, editeur= :editeur, annee= :annee, langue= :langue, numAuteur= :numAuteur, numGenre= :numGenre where num= :id");
-        $id = $ticket->getNum();
-        $isbn = $ticket->getIsbn();
-        $titre = $ticket->getTitre();
-        $prix = $ticket->getPrix();
-        $editeur = $ticket->getEditeur();
-        $annee = $ticket->getAnnee();
-        $langue = $ticket->getLangue();
-        $numAuteur = $ticket->getNumAuteur();
-        $numGenre = $ticket->getNumGenre();
-        $req->bindParam(':id', $id);
-        $req->bindParam(':isbn', $isbn);
-        $req->bindParam(':titre', $titre);
-        $req->bindParam(':prix', $prix);
-        $req->bindParam(':editeur', $editeur);
-        $req->bindParam(':annee', $annee);
-        $req->bindParam(':langue', $langue);
-        $req->bindParam(':numAuteur', $numAuteur);
-        $req->bindParam(':numGenre', $numGenre);
+        $req=MonPdo::getInstance()->prepare("Update Ticket set Technician_ID= :Technician_ID, status= :Status, urgence_level= :Urgence_level where Ticket_ID= :Ticket_ID");
+        $ticket_id = $ticket->getID();
+        $technician = $ticket->getTechnician();
+        $status = $ticket->getStatus();
+        $urgence = $ticket->getUrgence();
+        $req->bindParam(":Ticket_ID", $ticket_id);
+        $req->bindParam(':Technician_ID', $technician);
+        $req->bindParam(':Status', $status);
+        $req->bindParam(':Urgence_level', $urgence);
         $nb=$req->execute();
         return $nb;
     }
@@ -323,8 +293,8 @@ class Ticket{
      */
     public static function delete(Ticket $ticket) :int
     {
-        $req=MonPdo::getInstance()->prepare("Delete from ticket where num= :id");
-        $req->bindParam(':id', $ticket->getNum());
+        $req=MonPdo::getInstance()->prepare("Delete from ticket where Ticket_ID= :Ticket_ID");
+        $req->bindParam(':Ticket_ID', $ticket->getID());
         $nb=$req->execute();
         return $nb;
     }

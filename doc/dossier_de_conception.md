@@ -4,6 +4,7 @@
 1) Introduction
 2) Diagramme de package
 3) Diagramme de composant connecteur
+4) Diagramme d'objets
 
 ***
 
@@ -19,18 +20,29 @@ Dans notre diagramme de package nous utilisons l'architechture MVC (Modèle Vue 
 * Un dossier media stocke les images, vidéos et autres médias qui servent aux différentes composantes de la vue.<br><br>
 Diagramme de package :
 <br>
-
 ![Diagramme de package](img/diagramme_package.png)
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <br>
 <br>
 
-1) ### <ins>Diagramme de composant connecteur</ins>
+3) ### <ins>Diagramme de composant connecteur</ins>
 
 Dans ce diagramme le Serveur Apache interprète le code sur les pages PHP pour le transformer en code HTML, puis le Navigateur web d'un utilisateur lambda interprète le code HTML de la page grâce aux requête que celui-ci envois au serveur.
 <br><br>
 
 Diagramme composant connecteur :
 ![Diagramme de composant connecteur](img/diagramme_composant_connecteur.png)
+
+4) ### <ins>Diagramme d'objets</ins>
+
+Voici le diagramme d'objets concernant notre code PHP.
+![Diagramme d'objets](img/conception__objet_PHP.png)
 
 **Remarque** : Ce dossier de conception est basé sur les informations fournies. Il pourrait être amené à être modifié à l'avenir.

@@ -1,25 +1,18 @@
 <?php
 class Ticket{
 
-/**------------------------DEFINITION DES VARIABLES------------------------------- */
-
-    /**
-     *  ID du ticket
-     * @var int
-     */
-
-    private $ticket_ID;
+/**------------------------DEFINITION DES CHAMPS------------------------------- */
 
     /**
      *  UID du ticket
-     * @var string
+     * @var int
      */
 
     private $UID;
 
     /**
      *  Id du technicien assigné au ticket
-     * @var string
+     * @var int
      */
     private $technician_ID;
 
@@ -36,10 +29,10 @@ class Ticket{
     private $creation_date;
     
     /**
-     *  titre du ticket
+     *  label_id du ticket
      * @var int
      */
-    private $titre;
+    private $label_ID;
     
     /**
      *  Status du ticket
@@ -49,27 +42,26 @@ class Ticket{
     
     /**
      *  description du ticket
-     * @var int
+     * @var string
      */
     private $description;
         
 
-/**------------------------ACESSEURS------------------------------- */
-
-
-    /**
-     * Get the value of Ticket_ID
-     */
-    public function getID()
+/* ------------------------ACESSEURS------------------------------- */
+    public function __construct($UID, $urgence_level, $label, $description, $date = null, $status = "Ouvert", $technician = null)
     {
-        return $this->ticket_ID;
+        $this->UID = $UID;
+        $this->technician_ID = $technician;
+        $this->label_ID = $label;
+        $this->urgence_level = $urgence_level;
+        $this->creation_date = $date ?: date("Y-m-d H:i:s"); // Utilise la date actuelle si $date n'est pas fourni
+        $this->status = $status;
+        $this->description = $description;
     }
-
-
     /**
      * Get the value of UID
      */
-    public function getUID()
+    public function getUID(): int
     {
         return $this->UID;
     }
@@ -77,7 +69,7 @@ class Ticket{
     /**
      * Get Technicien_ID du ticket
      */
-    public function getTechnician(): string
+    public function getTechnician(): int
     {
         return $this->technician_ID;
     }
@@ -85,11 +77,9 @@ class Ticket{
     /**
      * Set Technicien_ID du ticket
      */
-    public function setTechnician(string $argtechnician_ID): self
+    public function setTechnician(int $argtechnician_ID): void
     {
         $this->technician_ID = $argtechnician_ID;
-
-        return $this;
     }
 
     /**
@@ -103,11 +93,9 @@ class Ticket{
     /**
      * Set urgence_level du ticket
      */
-    public function setUrgence(int $urgence_level): self
+    public function setUrgence(int $argUrgence_level): void
     {
-        $this->urgence_level = $urgence_level;
-
-        return $this;
+        $this->urgence_level = $argUrgence_level;
     }
 
     /**
@@ -119,33 +107,12 @@ class Ticket{
     }
 
     /**
-     * Set creation_date du ticket
-     */
-    public function setDate(string $creation_date): self
-    {
-        $this->creation_date = $creation_date;
-
-        return $this;
-    }
-
-    /**
      * Get title du ticket
      */
-    public function getTitle(): int
+    public function getLabelID(): string
     {
-        return $this->titre;
+        return $this->label_ID;
     }
-
-    /**
-     * Set title du ticket
-     */
-    public function setTitle(int $titre): self
-    {
-        $this->titre = $titre;
-
-        return $this;
-    }
-
     /**
      * Get status du ticket
      */
@@ -157,17 +124,15 @@ class Ticket{
     /**
      * Set status du ticket
      */
-    public function setStatus(string $status): self
+    public function setStatus(string $status)
     {
         $this->status = $status;
-
-        return $this;
     }
 
     /**
      * Get description du ticket
      */
-    public function getDescription(): int
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -175,131 +140,42 @@ class Ticket{
     /**
      * Set description du ticket
      */
-    public function setDescription(int $description): self
+    public function setDescription(string $description)
     {
         $this->description = $description;
-
-        return $this;
     }
 
-    
-
-/**------------------------CODE------------------------------- */
-
-
-    /**
-     * Retourne l'ensemble des Tickets
-     *
-     * @return Ticket[] tableau d'objets Ticket
-     */
-    public static function findAll(/*?string $titre="",?string $numAuteur="Tous",?string $numGenre="Tous"*/) : array
+    public static function getLastTickets(): array
     {
-        $texteReq="select l.num as numero, l.isbn as isbn, l.titre as 'titreL', l.prix as 'prixL', l.editeur as 'editeurL', l.annee as 'anneeL',
-        l.langue as 'langueL', a.nom as 'numAuteurL', g.libelle as 'numGenreL' 
-        from ticket l, auteur a, genre g 
-        where l.numAuteur=a.num 
-        AND l.numGenre=g.num";
-        /*
-        if($titre != "") {
-            $texteReq .= " and l.titre like '%".$titre."%'";
+        $tickets = array();
+        $requete = "SELECT * 
+                    FROM Ticket
+                    ORDER BY creation_date DESC
+                    LIMIT 10;";
+
+        $conn = Connexion::getConn();
+        $stmt = $conn->prepare($requete);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while($row = $result->fetch_assoc())
+        {
+            $uid = $row['UID'];
+            $techician = $row['Technician_ID'];
+            $urgence_level = $row['urgence_level'];
+            $label = $row['Label_ID'];
+            $creation_date = $row['creation_date'];
+            $status = $row['status'];
+            $description = $row['description'];
+            $ticket = new Ticket($uid, 
+                                $urgence_level, 
+                                $label,
+                                $description, 
+                                $creation_date, 
+                                $status, 
+                                $techician);
+            $tickets[] = $ticket;
         }
-        if($numAuteur != "Tous") {
-            $texteReq .= " and a.num like '%".$numAuteur."%'";
-        }
-        if($numGenre != "Tous") { 
-            $texteReq .= " and g.num='".$numGenre."'";
-        }*/
-        $texteReq .= " order by l.titre";
-        $req=MonPdo::getInstance()->prepare($texteReq);
-        $req->setFetchMode(PDO::FETCH_OBJ);
-        $req->execute();
-        $lesResultats=$req->fetchAll();
-        return $lesResultats;
-    }
-
-    /**
-     * trouve une Ticket par son num
-     *
-     * @param integer $id numéro de l'ticket
-     * @return Ticket objet Ticket trouvé
-     */
-    public static function findById(int $id) :Ticket
-    {
-        $req=MonPdo::getInstance()->prepare("Select * from ticket where num= :id");
-        $req->setFetchMode(PDO::FETCH_CLASS|PDO::FETCH_PROPS_LATE,"Ticket");
-        $req->bindParam(':id', $id);
-        $req->execute();
-        $leResultats=$req->fetch();
-        return $leResultats;
-    }
-
-
-    /**
-     * Permet d'ajouter un ticket
-     *
-     * @param Ticket $ticket ticket à ajouter
-     * @return integer resultat(1 si l'opération a réussi, 0 sinon)
-     */
-    public static function add(Ticket $ticket) : int
-    {
-        $req=MonPdo::getInstance()->prepare("INSERT INTO ticket(uid, Technician_ID, urgence_level, title, creation_date, status, description) 
-                                    VALUES(:uid, :Technician_ID, :urgence_level, :title, :creation_date, :status, :desc)");
-        $uid = $ticket->getUID();
-        $title = $ticket->getTitle();
-        $date = $ticket->getDate();
-        $technician = $ticket->getTechnician();
-        $desc = $ticket->getDescription();
-        $status = $ticket->getStatus();
-        $urgence = $ticket->getUrgence();
-        $req->bindParam(':uid', $uid);
-        $req->bindParam(':Technician_ID', $technician);
-        $req->bindParam(':creation_date', $date);
-        $req->bindParam(':title', $title);
-        $req->bindParam(':desc', $desc);
-        $req->bindParam(':status', $status);
-        $req->bindParam(':urgence_level', $urgence);
-        $nb=$req->execute();
-        return $nb;
-    }
-
-
-    /**
-     * Permet de modifier un ticket 
-     *
-     * @param Ticket $ticket ticket à modifier 
-     * @return integer resultat(1 si l'opération a réussi, 0 sinon)
-     */
-    public static function update(Ticket $ticket) : int
-    {
-        $req=MonPdo::getInstance()->prepare("Update Ticket set Technician_ID= :Technician_ID, status= :Status, urgence_level= :Urgence_level where Ticket_ID= :Ticket_ID");
-        $ticket_id = $ticket->getID();
-        $technician = $ticket->getTechnician();
-        $status = $ticket->getStatus();
-        $urgence = $ticket->getUrgence();
-        $req->bindParam(":Ticket_ID", $ticket_id);
-        $req->bindParam(':Technician_ID', $technician);
-        $req->bindParam(':Status', $status);
-        $req->bindParam(':Urgence_level', $urgence);
-        $nb=$req->execute();
-        return $nb;
-    }
-
-
-    /**
-     * Permet de supprimer un ticket 
-     *
-     * @param Ticket $ticket ticket à supprimer 
-     * @return integer resultat(1 si l'opération a réussi, 0 sinon)
-     */
-    public static function delete(Ticket $ticket) :int
-    {
-        $req=MonPdo::getInstance()->prepare("Delete from ticket where Ticket_ID= :Ticket_ID");
-        $req->bindParam(':Ticket_ID', $ticket->getID());
-        $nb=$req->execute();
-        return $nb;
-    }
-
+        return $tickets;
+    }    
 }
-
-
 ?>

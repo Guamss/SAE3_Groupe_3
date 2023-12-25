@@ -1,13 +1,17 @@
+
+
 <?php
 ob_start();
+include "Modeles/Ticket.php";
+include "Modeles/LabelFunc.php";
+include_once "Modeles/User.php";
+include "Modeles/Connexion.php";
 session_start();
 include "Vues/header.php";
-include "Modeles/Ticket.php";
-include "Modeles/connexionPdo.php";
-
 $uc =empty($_GET['uc']) ?  "accueil" : $_GET['uc'];
 
-switch($uc){
+switch($uc)
+{
   case 'accueil' :
     include('Vues/accueil.php');
     break;
@@ -22,6 +26,9 @@ switch($uc){
     break;
   case 'stats' :
     include('Vues/stats.php');
+    break;
+  case 'inscription' :
+    include('controllers/userController.php');
     break;
 }
 

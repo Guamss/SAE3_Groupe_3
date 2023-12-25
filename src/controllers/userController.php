@@ -1,0 +1,136 @@
+<?php
+$action = empty($_GET['action']) ?  "formInscription" : $_GET['action'];
+switch($action)
+{
+    case 'formConnexion' :
+        if (empty($_SESSION["user"]))
+        {
+            include('Vues/User/formConnexion.php');
+        }
+        else
+        {
+            header('Location: index.php');
+        }
+        break;
+
+    case 'validerFormConnexion' :
+        if (isset($_POST['login'], $_POST['pwd'], $_POST['captcha'], $_POST['num1'], $_POST['num2']) & empty($_SESSION["user"]))
+        {
+            include("Modeles/rc4.php");
+            $num1 = $_POST["num1"];
+            $num2 = $_POST["num2"];
+            $captcha = $_POST['captcha'];
+            if ($num1+$num2 == $captcha)
+            {
+                $_POST['pwd'] = rc4Encrypt($_POST['pwd']);
+                $conn = Connexion::getConn();
+                $stmt = $conn->prepare('SELECT UID, role FROM User WHERE login=? AND password=?;');
+                $stmt->bind_param("ss", $_POST['login'], $_POST['pwd']);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                if ($result->num_rows == 1)
+                {
+                    $row = $result->fetch_assoc();
+                    $uid = $row['UID'];
+                    $role = $row['role'];
+                }
+                else
+                {
+                    header('Location: index.php?uc=inscription&action=errorConnexion');
+                }
+            }
+            else
+            {
+                header('Location: index.php?uc=inscription&action=errorConnexion');
+            }
+        }
+        else
+        {
+            header('Location: index.php?uc=inscription&action=errorConnexion');
+        }
+        $stmt->close();
+        if ($result->num_rows == 1)
+        {
+            $_SESSION['user'] = serialize(new User($uid, $_POST['login'], $role));
+        }
+        echo "<h2>Heureux de vous revoir ".$_POST['login']."</h2><br>";
+        echo "<a href='index.php'>Cliquez pour revenir à l'accueil</a>";
+        break;
+
+    case 'formInscription' :
+        if (empty($_SESSION['user']))
+        {
+            include('Vues/User/formInscription.php');
+        }
+        else
+        {
+            header('Location: index.php');
+        }
+        break;
+        
+    case 'validerFormInscription' :
+        if (isset($_POST['login'], $_POST['pwd'], $_POST['captcha'], $_POST['num1'], $_POST['num2']) & empty($_SESSION["user"]))
+        {
+            include("Modeles/rc4.php");
+            $num1 = $_POST["num1"];
+            $num2 = $_POST["num2"];
+            $captcha = $_POST['captcha'];
+            if ($num1+$num2 == $captcha)
+            {
+                $_POST['pwd'] = rc4Encrypt($_POST['pwd']);
+                $conn = Connexion::getConn();
+                $stmt = $conn->prepare('INSERT INTO User (role, login, password) VALUES (?, ?, ?);');
+                $login = htmlspecialchars($_POST['login']);
+                $pwd = htmlspecialchars($_POST['pwd']);
+                $role = "user";
+                $stmt->bind_param("sss", $role, $login, $pwd);
+                if ($stmt->execute())
+                {
+                    $stmt = $conn->prepare('SELECT UID FROM User WHERE login=? AND password=? AND role=?');
+                    $stmt->bind_param("sss", $login, $pwd, $role);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    if ($result->num_rows == 1)
+                    {
+                        $row = $result->fetch_assoc();
+                        $uid = $row['UID'];
+                    }
+                    $stmt->close();
+                    $_SESSION['user'] = serialize(new User($uid, $login, $role));
+                    echo "<h2>Votre compte a bien été créé !</h2><br>";
+                    echo "<a href='index.php'>Cliquez pour revenir à l'accueil</a>";
+                }
+                else
+                {
+                    if ($conn->errno == 1062)
+                    {
+                        echo "Erreur : Le login est déjà utilisé. Veuillez en choisir un autre.";
+                    }
+                    else
+                    {
+                        echo "Une erreur s'est produite";
+                    }
+                }
+            }
+            else
+            {
+                header('Location: index.php?uc=inscription&action=errorInscription');
+            }
+        }
+        else
+        {
+            header('Location: index.php?uc=inscription&action=errorInscription');
+        }
+
+        break;
+        
+    case 'errorInscription':
+        echo "<p style='color:red;'>Une erreure est survenue, vérifiez bien votre saisie !</p>";
+        include('Vues/User/formInscription.php');
+        break;
+    
+    case 'errorConnexion':
+        echo "<p style='color:red;'>Nous n'avons pas trouvé votre utilisateur !</p>";
+        include('Vues/User/formConnexion.php');
+        break;
+}

@@ -4,6 +4,10 @@
 }
 
 .navbar{
+  position: fixed;
+  width: 100%;
+  top: 0;
+  
   display: flex;
   background-color: #454D5C;
   top:0;

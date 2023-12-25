@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <title>Accueil</title>
+  <title>TicketOpia</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="../medias/LOGO_TicketOpia.svg">
+  <link rel="icon" href="_medias/LOGO_TicketOpia.svg">
 
   <!--   Fonts Import   -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
@@ -34,17 +34,42 @@
           <div class="liens" id="Tickets">
             <a class="nav-item" href="index.php?uc=dashboard&action=list">Tickets</a>
           </div>
-          <div class="liens" id="stats">
-            <a class="nav-item" href="index.php?uc=stats">Statistiques</a>
-          </div>
-          <div class="liens" id="video">
-            <a class="nav-item" href="index.php?uc=video">Vidéo démo</a>
-          </div>
-          <div class="nav_profil">
-            <a class="lien_profil material-symbols-outlined" href="index.php?uc=profile" style="font-size: 30px;">account_circle</a>
-          </div>
+          <?php
+          if (isset($_SESSION['user']))
+          {
+            $user = unserialize($_SESSION['user']);
+            if ($user->getRole()=="sysadmin")
+            {
+              echo '
+              <div class="liens" id="stats">
+                <a class="nav-item" href="index.php?uc=stats">Statistiques</a>
+              </div>';
+            }
+          }
+            if (!isset($_SESSION['user']))
+            {
+              echo '
+              <div class="liens" id="video">
+                <a class="nav-item" href="index.php?uc=inscription">Authentification</a>
+              </div>';
+            }
+            else
+            {
+              echo'
+              <div class="liens" id="video">
+                <a class="nav-item" href="index.php?uc=dashboard&action=form">Créer un ticket</a>
+              </div>';
+            }
+          if (isset($_SESSION['user']))
+          {
+            echo '
+            <div class="nav_profil">
+              <a class="lien_profil material-symbols-outlined" href="index.php?uc=profile" style="font-size: 30px;">account_circle</a>
+            </div>';
+          }
+        ?>
         </div>
-        
+
         <a href="javascript:void(0);" class="icon" onclick="mobile_nav()">
           <i class="fa fa-bars"></i>
         </a>

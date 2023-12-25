@@ -1,97 +1,49 @@
 <?php
 $action=$_GET['action'];
-switch($action){
+switch($action)
+{
     case 'list' :
-        // traitement du formulaire de recherche
-        $titre="";
-        $auteurSel="Tous";
-        $genreSel="Tous";
-        if(!empty($_POST['titre'])){
-            $titre= $_POST['titre'];
-        }
-        if(!empty($_POST['numAuteur'])){
-            $auteurSel= $_POST['numAuteur'];
-        }
-        if(!empty($_POST['numGenre'])){
-            $genreSel= $_POST['numGenre'];
-        }
-
         include('Vues/Ticket/dashboard.php');
         break;
-        /*
-        $lesAuteurs=Auteur::findAll();        
-        $lesGenres=Genre::findAll(); 
-        $lesLivres=Livre::findAll($titre, $auteurSel, $genreSel);
-     
-
-    case 'add' :
-        $mode="Ajouter";
-        $lesAuteurs=Auteur::findAll();
-        $lesGenres=Genre::findAll();
-        include ('vues/Livre/formLivre.php');
-        break;
-
-    case 'update' :
-        $mode="Modifier";
-        $laLivre=Livre::findById($_GET['num']);
-        $lesAuteurs=Auteur::findAll();
-        $lesGenres=Genre::findAll();
-        include ('vues/Livre/formLivre.php');
-        break;
-
-    case 'delete' :
-        $laLivre=Livre::findById($_GET['num']);
-        $nb=Livre::delete($laLivre);
-        if($nb==1){
-            $_SESSION['message'] = ["success" => "Le livre a bien été supprimé"];
-        }else{
-            $_SESSION['message'] = ["warning" => "Le livre n'a pas été supprimé"];
     
+    case 'form' :
+        if (isset($_SESSION['user']))
+        {
+            include('Vues/Ticket/formTicket.php');
         }
-        header('location: index.php?uc=livres&action=list');
-        exit();
+        else
+        {
+            header("Location: index.php");
+        }
         break;
 
     case 'validerForm' :
-        $livre=new Livre();
-        $auteur=Auteur::findById($_POST['auteur']);
-        $genre=Genre::findById($_POST['genre']);
-        if(empty($_POST['num'])){ // cas d'une création 
-            $livre->setIsbn($_POST['isbn'])
-                    ->setTitre($_POST['titre'])
-                    ->setPrix($_POST['prix'])
-                    ->setEditeur($_POST['editeur'])
-                    ->setAnnee($_POST['annee'])
-                    ->setLangue($_POST['langue'])
-                    ->setNumAuteur($_POST['auteur'])
-                    ->setNumGenre($_POST['genre']);
-                    
-            $nb=Livre::add($livre);
-            $message='ajouté';
-        }else{ // cas d'une modif 
-            $livre->setNum($_POST['num'])
-                    ->setIsbn($_POST['isbn'])
-                    ->setTitre($_POST['titre'])
-                    ->setPrix($_POST['prix'])
-                    ->setEditeur($_POST['editeur'])
-                    ->setAnnee($_POST['annee'])
-                    ->setLangue($_POST['langue'])
-                    ->setNumAuteur($_POST['auteur'])
-                    ->setNumGenre($_POST['genre']);
-            var_dump($livre);
-            $nb=Livre::update($livre);
-            $message='modifié';
+        if (isset($_POST['label'], $_POST['description'], $_POST['urgence']) & isset($_SESSION['user']))
+        {
+            $urgence = htmlspecialchars($_POST['urgence']);
+            $desc = htmlspecialchars($_POST['description']);
+            $label = $_POST['label'];
+            $user = unserialize($_SESSION['user']);
+            $ticket = new Ticket($user->getUID(), $urgence, $label, $desc);
+            $user->createTicket($ticket);
+            $_SESSION['user'] = serialize($user);
         }
-        
-        if($nb==1){
-            $_SESSION['message'] = ["success" => "Le livre a bien été $message"];
-        }else{
-            $_SESSION['message'] = ["warning" => "Le livre n'a pas été $message"];
-
+        else
+        {
+            header('Location: index.php?uc=dashboard&action=error');
         }
-        header('location: index.php?uc=livres&action=list');
-        exit();
+        echo "<h2>Votre ticket a bien été créé !</h2><br>";
+        echo "<a href='index.php?uc=dashboard&action=list'>Cliquez pour revenir au tableau de bord</a>";
         break;
-
-        */
+    
+    case 'error' :
+        if (isset($_SESSION['user']))
+        {
+            include('Vues/Ticket/formTicket.php');
+            echo "<p style='color:red;'>Une erreur est survenue, vérifiez bien votre saisie !</p>";
+        }
+        else
+        {
+            header('Location: index.php');
+        }
 }

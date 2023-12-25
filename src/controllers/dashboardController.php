@@ -16,7 +16,7 @@ switch($action){
             $genreSel= $_POST['numGenre'];
         }
 
-        include('vues/Ticket/dashboard.php');
+        include('Vues/Ticket/dashboard.php');
         break;
         /*
         $lesAuteurs=Auteur::findAll();        

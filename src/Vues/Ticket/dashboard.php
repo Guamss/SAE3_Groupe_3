@@ -114,8 +114,8 @@ function traitementClick()
                         <td class="description-column">'.$ticket->getDescription().'</td>
                         <td>'.$user->getLogin().'</td>
                         <td>'.$ticket->getDate().'</td>
-                        <td>'.$ticket->getStatus().'</td>
                         <td>'.$niveauxUrgence[$urgence].'</td>
+                        <td>'.$ticket->getStatus().'</td>
                       </tr>';
                     }
                     echo '</tbody>

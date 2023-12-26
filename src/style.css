@@ -3,19 +3,18 @@
   color:#656565;
 }
 
+body{
+  margin: 0px;
+}
+
 .navbar{
-  position: fixed;
-  width: 100%;
-  top: 0;
-  
+  position:relative;
+    left: 0;
+    top: 0;
+    width: 100%;
   display: flex;
   background-color: #454D5C;
-  top:0;
-  left:0;
-  width: 100%;
-  position: relative;
   justify-content: space-between;
-  /*border-bottom: 3px solid #323232;*/
 }
 
 
@@ -168,6 +167,51 @@ margin-left:1em;
 
 
 
+
+
+.form{
+  display: block;
+  place-items: center;
+  font-family: 'Kantumruy Pro', sans-serif;
+  width: fit-content;
+  height: 600px;
+  background-color: rgba(255,255,255,0.13);
+  padding: 20px 50px;
+  text-align: center;
+  border: 2px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.226);
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  box-sizing: border-box;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.form input[type="text"],
+.form input[type="password"],
+.form input[type="submit"] {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  box-sizing: border-box;
+  border-radius: 15px;
+  border: 1px solid #454D5C;
+}
+
+.form input[type="submit"] {
+  width: 100%;
+  background-color: #454D5C;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.form a {
+  text-decoration: none;
+  color: #454D5C;
+}
+
+
 .profile
 {
   height: auto;
@@ -285,7 +329,7 @@ scrollbar-width: none;  /* Firefox */
 }
 
 
-html,body,h1,h2,h3,h4,h5,h6 {
+body,h1,h2,h3,h4,h5,h6 {
   font-family: 'Kantumruy Pro', sans-serif;
   letter-spacing: 0.5px;
   outline: none;
@@ -399,14 +443,14 @@ input{
     height: 50px;
     width: 100%;
     background-color: rgba(255,255,255,0.07);
-    border-radius: 3px;
+    border-radius: 10px;
     padding: 0 10px;
     margin-top: 8px;
     font-size: 14px;
     font-weight: 300;
 }
 ::placeholder{
-    color: #e5e5e5;
+    color: #7b7b7b;
 }
 .button{
   margin-top: 50px;
@@ -430,6 +474,23 @@ footer{
 }
 footer p{
   color: #ECE5D8;
+}
+
+.accueil{
+  margin: 5% ;
+}
+
+.accueil p{
+  margin-left: 2%;
+}
+
+.iframe-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 5%;
+
 }
 
 
@@ -493,6 +554,7 @@ footer p{
 @media screen and (max-width: 844px) {
   body {
       font-size: 14px;
+      margin-top: 5%;
   }
 
   .logo-accueil h1{
@@ -511,6 +573,10 @@ footer p{
   .navbar {
     display: flex;
     flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
   }
 
   .navbar a {
@@ -629,6 +695,11 @@ footer p{
   }
 /*Fin MENU*/
 
+  .form{
+    position: relative;
+    margin-top: 20%;
+  }
+
 }
 
 
@@ -695,4 +766,3 @@ footer p{
   }
 /*Fin MENU*/
 }
-

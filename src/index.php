@@ -30,6 +30,9 @@ switch($uc)
   case 'inscription' :
     include('controllers/userController.php');
     break;
+  default :
+    include('Vues/accueil.php');
+    break;
 }
 
 include "Vues/footer.php";?>

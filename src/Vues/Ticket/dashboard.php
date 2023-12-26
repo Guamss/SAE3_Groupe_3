@@ -40,7 +40,10 @@ function traitementClick()
     div_info_etat.setAttribute("class", "infos");
 
     const div_info_urgence = document.createElement("div");
-    div_info_etat.setAttribute("class", "infos");
+    div_info_urgence.setAttribute("class", "infos");
+
+    const div_info_tec = document.createElement("div");
+    div_info_tec.setAttribute("class", "infos");
 
     let dict_div =
         {1 : div_info_titre,
@@ -48,7 +51,9 @@ function traitementClick()
             5 : div_info_demandeur,
             7 : div_info_date,
             9 : div_info_etat,
-            11 : div_info_etat};
+            11 : div_info_urgence,
+            13 : div_info_tec};
+
     let h1 = document.createElement("h1");
     h1.appendChild(document.createTextNode("Informations"));
     div_element_flexible.appendChild(h1);
@@ -78,54 +83,115 @@ function traitementClick()
                 if(isset($_SESSION['user']))
                 {
                   $user = unserialize($_SESSION['user']);
-                  $tickets = $user->getTickets();
-                  if (!empty($tickets))
+                  $role = $user->getRole();
+                  switch($role)
                   {
-                    echo "
-                    <div class='container ligne'>
-                    <!--Tableau de bord-->
-                    <div class='element-flexible list'>
-                      <h1>Tableau de bord</h1>
-                      <div class='cadre-table-scroll'>
-                        <table class='table table-scroll'>
-                          <thead>
-                          <tr>
-                            <th>Libellé</th>
-                            <th class='description-column'>Description</th>
-                            <th>Demandeur</th>
-                            <th>Date de création</th>
-                            <th>Niveau d'urgence</th>
-                            <th>Etat</th>
-                          </tr>
-                      </thead>
-                      <tbody>";
-                    foreach($tickets as &$ticket)
-                    {
-                      $urgence = $ticket->getUrgence();
-                      $label = $ticket->getLabelID();
-                      $niveauxUrgence = array(
-                        1 => 'Urgent',
-                        2 => 'Important',
-                        3 => 'Moyen',
-                        4 => 'Faible');
-                      echo '
-                      <tr> 
-                        <td>'.getLabelNameById($label).'</td>
-                        <td class="description-column">'.$ticket->getDescription().'</td>
-                        <td>'.$user->getLogin().'</td>
-                        <td>'.$ticket->getDate().'</td>
-                        <td>'.$niveauxUrgence[$urgence].'</td>
-                        <td>'.$ticket->getStatus().'</td>
-                      </tr>';
-                    }
-                    echo '</tbody>
-                    </table>';
-                  }
-                  else
-                  {
-                    echo "
-                    <h2>Besoin d'aide? </h2>
-                    <p>Vous n'avez créé aucun ticket jusqu'à présent, vous pouvez créer des tickets et ceci seront affiché sur cette page</p>";
+                    case 'user':
+                      $tickets = $user->getTickets();
+                      if (!empty($tickets))
+                      {
+                        echo "
+                        <div class='container ligne'>
+                        <!--Tableau de bord-->
+                        <div class='element-flexible list'>
+                          <h1>Tableau de bord</h1>
+                          <div class='cadre-table-scroll'>
+                            <table class='table table-scroll'>
+                              <thead>
+                              <tr>
+                                <th>Libellé</th>
+                                <th class='description-column'>Description</th>
+                                <th>Demandeur</th>
+                                <th>Date de création</th>
+                                <th>Niveau d'urgence</th>
+                                <th>Technicien</th>
+                                <th>Etat</th>
+                              </tr>
+                          </thead>
+                          <tbody>";
+                        foreach($tickets as &$ticket)
+                        {
+                          $urgence = $ticket->getUrgence();
+                          $label = $ticket->getLabelID();
+                          $technician_ID = $ticket->getTechnician();
+                          $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
+                          $niveauxUrgence = array(
+                            1 => 'Urgent',
+                            2 => 'Important',
+                            3 => 'Moyen',
+                            4 => 'Faible');
+                          echo '
+                          <tr> 
+                            <td>'.getLabelNameById($label).'</td>
+                            <td class="description-column">'.$ticket->getDescription().'</td>
+                            <td>'.$user->getLogin().'</td>
+                            <td>'.$ticket->getDate().'</td>
+                            <td>'.$niveauxUrgence[$urgence].'</td>
+                            <td>'.$technician.'</td>
+                            <td>'.$ticket->getStatus().'</td>
+                          </tr>';
+                        }
+                        echo '</tbody>
+                        </table>';
+                      }
+                      else
+                      {
+                        echo "
+                        <h2>Besoin d'aide? </h2>
+                        <p>Vous n'avez créé aucun ticket jusqu'à présent, vous pouvez créer des tickets et ceci seront affiché sur cette page</p>";
+                      }
+                      break;
+                    
+                    case 'webadmin' :
+                      $tickets = Ticket::getTicketsWithoutTechnician();
+                      if (!empty($tickets))
+                      {
+                        echo "
+                          <div class='container ligne'>
+                          <!--Tableau de bord-->
+                          <div class='element-flexible list'>
+                            <h1>Vous pouvez attribuer des techniciens</h1>
+                            <div class='cadre-table-scroll'>
+                              <table class='table table-scroll'>
+                                <thead>
+                                <tr>
+                                  <th>Libellé</th>
+                                  <th class='description-column'>Description</th>
+                                  <th>Demandeur</th>
+                                  <th>Date de création</th>
+                                  <th>Niveau d'urgence</th>
+                                  <th>Technicien</th>
+                                  <th>Etat</th>
+                                </tr>
+                            </thead>
+                            <tbody>";
+                            foreach($tickets as &$ticket)
+                            {
+                              $uid = $ticket->getUID();
+                              $login = User::getLoginByUID($uid);  
+                              $urgence = $ticket->getUrgence();
+                              $label = $ticket->getLabelID();
+                              $technician_ID = $ticket->getTechnician();
+                              $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
+                              $niveauxUrgence = array(
+                                1 => 'Urgent',
+                                2 => 'Important',
+                                3 => 'Moyen',
+                                4 => 'Faible');
+                              echo '
+                              <tr> 
+                                <td>'.getLabelNameById($label).'</td>
+                                <td class="description-column">'.$ticket->getDescription().'</td>
+                                <td>'.$login.'</td>
+                                <td>'.$ticket->getDate().'</td>
+                                <td>'.$niveauxUrgence[$urgence].'</td>
+                                <td>'.$technician.'</td>
+                                <td>'.$ticket->getStatus().'</td>
+                              </tr>';
+                            }
+                          echo '</tbody>
+                          </table>';
+                      }
                   }
                 }
                 else
@@ -144,6 +210,7 @@ function traitementClick()
                           <th>Demandeur</th>
                           <th>Date de création</th>
                           <th>Niveau d'urgence</th>
+                          <th>Technicien</th>
                           <th>Etat</th>
                         </tr>
                     </thead>
@@ -154,7 +221,8 @@ function traitementClick()
                       $uid = $ticket->getUID();
                       $login = User::getLoginByUID($uid);
                       $label = $ticket->getLabelID();
-
+                      $technician_ID = $ticket->getTechnician();
+                      $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
                       $urgence = $ticket->getUrgence();
                       $niveauxUrgence = array(
                         1 => 'Urgent',
@@ -167,8 +235,9 @@ function traitementClick()
                         <td class="description-column">'.$ticket->getDescription().'</td>
                         <td>'.$login.'</td>
                         <td>'.$ticket->getDate().'</td>
-                        <td>'.$ticket->getStatus().'</td>
                         <td>'.$niveauxUrgence[$urgence].'</td>
+                        <td>'.$technician.'</td>
+                        <td>'.$ticket->getStatus().'</td>
                       </tr>';
                     }
                     echo '</tbody>

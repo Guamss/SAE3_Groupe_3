@@ -69,7 +69,7 @@ class Ticket{
     /**
      * Get Technicien_ID du ticket
      */
-    public function getTechnician(): int
+    public function getTechnician()
     {
         return $this->technician_ID;
     }
@@ -176,6 +176,37 @@ class Ticket{
             $tickets[] = $ticket;
         }
         return $tickets;
-    }    
+    }
+    
+    public static function getTicketsWithoutTechnician(): array
+    {
+        $tickets = array();
+        $requete = "SELECT * 
+                    FROM Ticket 
+                    WHERE Technician_ID IS NULL;";
+        $conn = Connexion::getConn();
+        $stmt = $conn->prepare($requete);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while($row = $result->fetch_assoc())
+        {
+            $uid = $row['UID'];
+            $techician = $row['Technician_ID'];
+            $urgence_level = $row['urgence_level'];
+            $label = $row['Label_ID'];
+            $creation_date = $row['creation_date'];
+            $status = $row['status'];
+            $description = $row['description'];
+            $ticket = new Ticket($uid, 
+                                $urgence_level, 
+                                $label,
+                                $description, 
+                                $creation_date, 
+                                $status, 
+                                $techician);
+            $tickets[] = $ticket;
+        }
+        return $tickets;
+    }
 }
 ?>

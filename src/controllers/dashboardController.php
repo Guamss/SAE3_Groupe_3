@@ -46,4 +46,8 @@ switch($action)
         {
             header('Location: index.php');
         }
+    
+    default :
+        include('Vues/accueil.php');
+        break;
 }

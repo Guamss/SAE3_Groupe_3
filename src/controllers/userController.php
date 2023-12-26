@@ -2,6 +2,44 @@
 $action = empty($_GET['action']) ?  "formInscription" : $_GET['action'];
 switch($action)
 {
+    case 'formTec':
+        if (isset($_SESSION["user"]) && unserialize($_SESSION['user'])->getRole() == 'webadmin') 
+        {
+            include('Vues/User/formCreationTec.php');
+        } 
+        else 
+        {
+            header('Location: index.php'); 
+        }
+        break;
+    
+    case 'validerFormTec' :
+        if ((isset($_SESSION["user"], $_POST['pwd'], $_POST['login']) && unserialize($_SESSION['user'])->getRole() == 'webadmin'))
+        {
+            include('Modeles/rc4.php');
+            $_POST['pwd'] = rc4Encrypt($_POST['pwd']);
+            $conn = Connexion::getConn();
+            $stmt = $conn->prepare('INSERT INTO User (role, login, password) VALUES (?, ?, ?);');
+            $login = htmlspecialchars($_POST['login']);
+            $pwd = htmlspecialchars($_POST['pwd']);
+            $role = "technician";
+            $stmt->bind_param("sss", $role, $login, $pwd);
+            if ($stmt->execute())
+            {
+                echo "<h2>Le technicien ".$_POST['login']." a bien été créé</h2><br>";
+                echo "<a href='index.php'>Cliquez pour revenir à l'accueil</a>";
+            }
+            else
+            {
+                header('Location: index.php?uc=inscription&action=errorConnexion');
+            }
+        }
+        else 
+        {
+            header('Location: index.php');
+        }
+        break;
+
     case 'formConnexion' :
         if (empty($_SESSION["user"]))
         {
@@ -14,7 +52,7 @@ switch($action)
         break;
 
     case 'validerFormConnexion' :
-        if (isset($_POST['login'], $_POST['pwd'], $_POST['captcha'], $_POST['num1'], $_POST['num2']) & empty($_SESSION["user"]))
+        if (isset($_POST['login'], $_POST['pwd'], $_POST['captcha'], $_POST['num1'], $_POST['num2']) && (empty($_SESSION["user"]) && !empty($_POST["pwd"]) && !empty($_POST["login"]) && !empty($_POST["num1"]) & !empty($_POST["num2"]) & !empty($_POST["captcha"])))
         {
             include("Modeles/rc4.php");
             $num1 = $_POST["num1"];
@@ -69,7 +107,7 @@ switch($action)
         break;
         
     case 'validerFormInscription' :
-        if (isset($_POST['login'], $_POST['pwd'], $_POST['captcha'], $_POST['num1'], $_POST['num2']) & empty($_SESSION["user"]))
+        if (isset($_POST['login'], $_POST['pwd'], $_POST['captcha'], $_POST['num1'], $_POST['num2']) && (empty($_SESSION["user"]) && !empty($_POST["pwd"]) && !empty($_POST["login"]) && !empty($_POST["num1"]) & !empty($_POST["num2"]) & !empty($_POST["captcha"])))
         {
             include("Modeles/rc4.php");
             $num1 = $_POST["num1"];
@@ -133,4 +171,9 @@ switch($action)
         echo "<p style='color:red;'>Nous n'avons pas trouvé votre utilisateur !</p>";
         include('Vues/User/formConnexion.php');
         break;
+
+    default :
+        include('Vues/accueil.php');
+        break;
+        
 }

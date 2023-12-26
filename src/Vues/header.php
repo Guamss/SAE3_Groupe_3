@@ -35,39 +35,54 @@
             <a class="nav-item" href="index.php?uc=dashboard&action=list">Tickets</a>
           </div>
           <?php
-          if (isset($_SESSION['user']))
-          {
-            $user = unserialize($_SESSION['user']);
-            if ($user->getRole()=="sysadmin")
+            if (isset($_SESSION['user']))
             {
-              echo '
-              <div class="liens" id="stats">
-                <a class="nav-item" href="index.php?uc=stats">Statistiques</a>
-              </div>';
+              $user = unserialize($_SESSION['user']);
+              $role = $user->getRole();
+              switch($role)
+              {
+                case 'sysadmin' :
+                  echo '
+                  <div class="liens" id="stats">
+                    <a class="nav-item" href="index.php?uc=stats">Statistiques</a>
+                  </div>';
+                  break;
+                case 'user' :
+                  echo'
+                  <div class="liens" id="createTicket">
+                    <a class="nav-item" href="index.php?uc=dashboard&action=form">Créer un ticket</a>
+                  </div>';
+                  break;
+                case 'webadmin' :
+                  echo '
+                  <div class="liens" id="createTec">
+                    <a class="nav-item" href="index.php?uc=inscription&action=formTec">Créer un technicien</a>
+                  </div>';
+                  echo '
+                  <div class="liens" id="labels">
+                    <a class="nav-item" href="index.php?uc=dashboard&action=form">Gérer les libellés</a>
+                  </div>';
+                  break;
+                case 'technician' :
+                  echo '
+                  <div class="liens" id="myTickets">
+                    <a class="nav-item" href="index.php?uc=dashboard&action=form">Mes tickets</a>
+                  </div>';
+                  break;
+              }
+                echo '
+                <div class="nav_profil">
+                  <a class="lien_profil material-symbols-outlined" href="index.php?uc=profile" style="font-size: 30px;">account_circle</a>
+                </div>';
             }
-          }
-            if (!isset($_SESSION['user']))
+            else
             {
               echo '
               <div class="liens" id="video">
                 <a class="nav-item" href="index.php?uc=inscription">Authentification</a>
               </div>';
             }
-            else
-            {
-              echo'
-              <div class="liens" id="video">
-                <a class="nav-item" href="index.php?uc=dashboard&action=form">Créer un ticket</a>
-              </div>';
-            }
-          if (isset($_SESSION['user']))
-          {
-            echo '
-            <div class="nav_profil">
-              <a class="lien_profil material-symbols-outlined" href="index.php?uc=profile" style="font-size: 30px;">account_circle</a>
-            </div>';
-          }
-        ?>
+          ?>
         </div>
 
         <a href="javascript:void(0);" class="icon" onclick="mobile_nav()">

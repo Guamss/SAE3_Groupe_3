@@ -79,6 +79,30 @@ class Ticket{
      */
     public function setTechnician(int $argtechnician_ID): void
     {
+        $conn = Connexion::getConn();
+            $stmt = $conn->prepare("UPDATE Ticket
+                                    SET Technician_ID = ?
+                                    WHERE UID = ?
+                                    AND urgence_level = ?
+                                    AND Label_ID = ?
+                                    AND creation_date = ?
+                                    AND status = ?
+                                    AND description = ?;");
+            $uid = $this->UID;
+            $urgence = $this->urgence_level;
+            $label = $this->label_ID;
+            $date = $this->creation_date;
+            $status = $this->status;
+            $desc = htmlspecialchars($this->description);
+            $stmt->bind_param("iiiisss",
+                $argtechnician_ID,
+                $uid,
+                $urgence,
+                $label,
+                $date,
+                $status,
+                $desc);
+            $stmt->execute();
         $this->technician_ID = $argtechnician_ID;
     }
 

@@ -36,6 +36,28 @@ switch($action)
         echo "<a href='index.php?uc=dashboard&action=list'>Cliquez pour revenir au tableau de bord</a>";
         break;
     
+    case 'assignerTicketTec':
+        if (isset($_POST['uid'], $_POST['tec'], $_POST['urgence_level'], $_POST['date'], $_POST['label_ID'], $_POST['status'], $_POST['desc']) && unserialize($_SESSION['user'])->getRole() == 'technician')
+        {
+            $tec = unserialize($_SESSION['user']);
+            $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['label_ID'], $_POST['desc'], $_POST['date'], $_POST['status'], $_POST['tec']);
+            $ticket->setTechnician($tec->getUid());
+            $niveauxUrgence = array(
+                1 => 'urgent',
+                2 => 'important',
+                3 => 'moyen',
+                4 => 'faible');
+            echo "<p style='color: green;'>Un ticket d'urgence ".$niveauxUrgence[$ticket->getUrgence()]." vous a été attribué!</p>";
+            include('Vues/Ticket/dashboard.php');
+   
+            }
+        else
+        {
+            header('Location : index.php');
+        }
+        
+        break;
+    
     case 'error' :
         if (isset($_SESSION['user']))
         {

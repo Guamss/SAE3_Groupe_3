@@ -16,68 +16,44 @@ function init()
     }
 }
 
-function traitementClick()
-{
-    while (div_element_flexible.firstChild)
-    {
+function traitementClick() {
+    while (div_element_flexible.firstChild) {
         div_element_flexible.removeChild(div_element_flexible.firstChild);
     }
-    const enfants_this = this.childNodes
 
-    const div_info_titre = document.createElement("div");
-    div_info_titre.setAttribute("class", "infos");
-
-    const div_info_desc = document.createElement("div");
-    div_info_desc.setAttribute("class", "infos");
-
-    const div_info_demandeur = document.createElement("div");
-    div_info_demandeur.setAttribute("class", "infos");
-
-    const div_info_date = document.createElement("div");
-    div_info_date.setAttribute("class", "infos");
-
-    const div_info_etat = document.createElement("div");
-    div_info_etat.setAttribute("class", "infos");
-
-    const div_info_urgence = document.createElement("div");
-    div_info_urgence.setAttribute("class", "infos");
-
-    const div_info_tec = document.createElement("div");
-    div_info_tec.setAttribute("class", "infos");
-
-    let dict_div =
-        {1 : div_info_titre,
-            3 : div_info_desc,
-            5 : div_info_demandeur,
-            7 : div_info_date,
-            9 : div_info_etat,
-            11 : div_info_urgence,
-            13 : div_info_tec};
+    const enfants_this = this.childNodes;
 
     let h1 = document.createElement("h1");
     h1.appendChild(document.createTextNode("Informations"));
     div_element_flexible.appendChild(h1);
-    for (let i = 3; i<enfants_this.length; i+=2)
-    {
-        let actual_text = enfants_this[i].innerText;
-        let actual_div = dict_div[i]
-        let actual_titre = tr_head_enfants[i].innerText;
-        let h4 = document.createElement("h4");
-        let p = document.createElement("p");
 
-        p.appendChild(document.createTextNode(actual_text));
-        h4.appendChild(document.createTextNode(actual_titre));
-        actual_div.appendChild(h4);
-        actual_div.appendChild(p);
-        div_element_flexible.appendChild(actual_div);
-        for (let j = 0; j<2; j++)
-        {
-            let br = document.createElement("br");
-            div_element_flexible.appendChild(br);
+    for (let i = 3; i < enfants_this.length; i += 2) {
+        let actual_text = enfants_this[i].innerText.trim();
+        let actual_titre = tr_head_enfants[i].innerText.trim();
+
+        if (actual_titre !== "Prendre en charge") {
+            let h4 = document.createElement("h4");
+            let p = document.createElement("p");
+
+            p.appendChild(document.createTextNode(actual_text));
+            h4.appendChild(document.createTextNode(actual_titre));
+
+            let actual_div = document.createElement("div");
+            actual_div.setAttribute("class", "infos");
+            actual_div.appendChild(h4);
+            actual_div.appendChild(p);
+            div_element_flexible.appendChild(actual_div);
+
+            for (let j = 0; j < 2; j++) {
+                let br = document.createElement("br");
+                div_element_flexible.appendChild(br);
+            }
         }
     }
-    div_mere[0].appendChild(div_element_flexible)
+
+    div_mere[0].appendChild(div_element_flexible);
 }
+
   </script>
               <?php
                 if(isset($_SESSION['user']))
@@ -192,6 +168,66 @@ function traitementClick()
                           echo '</tbody>
                           </table>';
                       }
+                      case 'technician' :
+                        $tickets = Ticket::getTicketsWithoutTechnician();
+                        if (!empty($tickets))
+                        {
+                          echo "
+                          <div class='container ligne'>
+                          <!--Tableau de bord-->
+                          <div class='element-flexible list'>
+                            <h1>Les tickets qui n'ont pas de technicien assignés</h1>
+                            <div class='cadre-table-scroll'>
+                              <table class='table table-scroll'>
+                                <thead>
+                                <tr>
+                                  <th>Libellé</th>
+                                  <th class='description-column'>Description</th>
+                                  <th>Demandeur</th>
+                                  <th>Date de création</th>
+                                  <th>Niveau d'urgence</th>
+                                  <th>Prendre en charge</th>
+                                </tr>
+                            </thead>
+                            <tbody>";
+                            foreach($tickets as &$ticket)
+                            {
+                              $uid = $ticket->getUID();
+                              $label = $ticket->getLabelID();
+                              $urgence = $ticket->getUrgence();
+                              $login = User::getLoginByUID($uid);
+                              $niveauxUrgence = array(
+                                1 => 'Urgent',
+                                2 => 'Important',
+                                3 => 'Moyen',
+                                4 => 'Faible');
+                              echo '
+                              <tr> 
+                                <td>'.getLabelNameById($label).'</td>
+                                <td class="description-column">'.$ticket->getDescription().'</td>
+                                <td>'.$login.'</td>
+                                <td>'.$ticket->getDate().'</td>
+                                <td>'.$niveauxUrgence[$urgence].'</td>
+                                <td>
+                                  <form method="POST" action="index.php?uc=dashboard&action=assignerTicketTec">
+                                  <input type="hidden" name="uid" value="' . $ticket->getUID() . '">
+                                  <input type="hidden" name="tec" value="' . $ticket->getTechnician() . '">
+                                  <input type="hidden" name="urgence_level" value="' . $ticket->getUrgence() . '">
+                                  <input type="hidden" name="date" value="' . $ticket->getDate() . '">
+                                  <input type="hidden" name="label_ID" value="' . $ticket->getLabelID() . '">
+                                  <input type="hidden" name="status" value="' . $ticket->getStatus() . '">
+                                  <input type="hidden" name="desc" value="' . $ticket->getDescription() . '">
+                                  <button type="submit">+</button>
+                                  </form>
+                                </td>
+                              </tr>';
+                            }
+                        }
+                        else
+                        {
+                          echo "<h2>Rien ne s'affiche?</h2>
+                          <p>Tout les tickets ont déjà un technicien attribué.</p>";
+                        }
                   }
                 }
                 else

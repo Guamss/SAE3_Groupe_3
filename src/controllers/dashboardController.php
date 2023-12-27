@@ -32,8 +32,11 @@ switch($action)
         {
             header('Location: index.php?uc=dashboard&action=error');
         }
-        echo "<h2>Votre ticket a bien été créé !</h2><br>";
-        echo "<a href='index.php?uc=dashboard&action=list'>Cliquez pour revenir au tableau de bord</a>";
+        echo "<div class='messages'>
+                <h2>Votre ticket a bien été créé !</h2>
+                <br>
+                <a href='index.php?uc=dashboard&action=list'>Cliquez pour revenir au tableau de bord</a>
+            </div>";
         break;
     
     case 'error' :

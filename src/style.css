@@ -174,7 +174,7 @@ margin-left:1em;
   place-items: center;
   font-family: 'Kantumruy Pro', sans-serif;
   width: fit-content;
-  height: 600px;
+  height: fit-content;
   background-color: rgba(255,255,255,0.13);
   padding: 20px 50px;
   text-align: center;
@@ -189,7 +189,8 @@ margin-left:1em;
 
 .form input[type="text"],
 .form input[type="password"],
-.form input[type="submit"] {
+.form input[type="submit"],
+.form select {
   width: 100%;
   margin-bottom: 10px;
   padding: 8px;
@@ -210,6 +211,33 @@ margin-left:1em;
   text-decoration: none;
   color: #454D5C;
 }
+
+.form label{
+  margin-bottom: 10px;
+}
+
+.form option,
+.form select{
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+.form textarea{
+  width: 100%;
+  resize: vertical;
+  max-height: 220px;
+  min-height: 50px;
+  border-radius: 15px;
+  font-size: large;
+}
+
+.messages{
+  place-items: center;
+  text-align: center;
+}
+
+
+
 
 
 .profile
@@ -243,6 +271,7 @@ margin-left:1em;
 .profile .button{
   background-color: #454d5c;
   color: #ECE5D8;
+  border-radius: 15px;
 }
 
 #bouton-deco
@@ -336,6 +365,9 @@ body,h1,h2,h3,h4,h5,h6 {
   border: none;
 }
 
+p{
+  font-weight: 500;
+}
 
 .w3-sidebar {
   z-index: 3;

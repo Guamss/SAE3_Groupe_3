@@ -26,8 +26,11 @@ switch($action)
             $stmt->bind_param("sss", $role, $login, $pwd);
             if ($stmt->execute())
             {
-                echo "<h2>Le technicien ".$_POST['login']." a bien été créé</h2><br>";
-                echo "<a href='index.php'>Cliquez pour revenir à l'accueil</a>";
+                echo "<div class='messages'>
+                <h2>Le technicien ".$_POST['login']." a bien été créé.</h2>
+                <br>
+                <a href='index.php'>Cliquez pour revenir à l'accueil</a>
+            </div>";
             }
             else
             {
@@ -91,8 +94,11 @@ switch($action)
         {
             $_SESSION['user'] = serialize(new User($uid, $_POST['login'], $role));
         }
-        echo "<h2>Heureux de vous revoir ".$_POST['login']."</h2><br>";
-        echo "<a href='index.php'>Cliquez pour revenir à l'accueil</a>";
+        echo "<div class='messages'>
+                <h2>Heureux de vous revoir ".$_POST['login']." !</h2>
+                <br>
+                <a href='index.php'>Cliquez pour revenir à l'accueil.</a>
+            </div>";
         break;
 
     case 'formInscription' :
@@ -135,18 +141,21 @@ switch($action)
                     }
                     $stmt->close();
                     $_SESSION['user'] = serialize(new User($uid, $login, $role));
-                    echo "<h2>Votre compte a bien été créé !</h2><br>";
-                    echo "<a href='index.php'>Cliquez pour revenir à l'accueil</a>";
+                    echo "<div class='messages'>
+                            <h2>Votre compte a bien été créé !</h2>
+                            <br>
+                            <a href='index.php'>Cliquez pour revenir à l'accueil.</a>
+                        </div>";
                 }
                 else
                 {
                     if ($conn->errno == 1062)
                     {
-                        echo "Erreur : Le login est déjà utilisé. Veuillez en choisir un autre.";
+                        echo "<div class='messages'>Erreur : Le login est déjà utilisé. Veuillez en choisir un autre.</div>";
                     }
                     else
                     {
-                        echo "Une erreur s'est produite";
+                        echo "<div class='messages'>Une erreur s'est produite</div>";
                     }
                 }
             }
@@ -163,12 +172,16 @@ switch($action)
         break;
         
     case 'errorInscription':
-        echo "<p style='color:red;'>Une erreure est survenue, vérifiez bien votre saisie !</p>";
+        echo "<div class='messages'>
+                <p style='color:red;'>Une erreure est survenue, vérifiez bien votre saisie !</p>
+            </div>";
         include('Vues/User/formInscription.php');
         break;
     
     case 'errorConnexion':
-        echo "<p style='color:red;'>Nous n'avons pas trouvé votre utilisateur !</p>";
+        echo "<div class='messages'>
+                <p style='color:red;'>Nous n'avons pas trouvé votre utilisateur !</p>
+            </div>";
         include('Vues/User/formConnexion.php');
         break;
 

@@ -136,9 +136,11 @@ function traitementClick()
                       }
                       else
                       {
-                        echo "
-                        <h2>Besoin d'aide? </h2>
-                        <p>Vous n'avez créé aucun ticket jusqu'à présent, vous pouvez créer des tickets et ceci seront affiché sur cette page</p>";
+                        echo "<div class='messages'>
+                                <h2>Besoin d'aide? </h2>
+                                <p>Vous n'avez pas encore créé de tickets, vous pouvez en créer en cliquant sur \"Créer un ticket\" dans la navbar.<br>
+                                Ils seront alors affichés sur cette page.</p>
+                              </div>";
                       }
                       break;
                     
@@ -162,6 +164,7 @@ function traitementClick()
                                   <th>Niveau d'urgence</th>
                                   <th>Technicien</th>
                                   <th>Etat</th>
+                                  <th>Modifier</th>
                                 </tr>
                             </thead>
                             <tbody>";

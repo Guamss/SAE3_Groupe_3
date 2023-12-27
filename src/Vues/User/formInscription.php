@@ -4,7 +4,7 @@
         <label for='login'>Nom d'utilisateur</label>
         <input id='login' name='login' type='text' placeholder="Nom d'utilisateur">
         <br>
-        <label for='pwd'>Mor de passe</label>
+        <label for='pwd'>Mot de passe</label>
         <input id='pwd' name='pwd' type='password' placeholder="Mot de passe">
         <br>
         <a href="index.php?uc=inscription&action=formConnexion">Déjà un compte?</a>

@@ -122,13 +122,13 @@ function traitementClick() {
                     
                     case 'webadmin' :
                       $tickets = Ticket::getTicketsWithoutTechnician();
-                      if (!empty($tickets))
-                      {
-                        echo "
+                        if (!empty($tickets))
+                        {
+                          echo "
                           <div class='container ligne'>
                           <!--Tableau de bord-->
                           <div class='element-flexible list'>
-                            <h1>Vous pouvez attribuer des techniciens</h1>
+                            <h1>Les tickets qui n'ont pas de technicien assignés</h1>
                             <div class='cadre-table-scroll'>
                               <table class='table table-scroll'>
                                 <thead>
@@ -138,20 +138,16 @@ function traitementClick() {
                                   <th>Demandeur</th>
                                   <th>Date de création</th>
                                   <th>Niveau d'urgence</th>
-                                  <th>Technicien</th>
-                                  <th>Etat</th>
-                                  <th>Modifier</th>
+                                  <th>Prendre en charge</th>
                                 </tr>
                             </thead>
                             <tbody>";
                             foreach($tickets as &$ticket)
                             {
                               $uid = $ticket->getUID();
-                              $login = User::getLoginByUID($uid);  
-                              $urgence = $ticket->getUrgence();
                               $label = $ticket->getLabelID();
-                              $technician_ID = $ticket->getTechnician();
-                              $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
+                              $urgence = $ticket->getUrgence();
+                              $login = User::getLoginByUID($uid);
                               $niveauxUrgence = array(
                                 1 => 'Urgent',
                                 2 => 'Important',
@@ -164,13 +160,26 @@ function traitementClick() {
                                 <td>'.$login.'</td>
                                 <td>'.$ticket->getDate().'</td>
                                 <td>'.$niveauxUrgence[$urgence].'</td>
-                                <td>'.$technician.'</td>
-                                <td>'.$ticket->getStatus().'</td>
+                                <td>
+                                  <form method="POST" action="index.php?uc=dashboard&action=assignerTicketWebadmin">
+                                  <input type="hidden" name="uid" value="' . $ticket->getUID() . '">
+                                  <input type="hidden" name="urgence_level" value="' . $ticket->getUrgence() . '">
+                                  <input type="hidden" name="date" value="' . $ticket->getDate() . '">
+                                  <input type="hidden" name="label_ID" value="' . $ticket->getLabelID() . '">
+                                  <input type="hidden" name="status" value="' . $ticket->getStatus() . '">
+                                  <input type="hidden" name="desc" value="' . $ticket->getDescription() . '">
+                                  <button type="submit">+</button>
+                                  </form>
+                                </td>
                               </tr>';
                             }
-                          echo '</tbody>
-                          </table>';
-                      }
+                        }
+                        else
+                        {
+                          echo "<h2>Rien ne s'affiche?</h2>
+                          <p>Tout les tickets ont déjà un technicien attribué.</p>";
+                        }
+                        break;
                       case 'technician' :
                         $tickets = Ticket::getTicketsWithoutTechnician();
                         if (!empty($tickets))

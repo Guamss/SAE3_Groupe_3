@@ -115,4 +115,29 @@ class User
         }
         return $login;
     }
+
+    public static function getAllTechnicians(): array
+    {
+        $technicians = array();
+
+        $request = "SELECT UID, role, login 
+                    FROM User
+                    WHERE role='technician';";
+        $conn = Connexion::getConn();
+        $stmt = $conn->prepare($request);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0)
+        {
+            while($row = $result->fetch_array())
+            {
+                $uid = $row['UID'];
+                $role = $row['role'];
+                $login = $row['login'];
+                $technicians[] = new User($uid, $login, $role);
+            }
+        }
+        return $technicians;
+    }
+
 }

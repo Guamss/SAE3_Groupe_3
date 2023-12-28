@@ -1,5 +1,10 @@
 <?php
 $action=$_GET['action'];
+$niveauxUrgence = array(
+    1 => 'urgent',
+    2 => 'important',
+    3 => 'moyen',
+    4 => 'faible');
 switch($action)
 {
     case 'list' :
@@ -7,7 +12,7 @@ switch($action)
         break;
     
     case 'form' :
-        if (isset($_SESSION['user']))
+        if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole() == 'user')
         {
             include('Vues/Ticket/formTicket.php');
         }
@@ -16,7 +21,7 @@ switch($action)
             header("Location: index.php");
         }
         break;
-
+        
     case 'validerForm' :
         if (isset($_POST['label'], $_POST['description'], $_POST['urgence']) & isset($_SESSION['user']))
         {
@@ -45,11 +50,6 @@ switch($action)
             $tec = unserialize($_SESSION['user']);
             $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['label_ID'], $_POST['desc'], $_POST['date'], $_POST['status'], $_POST['tec']);
             $ticket->setTechnician($tec->getUid());
-            $niveauxUrgence = array(
-                1 => 'urgent',
-                2 => 'important',
-                3 => 'moyen',
-                4 => 'faible');
             echo "<p style='color: green;'>Un ticket d'urgence ".$niveauxUrgence[$ticket->getUrgence()]." vous a été attribué!</p>";
             include('Vues/Ticket/dashboard.php');
    
@@ -58,7 +58,31 @@ switch($action)
         {
             header('Location : index.php');
         }
-        
+        break;
+
+    case 'validerFormWebadmin':
+        if (isset($_POST['uid'], $_POST['urgence_level'], $_POST['date'], $_POST['label_ID'], $_POST['status'], $_POST['desc']) && unserialize($_SESSION['user'])->getRole() == 'webadmin' && !empty($_POST['tec']))
+        {
+            $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['label_ID'], $_POST['desc'], $_POST['date'], $_POST['status']);
+            $ticket->setTechnician($_POST['tec']);
+            echo "<p style='color: green;'>Un ticket d'urgence ".$niveauxUrgence[$ticket->getUrgence()]." a été attribué à ".User::getLoginByUID($ticket->getTechnician())."</p>";
+            include('Vues/Ticket/dashboard.php');
+        }
+        else
+        {
+            header('Location: index.php');
+        }
+        break;
+    
+    case 'assignerTicketWebadmin':
+        if (isset($_POST['uid'], $_POST['urgence_level'], $_POST['date'], $_POST['label_ID'], $_POST['status'], $_POST['desc']) && unserialize($_SESSION['user'])->getRole() == 'webadmin')
+        {
+            include("Vues/User/formAssignerTec.php");
+        } 
+        else
+        {
+            header('Location: index.php');
+        }
         break;
     
     case 'error' :

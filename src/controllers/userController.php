@@ -2,6 +2,7 @@
 $action = empty($_GET['action']) ?  "formInscription" : $_GET['action'];
 switch($action)
 {
+
     case 'formTec':
         if (isset($_SESSION["user"]) && unserialize($_SESSION['user'])->getRole() == 'webadmin') 
         {

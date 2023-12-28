@@ -58,6 +58,7 @@ class Ticket{
         $this->status = $status;
         $this->description = $description;
     }
+
     /**
      * Get the value of UID
      */

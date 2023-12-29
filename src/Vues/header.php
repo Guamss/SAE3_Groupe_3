@@ -60,13 +60,13 @@
                   </div>';
                   echo '
                   <div class="liens" id="labels">
-                    <a class="nav-item" href="index.php?uc=dashboard&action=form">Gérer les libellés</a>
+                    <a class="nav-item" href="index.php?uc=dashboard&action=labels">Gérer les libellés</a>
                   </div>';
                   break;
                 case 'technician' :
                   echo '
                   <div class="liens" id="myTickets">
-                    <a class="nav-item" href="index.php?uc=dashboard&action=form">Mes tickets</a>
+                    <a class="nav-item" href="index.php?uc=dashboard&action=myTickets">Mes tickets</a>
                   </div>';
                   break;
               }

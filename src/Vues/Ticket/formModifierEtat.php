@@ -1,6 +1,6 @@
 <div class="form">
-    <h1>Assigner un technicien</h1>
-    <form action="index.php?uc=dashboard&action=validerFormWebadmin" method="POST">
+    <h1>Modifier l'état du ticket</h1>
+    <form action="index.php?uc=dashboard&action=validerModifierEtat" method="POST">
         <?php
             echo "<p>Informations relatives au ticket :</p><br>
             <ul style='list-style: none;'>
@@ -15,19 +15,23 @@
             echo '<input type="hidden" name="desc" value="' . $_POST['desc'] . '">';
             echo '<input type="hidden" name="date" value="' . $_POST['date'] . '">';
             echo '<input type="hidden" name="status" value="' . $_POST['status'] . '">';
-        ?>
-        <label for="tec">Sélectionnez un technicien :</label>
-        <select name="tec" id="tec" required>
-        <option value="" disabled selected>Aucun technicien sélectionné</option>
-            <?php
+            echo '<input type="hidden" name="tec" value="' . $_POST['tec'] . '">';
+            echo "
+        <label for='etat'>Modifier l'état du Ticket :</label>
+        <select name='etat' id='etat' required>
+        <option value='' disabled selected>".$_POST['status']."</option>";
+        
                 $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['Label_ID'], $_POST['desc'], $_POST['date'], $_POST['status'], $_POST['tec']);
-                $tecs = User::getAllTechnicians();
-                foreach ($tecs as $tec) {
-                    echo '<option value="' . $tec->getUID() . '">' . $tec->getLogin() . '</option>';
+                foreach ($states as $state) 
+                {
+                    if ($state != "Ouvert" && $_POST['status'] != $state)
+                    { 
+                        echo '<option value="' . $state . '">' . $state . '</option>';
+                    }
                 }
             ?>
         </select>
         
-        <input type="submit" value="Envoyer">
+        <input type="submit" value="Modifier">
     </form>
 </div>

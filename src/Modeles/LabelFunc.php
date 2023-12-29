@@ -1,5 +1,26 @@
 <?php
 
+function archive($id): void
+{
+    $request = "UPDATE Label
+                SET archivé = 1
+                WHERE Label_ID = ?";
+    $conn = Connexion::getConn();
+    $stmt = $conn->prepare($request);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+}
+
+function updateLabel($name, $id): void
+{
+    $request = "UPDATE Label
+    SET name = ?
+    WHERE Label_ID = ?";
+$conn = Connexion::getConn();
+$stmt = $conn->prepare($request);
+$stmt->bind_param("si", $name, $id);
+$stmt->execute();
+}
 
 function getLabelNameById($id): string
 {
@@ -35,7 +56,8 @@ function getAllLabels(): array
         {
             $name = $row['name'];
             $id = $row['Label_ID'];
-            $labels[$id] = $name;
+            $archive = $row['archivé'];
+            $labels[$id] = array($name, $archive);
         }
     }
     return $labels;

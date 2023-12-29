@@ -9,7 +9,8 @@ CREATE TABLE `User` (
 
 CREATE TABLE Label (
     Label_ID INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50)
+    name VARCHAR(50),
+    archivé TINYINT(1) DEFAULT 0
 );
 
 CREATE TABLE Ticket (

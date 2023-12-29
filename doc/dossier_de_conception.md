@@ -92,6 +92,6 @@ Voici le MLD correspondant :<br>
 Ticket (<ins>Ticket_ID</ins>, #UID, #Technician_ID, urgence_level, #Label_ID, creation_date, status, description)
 <br>
 User (<ins>UID</ins>, role,  login, password)<br>
-Label (<ins>Label_ID</ins>, name)<br>
+Label (<ins>Label_ID</ins>, name, archivé)<br>
 
 **Remarque** : Ce dossier de conception est basé sur les informations fournies. Il pourrait être amené à être modifié à l'avenir.

@@ -8,6 +8,13 @@ include_once "Modeles/User.php";
 include "Modeles/Connexion.php";
 session_start();
 include "Vues/header.php";
+
+$states = array("Ouvert", "En Cours", "Fermé");
+$niveauxUrgence = array(
+  1 => 'Urgent',
+  2 => 'Important',
+  3 => 'Moyen',
+  4 => 'Faible');
 $uc =empty($_GET['uc']) ?  "accueil" : $_GET['uc'];
 
 switch($uc)

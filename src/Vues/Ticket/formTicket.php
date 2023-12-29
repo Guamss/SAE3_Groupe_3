@@ -7,10 +7,12 @@
                 <option value="" disabled selected>Choisissez un libellé</option>
                 <?php
                 $labels = getAllLabels();
-                var_dump($labels);
-                foreach ($labels as $id => $name)
+                foreach ($labels as $id => $label)
                 {
-                    echo "<option value='" . htmlspecialchars($id) . "'>" . htmlspecialchars($name) . "</option>";
+                    if ($label[1] == 0)
+                    {
+                        echo "<option value='" . htmlspecialchars($id) . "'>" . htmlspecialchars($label[0]) . "</option>";
+                    }
                 }
                 ?>
             </select>

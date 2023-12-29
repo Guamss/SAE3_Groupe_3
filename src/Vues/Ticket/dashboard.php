@@ -56,6 +56,7 @@ function traitementClick() {
 
   </script>
               <?php
+              $labels = getAllLabels();
                 if(isset($_SESSION['user']))
                 {
                   $user = unserialize($_SESSION['user']);
@@ -87,25 +88,23 @@ function traitementClick() {
                           <tbody>";
                         foreach($tickets as &$ticket)
                         {
-                          $urgence = $ticket->getUrgence();
-                          $label = $ticket->getLabelID();
-                          $technician_ID = $ticket->getTechnician();
-                          $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
-                          $niveauxUrgence = array(
-                            1 => 'Urgent',
-                            2 => 'Important',
-                            3 => 'Moyen',
-                            4 => 'Faible');
-                          echo '
-                          <tr> 
-                            <td>'.getLabelNameById($label).'</td>
-                            <td class="description-column">'.$ticket->getDescription().'</td>
-                            <td>'.$user->getLogin().'</td>
-                            <td>'.$ticket->getDate().'</td>
-                            <td>'.$niveauxUrgence[$urgence].'</td>
-                            <td>'.$technician.'</td>
-                            <td>'.$ticket->getStatus().'</td>
-                          </tr>';
+                          if ($ticket->getStatus() != "Fermé")
+                          {
+                            $urgence = $ticket->getUrgence();
+                            $label = $ticket->getLabelID();
+                            $technician_ID = $ticket->getTechnician();
+                            $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
+                            echo '
+                            <tr> 
+                              <td>'.getLabelNameById($label).'</td>
+                              <td class="description-column">'.$ticket->getDescription().'</td>
+                              <td>'.$user->getLogin().'</td>
+                              <td>'.$ticket->getDate().'</td>
+                              <td>'.$niveauxUrgence[$urgence].'</td>
+                              <td>'.$technician.'</td>
+                              <td>'.$ticket->getStatus().'</td>
+                            </tr>';
+                          }
                         }
                         echo '</tbody>
                         </table>';
@@ -144,34 +143,32 @@ function traitementClick() {
                             <tbody>";
                             foreach($tickets as &$ticket)
                             {
-                              $uid = $ticket->getUID();
-                              $label = $ticket->getLabelID();
-                              $urgence = $ticket->getUrgence();
-                              $login = User::getLoginByUID($uid);
-                              $niveauxUrgence = array(
-                                1 => 'Urgent',
-                                2 => 'Important',
-                                3 => 'Moyen',
-                                4 => 'Faible');
-                              echo '
-                              <tr> 
-                                <td>'.getLabelNameById($label).'</td>
-                                <td class="description-column">'.$ticket->getDescription().'</td>
-                                <td>'.$login.'</td>
-                                <td>'.$ticket->getDate().'</td>
-                                <td>'.$niveauxUrgence[$urgence].'</td>
-                                <td>
-                                  <form method="POST" action="index.php?uc=dashboard&action=assignerTicketWebadmin">
-                                  <input type="hidden" name="uid" value="' . $ticket->getUID() . '">
-                                  <input type="hidden" name="urgence_level" value="' . $ticket->getUrgence() . '">
-                                  <input type="hidden" name="date" value="' . $ticket->getDate() . '">
-                                  <input type="hidden" name="label_ID" value="' . $ticket->getLabelID() . '">
-                                  <input type="hidden" name="status" value="' . $ticket->getStatus() . '">
-                                  <input type="hidden" name="desc" value="' . $ticket->getDescription() . '">
-                                  <button type="submit">+</button>
-                                  </form>
-                                </td>
-                              </tr>';
+                              if ($ticket->getStatus() != "Fermé")
+                              {
+                                $uid = $ticket->getUID();
+                                $label = $ticket->getLabelID();
+                                $urgence = $ticket->getUrgence();
+                                $login = User::getLoginByUID($uid);
+                                echo '
+                                <tr> 
+                                  <td>'.getLabelNameById($label).'</td>
+                                  <td class="description-column">'.$ticket->getDescription().'</td>
+                                  <td>'.$login.'</td>
+                                  <td>'.$ticket->getDate().'</td>
+                                  <td>'.$niveauxUrgence[$urgence].'</td>
+                                  <td>
+                                    <form method="POST" action="index.php?uc=dashboard&action=assignerTicketWebadmin">
+                                    <input type="hidden" name="uid" value="' . $ticket->getUID() . '">
+                                    <input type="hidden" name="urgence_level" value="' . $ticket->getUrgence() . '">
+                                    <input type="hidden" name="date" value="' . $ticket->getDate() . '">
+                                    <input type="hidden" name="label_ID" value="' . $ticket->getLabelID() . '">
+                                    <input type="hidden" name="status" value="' . $ticket->getStatus() . '">
+                                    <input type="hidden" name="desc" value="' . $ticket->getDescription() . '">
+                                    <button type="submit">+</button>
+                                    </form>
+                                  </td>
+                                </tr>';
+                              }
                             }
                         }
                         else
@@ -204,35 +201,34 @@ function traitementClick() {
                             <tbody>";
                             foreach($tickets as &$ticket)
                             {
-                              $uid = $ticket->getUID();
-                              $label = $ticket->getLabelID();
-                              $urgence = $ticket->getUrgence();
-                              $login = User::getLoginByUID($uid);
-                              $niveauxUrgence = array(
-                                1 => 'Urgent',
-                                2 => 'Important',
-                                3 => 'Moyen',
-                                4 => 'Faible');
-                              echo '
-                              <tr> 
-                                <td>'.getLabelNameById($label).'</td>
-                                <td class="description-column">'.$ticket->getDescription().'</td>
-                                <td>'.$login.'</td>
-                                <td>'.$ticket->getDate().'</td>
-                                <td>'.$niveauxUrgence[$urgence].'</td>
-                                <td>
-                                  <form method="POST" action="index.php?uc=dashboard&action=assignerTicketTec">
-                                  <input type="hidden" name="uid" value="' . $ticket->getUID() . '">
-                                  <input type="hidden" name="tec" value="' . $ticket->getTechnician() . '">
-                                  <input type="hidden" name="urgence_level" value="' . $ticket->getUrgence() . '">
-                                  <input type="hidden" name="date" value="' . $ticket->getDate() . '">
-                                  <input type="hidden" name="label_ID" value="' . $ticket->getLabelID() . '">
-                                  <input type="hidden" name="status" value="' . $ticket->getStatus() . '">
-                                  <input type="hidden" name="desc" value="' . $ticket->getDescription() . '">
-                                  <button type="submit">+</button>
-                                  </form>
-                                </td>
-                              </tr>';
+                              if ($ticket->getStatus() != "Fermé")
+                              {
+                                $uid = $ticket->getUID();
+                                $label = $ticket->getLabelID();
+                                $urgence = $ticket->getUrgence();
+                                $login = User::getLoginByUID($uid);
+
+                                echo '
+                                <tr> 
+                                  <td>'.getLabelNameById($label).'</td>
+                                  <td class="description-column">'.$ticket->getDescription().'</td>
+                                  <td>'.$login.'</td>
+                                  <td>'.$ticket->getDate().'</td>
+                                  <td>'.$niveauxUrgence[$urgence].'</td>
+                                  <td>
+                                    <form method="POST" action="index.php?uc=dashboard&action=assignerTicketTec">
+                                    <input type="hidden" name="uid" value="' . $ticket->getUID() . '">
+                                    <input type="hidden" name="tec" value="' . $ticket->getTechnician() . '">
+                                    <input type="hidden" name="urgence_level" value="' . $ticket->getUrgence() . '">
+                                    <input type="hidden" name="date" value="' . $ticket->getDate() . '">
+                                    <input type="hidden" name="label_ID" value="' . $ticket->getLabelID() . '">
+                                    <input type="hidden" name="status" value="' . $ticket->getStatus() . '">
+                                    <input type="hidden" name="desc" value="' . $ticket->getDescription() . '">
+                                    <button type="submit">+</button>
+                                    </form>
+                                  </td>
+                                </tr>';
+                              }
                             }
                         }
                         else
@@ -266,27 +262,25 @@ function traitementClick() {
                   $tickets = Ticket::getLastTickets();
                   foreach($tickets as &$ticket)
                     {
-                      $uid = $ticket->getUID();
-                      $login = User::getLoginByUID($uid);
-                      $label = $ticket->getLabelID();
-                      $technician_ID = $ticket->getTechnician();
-                      $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
-                      $urgence = $ticket->getUrgence();
-                      $niveauxUrgence = array(
-                        1 => 'Urgent',
-                        2 => 'Important',
-                        3 => 'Moyen',
-                        4 => 'Faible');
-                      echo '
-                      <tr> 
-                        <td>'.getLabelNameById($label).'</td>
-                        <td class="description-column">'.$ticket->getDescription().'</td>
-                        <td>'.$login.'</td>
-                        <td>'.$ticket->getDate().'</td>
-                        <td>'.$niveauxUrgence[$urgence].'</td>
-                        <td>'.$technician.'</td>
-                        <td>'.$ticket->getStatus().'</td>
-                      </tr>';
+                      if ($ticket->getStatus() != "Fermé")
+                      {
+                        $uid = $ticket->getUID();
+                        $login = User::getLoginByUID($uid);
+                        $label = $ticket->getLabelID();
+                        $technician_ID = $ticket->getTechnician();
+                        $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
+                        $urgence = $ticket->getUrgence();
+                        echo '
+                        <tr> 
+                          <td>'.getLabelNameById($label).'</td>
+                          <td class="description-column">'.$ticket->getDescription().'</td>
+                          <td>'.$login.'</td>
+                          <td>'.$ticket->getDate().'</td>
+                          <td>'.$niveauxUrgence[$urgence].'</td>
+                          <td>'.$technician.'</td>
+                          <td>'.$ticket->getStatus().'</td>
+                        </tr>';
+                      }
                     }
                     echo '</tbody>
                     </table>';

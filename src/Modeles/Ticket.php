@@ -151,6 +151,32 @@ class Ticket{
      */
     public function setStatus(string $status)
     {
+        $conn = Connexion::getConn();
+        $stmt = $conn->prepare("UPDATE Ticket
+                                SET status = ?
+                                WHERE UID = ?
+                                AND urgence_level = ?
+                                AND status = ?
+                                AND Label_ID = ?
+                                AND creation_date = ?
+                                AND Technician_ID = ?
+                                AND description = ?;");
+        $uid = $this->UID;
+        $urgence = $this->urgence_level;
+        $label = $this->label_ID;
+        $date = $this->creation_date;
+        $tec = $this->technician_ID;
+        $desc = htmlspecialchars($this->description);
+        $stmt->bind_param("siisisis",
+            $status,
+            $uid,
+            $urgence,
+            $this->status,
+            $label,
+            $date,
+            $tec,
+            $desc);
+        $stmt->execute();
         $this->status = $status;
     }
 
@@ -211,6 +237,38 @@ class Ticket{
                     WHERE Technician_ID IS NULL;";
         $conn = Connexion::getConn();
         $stmt = $conn->prepare($requete);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while($row = $result->fetch_assoc())
+        {
+            $uid = $row['UID'];
+            $techician = $row['Technician_ID'];
+            $urgence_level = $row['urgence_level'];
+            $label = $row['Label_ID'];
+            $creation_date = $row['creation_date'];
+            $status = $row['status'];
+            $description = $row['description'];
+            $ticket = new Ticket($uid, 
+                                $urgence_level, 
+                                $label,
+                                $description, 
+                                $creation_date, 
+                                $status, 
+                                $techician);
+            $tickets[] = $ticket;
+        }
+        return $tickets;
+    }
+
+    public static function getTicketsWithTechnician($technician_ID): array
+    {
+        $tickets = array();
+        $requete = "SELECT * 
+                    FROM Ticket 
+                    WHERE Technician_ID = ?;";
+        $conn = Connexion::getConn();
+        $stmt = $conn->prepare($requete);
+        $stmt->bind_param("i", $technician_ID);
         $stmt->execute();
         $result = $stmt->get_result();
         while($row = $result->fetch_assoc())

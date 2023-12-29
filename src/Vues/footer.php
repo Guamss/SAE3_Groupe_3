@@ -35,10 +35,10 @@
       var x = document.getElementById("myLinks");
       var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
 
-      if (screenWidth > 845 && getComputedStyle(x).display === "none") {
+      if (screenWidth > 1025 && getComputedStyle(x).display === "none") {
           x.style.display = "flex";
       }
-      if (screenWidth < 845 && getComputedStyle(x).display === "flex") {
+      if (screenWidth < 1025 && getComputedStyle(x).display === "flex") {
           x.style.display = "none";
       }
     });

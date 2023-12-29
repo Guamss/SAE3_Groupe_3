@@ -72,41 +72,7 @@ body{
     position: relative;
 }
 
-.nav-link:hover {
-  opacity: 1;
-}
 
-.nav-link::before {
-  transition: 300ms;
-  height: 5px;
-  content: "";
-  position: absolute;
-  background-color: #031D44;
-}
-
-.nav-item:hover
-{
-  transition:1s;
-  color:#ffe68e;
-}
-.nav-item::before
-{
-  width: 0;
-  bottom: 10px;
-}
-.nav-item:hover::before {
-  width: 100%;
-}
-.nav-item:hover {
-  opacity: 1;
-}
-.nav-item::before {
-  transition: 500ms;
-  height: 5px;
-  content: "";
-  position: absolute;
-  background-color: #ffe68e;
-}
 
 .nav_profil
 {
@@ -165,8 +131,37 @@ margin-left:1em;
   margin-top: 20px;
 }
 
+.element-flexible-lib {
+  display: block;
+  place-items: center;
+  font-family: 'Kantumruy Pro', sans-serif;
+  width: 50%;
+  height: 580px;
+  background-color: rgba(255,255,255,0.13);
+  padding: 10px 20px;
+  text-align: center;
+  border: 2px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.226);
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+  box-sizing: border-box;
+  margin: auto;
+  margin-top: 20px;
+}
 
-
+.button-lib {
+  font-family: 'Kantumruy Pro', sans-serif;
+  width: 40%;
+  height: 15%;
+  margin-top: 3%;
+  border-radius: 15px;
+  background-color: #454D5C;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: large;
+}
 
 
 .form{
@@ -552,6 +547,7 @@ footer p{
     overflow: hidden;
     background-color: #ECE5D8;
     position: relative;
+    z-index: 999;
   }
   
   .topnav #myLinks {
@@ -580,6 +576,14 @@ footer p{
     padding-top: 5px;
   }
 /*Fin MENU*/
+
+  .element-flexible-lib{
+    margin-top: 10%;
+    width: 100%;
+  }
+  
+  .list{
+  }
 
 }
 
@@ -661,6 +665,12 @@ footer p{
     height: 350px;
     overflow: auto;
   }
+  .list-lib{
+    padding: 20px 2px;
+    margin: 8% 0%;
+    height: 600px;
+    overflow: auto;
+  }
 
   .pannel{
     height: 350px;
@@ -700,6 +710,7 @@ footer p{
   .topnav {
     overflow: hidden;
     background-color: #ECE5D8;
+    z-index: 999;
   }
   
   .topnav #myLinks {
@@ -772,6 +783,7 @@ footer p{
   .topnav {
     overflow: hidden;
     background-color: #ECE5D8;
+    z-index: 999;
   }
   
   .topnav #myLinks {
@@ -796,6 +808,42 @@ footer p{
     right: 0;
     top: 0;
     padding-top: 5px;
+  }
+
+  .nav-link:hover {
+    opacity: 1;
+  }
+  
+  .nav-link::before {
+    transition: 300ms;
+    height: 5px;
+    content: "";
+    position: absolute;
+    background-color: #031D44;
+  }
+  
+  .nav-item:hover
+  {
+    transition:1s;
+    color:#ffe68e;
+  }
+  .nav-item::before
+  {
+    width: 0;
+    bottom: 10px;
+  }
+  .nav-item:hover::before {
+    width: 100%;
+  }
+  .nav-item:hover {
+    opacity: 1;
+  }
+  .nav-item::before {
+    transition: 500ms;
+    height: 5px;
+    content: "";
+    position: absolute;
+    background-color: #ffe68e;
   }
 /*Fin MENU*/
 }

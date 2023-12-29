@@ -50,7 +50,9 @@ switch($action)
             $tec = unserialize($_SESSION['user']);
             $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['label_ID'], $_POST['desc'], $_POST['date'], $_POST['status'], $_POST['tec']);
             $ticket->setTechnician($tec->getUid());
-            echo "<p style='color: green;'>Un ticket d'urgence ".$niveauxUrgence[$ticket->getUrgence()]." vous a été attribué!</p>";
+            echo "<div class='messages'>
+                    <p style='color: green;'>Un ticket d'urgence ".$niveauxUrgence[$ticket->getUrgence()]." vous a été attribué!</p>
+                    </div>";
             include('Vues/Ticket/dashboard.php');
    
             }
@@ -65,7 +67,9 @@ switch($action)
         {
             $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['label_ID'], $_POST['desc'], $_POST['date'], $_POST['status']);
             $ticket->setTechnician($_POST['tec']);
-            echo "<p style='color: green;'>Un ticket d'urgence ".$niveauxUrgence[$ticket->getUrgence()]." a été attribué à ".User::getLoginByUID($ticket->getTechnician())."</p>";
+            echo "<div class='messages'>
+                    <p style='color: green;'>Un ticket d'urgence ".$niveauxUrgence[$ticket->getUrgence()]." a été attribué à ".User::getLoginByUID($ticket->getTechnician())."</p>
+                </div>";
             include('Vues/Ticket/dashboard.php');
         }
         else
@@ -89,7 +93,9 @@ switch($action)
         if (isset($_SESSION['user']))
         {
             include('Vues/Ticket/formTicket.php');
-            echo "<p style='color:red;'>Une erreur est survenue, vérifiez bien votre saisie !</p>";
+            echo "<div class='messages'>
+                    <p style='color:red;'>Une erreur est survenue, vérifiez bien votre saisie !</p>
+                </div>";
         }
         else
         {

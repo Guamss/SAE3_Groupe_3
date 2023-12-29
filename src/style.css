@@ -333,6 +333,7 @@ th{
 
 td{
   padding-top: 20px;
+  cursor: pointer;
 }
 
 .pannel{
@@ -656,7 +657,7 @@ footer p{
 
   .list{
     padding: 20px 2px;
-    margin: 10px 0px;
+    margin: 8% 0%;
     height: 350px;
     overflow: auto;
   }

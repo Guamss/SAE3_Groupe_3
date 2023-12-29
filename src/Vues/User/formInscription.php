@@ -21,6 +21,3 @@
             <input type="submit" value="S'inscrire">
       </form>
 </div>
-
-
-      

@@ -43,6 +43,7 @@
                                         check_circle
                                     </span>
                                 </button>
+                                </form>
                             </td>
                         </tr>';
                 }

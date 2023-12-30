@@ -11,6 +11,16 @@ function archive($id): void
     $stmt->execute();
 }
 
+function addLabel($name): void
+{
+    $request = "INSERT INTO Label
+                (name) VALUES (?);";
+    $conn = Connexion::getConn();
+    $stmt = $conn->prepare($request);
+    $stmt->bind_param("s", $name);
+    $stmt->execute();
+}
+
 function updateLabel($name, $id): void
 {
     $request = "UPDATE Label

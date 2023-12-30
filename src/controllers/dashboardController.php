@@ -166,11 +166,25 @@ switch($action)
             header('Location: index.php');
         }
         break;
-
+    
+    case 'validerAddLabel' :
+        if (isset($_SESSION['user'], $_POST['name']) && unserialize($_SESSION['user'])->getRole()=='webadmin' & !empty($_POST['name']))
+        {
+            $name = htmlspecialchars($_POST['name']);
+            addLabel($name);
+            echo "<p style='color:green'>Le libellé ".$name." a bien été créé</p>";
+            include("Vues/Label/dashboardLabel.php");
+        }
+        else
+        {
+            header('Location: index.php');
+        }
+        break;
+    
     case 'addLabel' :
         if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='webadmin')
         {
-            echo" truc";
+            include('Vues/Label/formAjouterLabel.php');
         }
         else
         {

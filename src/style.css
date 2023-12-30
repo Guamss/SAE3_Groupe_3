@@ -153,7 +153,7 @@ margin-left:1em;
   font-family: 'Kantumruy Pro', sans-serif;
   width: 40%;
   height: 15%;
-  margin-top: 3%;
+  margin-top: 2%;
   border-radius: 15px;
   background-color: #454D5C;
   color: white;
@@ -582,9 +582,6 @@ footer p{
     width: 100%;
   }
   
-  .list{
-  }
-
 }
 
 /* Breakpoint pour les écrans de petite taille */

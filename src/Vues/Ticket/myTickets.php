@@ -48,7 +48,11 @@ if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='tech
                     <input type="hidden" name="label_ID" value="' . $ticket->getLabelID() . '">
                     <input type="hidden" name="status" value="' . $ticket->getStatus() . '">
                     <input type="hidden" name="desc" value="' . $ticket->getDescription() . '">
-                    <button type="submit">Modifier</button>
+                    <button type="submit">
+                        <span class="material-symbols-outlined">
+                            edit
+                        </span>
+                    </button>
                     </form>
                     </td>
                 </tr>';

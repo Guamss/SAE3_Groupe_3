@@ -46,6 +46,10 @@
                   <div class="liens" id="stats">
                     <a class="nav-item" href="index.php?uc=stats">Statistiques</a>
                   </div>';
+                  echo '
+                  <div class="liens" id="logs">
+                    <a class="nav-item" href="index.php?uc=logs">Journal d\'activité</a>
+                  </div>';
                   break;
                 case 'user' :
                   echo'

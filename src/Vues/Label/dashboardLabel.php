@@ -22,8 +22,6 @@
                     <tbody>';
                 foreach($labels as $id => $label)
                 {
-                    if ($label[1] == 0)
-                    {
                         echo '
                         <tr>
                             <td>' . $label[0] . '</td>
@@ -47,7 +45,6 @@
                                 </button>
                             </td>
                         </tr>';
-                    }
                 }
             }
         ?>

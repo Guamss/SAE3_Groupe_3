@@ -45,7 +45,8 @@ function getAllLabels(): array
 {
     $labels = array();
 
-    $request = "SELECT * FROM Label";
+    $request = "SELECT * FROM Label
+                WHERE archivé=0";
     $conn = Connexion::getConn();
     $stmt = $conn->prepare($request);
     $stmt->execute();

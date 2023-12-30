@@ -1,15 +1,18 @@
 
 
 <?php
-ob_start();
 include "Modeles/Ticket.php";
 include "Modeles/LabelFunc.php";
 include_once "Modeles/User.php";
 include "Modeles/Connexion.php";
 session_start();
 include "Vues/header.php";
+include "Modeles/logsFunc.php";
 
 $states = array("Ouvert", "En Cours", "Fermé");
+
+$logfile = "history.log";
+
 $niveauxUrgence = array(
   1 => 'Urgent',
   2 => 'Important',
@@ -33,6 +36,9 @@ switch($uc)
     break;
   case 'stats' :
     include('Vues/stats.php');
+    break;
+  case 'logs' :
+    include('Vues/logs.php');
     break;
   case 'inscription' :
     include('controllers/userController.php');

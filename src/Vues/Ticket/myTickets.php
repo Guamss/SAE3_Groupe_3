@@ -27,8 +27,6 @@ if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='tech
         <tbody>";
         foreach($tickets as &$ticket)
         {
-            if ($ticket->getStatus() != "Fermé")
-            {
                 $uid = $ticket->getUID();
                 $label = $ticket->getLabelID();
                 $urgence = $ticket->getUrgence();
@@ -54,7 +52,6 @@ if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='tech
                     </form>
                     </td>
                 </tr>';
-            }
         }
         echo "</tbody>
         </table>

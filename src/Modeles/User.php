@@ -91,7 +91,18 @@ class User
                 $status,
                 $desc);
             
-            $stmt->execute();
+            if ($stmt->execute())
+            {
+                $niveauxUrgence = array(
+                    1 => 'Urgent',
+                    2 => 'Important',
+                    3 => 'Moyen',
+                    4 => 'Faible');
+                $ipAddress = $_SERVER['REMOTE_ADDR'];
+                $details = 'L\'utilisateur '.$this->login.' a créé un ticket d\'urgence '.$niveauxUrgence[$urgence].'';
+                $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Ticket', $details, $ipAddress);
+                write("log", "history.log", $message);
+            }
             $this->tickets[] = $ticket;
         }
     }

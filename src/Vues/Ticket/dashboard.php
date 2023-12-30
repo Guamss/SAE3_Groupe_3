@@ -88,8 +88,6 @@ function traitementClick() {
                           <tbody>";
                         foreach($tickets as &$ticket)
                         {
-                          if ($ticket->getStatus() != "Fermé")
-                          {
                             $urgence = $ticket->getUrgence();
                             $label = $ticket->getLabelID();
                             $technician_ID = $ticket->getTechnician();
@@ -104,7 +102,6 @@ function traitementClick() {
                               <td>'.$technician.'</td>
                               <td>'.$ticket->getStatus().'</td>
                             </tr>';
-                          }
                         }
                         echo '</tbody>
                         </table>';
@@ -118,7 +115,52 @@ function traitementClick() {
                               </div>";
                       }
                       break;
-                    
+                    case 'sysadmin' :
+                      $tickets = Ticket::getClosedTickets();
+                  if (!empty($tickets))
+                  {
+                    echo "
+                    <div class='container ligne'>
+                    <!--Tableau de bord-->
+                    <div class='element-flexible list'>
+                      <h1>Les 10 derniers tickets</h1>
+                      <div class='cadre-table-scroll'>
+                        <table class='table table-scroll'>
+                          <thead>
+                          <tr>
+                            <th>Libellé</th>
+                            <th class='description-column'>Description</th>
+                            <th>Demandeur</th>
+                            <th>Date de création</th>
+                            <th>Niveau d'urgence</th>
+                            <th>Technicien</th>
+                            <th>Etat</th>
+                          </tr>
+                      </thead>
+                      <tbody>";
+                    foreach($tickets as &$ticket)
+                      {
+                          $uid = $ticket->getUID();
+                          $login = User::getLoginByUID($uid);
+                          $label = $ticket->getLabelID();
+                          $technician_ID = $ticket->getTechnician();
+                          $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
+                          $urgence = $ticket->getUrgence();
+                          echo '
+                          <tr> 
+                            <td>'.getLabelNameById($label).'</td>
+                            <td class="description-column">'.$ticket->getDescription().'</td>
+                            <td>'.$login.'</td>
+                            <td>'.$ticket->getDate().'</td>
+                            <td>'.$niveauxUrgence[$urgence].'</td>
+                            <td>'.$technician.'</td>
+                            <td>'.$ticket->getStatus().'</td>
+                          </tr>';
+                      }
+                      echo '</tbody>
+                      </table>';
+                  }
+                      break;
                     case 'webadmin' :
                       $tickets = Ticket::getTicketsWithoutTechnician();
                         if (!empty($tickets))
@@ -143,8 +185,6 @@ function traitementClick() {
                             <tbody>";
                             foreach($tickets as &$ticket)
                             {
-                              if ($ticket->getStatus() != "Fermé")
-                              {
                                 $uid = $ticket->getUID();
                                 $label = $ticket->getLabelID();
                                 $urgence = $ticket->getUrgence();
@@ -168,7 +208,6 @@ function traitementClick() {
                                     </form>
                                   </td>
                                 </tr>';
-                              }
                             }
                         }
                         else
@@ -201,8 +240,6 @@ function traitementClick() {
                             <tbody>";
                             foreach($tickets as &$ticket)
                             {
-                              if ($ticket->getStatus() != "Fermé")
-                              {
                                 $uid = $ticket->getUID();
                                 $label = $ticket->getLabelID();
                                 $urgence = $ticket->getUrgence();
@@ -228,7 +265,6 @@ function traitementClick() {
                                     </form>
                                   </td>
                                 </tr>';
-                              }
                             }
                         }
                         else
@@ -240,50 +276,50 @@ function traitementClick() {
                 }
                 else
                 {
-                  echo "
-                  <div class='container ligne'>
-                  <!--Tableau de bord-->
-                  <div class='element-flexible list'>
-                    <h1>Les 10 derniers tickets</h1>
-                    <div class='cadre-table-scroll'>
-                      <table class='table table-scroll'>
-                        <thead>
-                        <tr>
-                          <th>Libellé</th>
-                          <th class='description-column'>Description</th>
-                          <th>Demandeur</th>
-                          <th>Date de création</th>
-                          <th>Niveau d'urgence</th>
-                          <th>Technicien</th>
-                          <th>Etat</th>
-                        </tr>
-                    </thead>
-                    <tbody>";
                   $tickets = Ticket::getLastTickets();
-                  foreach($tickets as &$ticket)
-                    {
-                      if ($ticket->getStatus() != "Fermé")
+                  if (!empty($tickets))
+                  {
+                    echo "
+                    <div class='container ligne'>
+                    <!--Tableau de bord-->
+                    <div class='element-flexible list'>
+                      <h1>Les 10 derniers tickets</h1>
+                      <div class='cadre-table-scroll'>
+                        <table class='table table-scroll'>
+                          <thead>
+                          <tr>
+                            <th>Libellé</th>
+                            <th class='description-column'>Description</th>
+                            <th>Demandeur</th>
+                            <th>Date de création</th>
+                            <th>Niveau d'urgence</th>
+                            <th>Technicien</th>
+                            <th>Etat</th>
+                          </tr>
+                      </thead>
+                      <tbody>";
+                    foreach($tickets as &$ticket)
                       {
-                        $uid = $ticket->getUID();
-                        $login = User::getLoginByUID($uid);
-                        $label = $ticket->getLabelID();
-                        $technician_ID = $ticket->getTechnician();
-                        $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
-                        $urgence = $ticket->getUrgence();
-                        echo '
-                        <tr> 
-                          <td>'.getLabelNameById($label).'</td>
-                          <td class="description-column">'.$ticket->getDescription().'</td>
-                          <td>'.$login.'</td>
-                          <td>'.$ticket->getDate().'</td>
-                          <td>'.$niveauxUrgence[$urgence].'</td>
-                          <td>'.$technician.'</td>
-                          <td>'.$ticket->getStatus().'</td>
-                        </tr>';
+                          $uid = $ticket->getUID();
+                          $login = User::getLoginByUID($uid);
+                          $label = $ticket->getLabelID();
+                          $technician_ID = $ticket->getTechnician();
+                          $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
+                          $urgence = $ticket->getUrgence();
+                          echo '
+                          <tr> 
+                            <td>'.getLabelNameById($label).'</td>
+                            <td class="description-column">'.$ticket->getDescription().'</td>
+                            <td>'.$login.'</td>
+                            <td>'.$ticket->getDate().'</td>
+                            <td>'.$niveauxUrgence[$urgence].'</td>
+                            <td>'.$technician.'</td>
+                            <td>'.$ticket->getStatus().'</td>
+                          </tr>';
                       }
-                    }
-                    echo '</tbody>
-                    </table>';
+                      echo '</tbody>
+                      </table>';
+                  }
                 }
               ?>
           </table>

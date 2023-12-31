@@ -35,10 +35,24 @@ switch($uc)
     include('Vues/video.php');
     break;
   case 'stats' :
-    include('Vues/stats.php');
-    break;
+    if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='sysadmin')
+    {
+      include('Vues/stats.php');
+    }
+    else
+    {
+      header('Location: index.php');
+    }
+      break;
   case 'logs' :
-    include('Vues/logs.php');
+    if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='sysadmin')
+    {
+      include('Vues/logs.php');
+    }
+    else
+    {
+      header('Location: index.php');
+    }
     break;
   case 'inscription' :
     include('controllers/userController.php');

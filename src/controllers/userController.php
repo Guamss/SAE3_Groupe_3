@@ -31,7 +31,7 @@ switch($action)
                 {
                     $user = unserialize($_SESSION['user']);
                     $ipAddress = $_SERVER['REMOTE_ADDR'];
-                    $details = 'L\'administrateur web '.$user->getLogin().' a créé le technicien '.$login.'avec succès';
+                    $details = 'L\'administrateur web '.$user->getLogin().' a créé le technicien '.$login.' avec succès';
                     $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Inscription', $details, $ipAddress);
                     write("log", $logfile, $message);
                     echo "<div class='messages'>
@@ -42,7 +42,7 @@ switch($action)
                 }
                 else
                 {
-                    header('Location: index.php?uc=inscription&action=errorInscription');
+                    header('Location: index.php?uc=inscription&action=errorCreationTec');
                 }
             }
             catch (Exception $e) 
@@ -51,18 +51,18 @@ switch($action)
             
                 if ($errorCode == 1062) 
                 {
-                    header('Location: index.php?uc=inscription&action=errorInscriptionDupli');
+                    header('Location: index.php?uc=inscription&action=errorCreationTecDupli');
                 } 
                 else 
                 {
-                    header('Location: index.php?uc=inscription&action=errorInscription');
+                    header('Location: index.php?uc=inscription&action=errorCreationTec');
                 }
             } 
 
         }
         else 
         {
-            header('Location: index.php?uc=inscription&action=errorInscription');
+            header('Location: index.php?uc=inscription&action=errorCreationTec');
         }
         break;
 
@@ -214,7 +214,47 @@ switch($action)
             header('Location: index.php?uc=inscription&action=errorInscription');
         }
         break;
-        
+    
+    case 'errorCreationTecDupli':
+        if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='webadmin')
+        {
+            echo "
+            <div class='messages'>
+                <p style='color:red;'>Une erreure est survenue, le technicien existe déjà !</p>
+            </div>";
+            $user = unserialize($_SESSION['user']);
+            $ipAddress = $_SERVER['REMOTE_ADDR'];
+            $details = 'L\'administrateur web '.$user->getLogin().' a tenté de créer un technicien déjà existant';
+            $message = getLogMessage(date('Y-m-d H:i:s'), 'ERROR', 'Inscription', $details, $ipAddress);
+            write("log", $logfile, $message);
+            include('Vues/User/formCreationTec.php');
+        }
+        else
+        {
+            header('Location: index.php');
+        }
+        break;
+
+    case 'errorCreationTec' :
+        if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='webadmin')
+        {
+            echo "
+            <div class='messages'>
+                <p style='color:red;'>Une erreure est survenue, vérifiez bien votre saisie !</p>
+            </div>";
+            $user = unserialize($_SESSION['user']);
+            $ipAddress = $_SERVER['REMOTE_ADDR'];
+            $details = 'L\'administrateur web '.$user->getLogin().' a tenté de créer un technicien mais une erreur est survenue';
+            $message = getLogMessage(date('Y-m-d H:i:s'), 'ERROR', 'Inscription', $details, $ipAddress);
+            write("log", $logfile, $message);
+            include('Vues/User/formCreationTec.php');
+        }
+        else
+        {
+            header('Location: index.php');
+        }
+        break;
+
     case 'errorInscriptionDupli' :
         echo "<div class='messages'>
                 <p style='color:red;'>Une erreure est survenue, l'utilisateur existe déjà !</p>

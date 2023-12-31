@@ -6,7 +6,7 @@
     echo'
     <script>
     function changerMotDePasse() {
-        alert("Changer le mot de passe");
+      window.location.href = "index.php?uc=profile&action=formPwd";
     }
 
     function deconnexion() {

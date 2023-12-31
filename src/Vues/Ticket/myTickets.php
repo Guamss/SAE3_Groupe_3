@@ -50,7 +50,7 @@ if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='tech
                     <input type="hidden" name="desc" value="' . $ticket->getDescription() . '">
                     <button type="submit">
                         <span class="material-symbols-outlined">
-                            edit
+                            Modifier
                         </span>
                     </button>
                     </form>

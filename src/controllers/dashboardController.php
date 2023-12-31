@@ -100,9 +100,10 @@ switch($action)
         {
             $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['label_ID'], $_POST['desc'], $_POST['date'], $_POST['status'], $_POST['tec']);
             $ticket->setStatus($_POST['etat']);
-            echo "<div class='messages'>
-                    <p style='color: green;'>Un ticket d'urgence ".$niveauxUrgence[$ticket->getUrgence()]." a été modifié pour l'état ".$_POST['etat']."</p>
-                </div>";
+            echo "
+            <div class='message'>
+                <p style='color: green;'>Un ticket d'urgence ".$niveauxUrgence[$ticket->getUrgence()]." a été modifié pour l'état ".$_POST['etat']."</p>
+            </div>";
             include('Vues/Ticket/myTickets.php');
         }
         else
@@ -136,10 +137,11 @@ switch($action)
         if (isset($_SESSION['user'], $_POST['name'], $_POST['label_ID']) && unserialize($_SESSION['user'])->getRole()=='webadmin')
         {
             updateLabel($_POST['name'], $_POST['label_ID']);
-            echo "<div class='messages'>
-                    <p style='color:green'>Ce libellé a comme nouveau nom ".$_POST['name']." </p>
-                </div>";
             include('Vues/Label/dashboardLabel.php');
+            echo "
+            <div class='message'>
+                <p style='color:green'>Ce label a comme nouveau nom ".$_POST['name']." </p>
+            </div";
         }
         else
         {
@@ -163,9 +165,10 @@ switch($action)
         {
             archive($_POST['label_ID']);
             include('Vues/Label/dashboardLabel.php');
-            echo "<div class='messages'>
-                    <p style='color:green'>Ce libellé a bien été archivé</p>
-                </div>";
+            echo "
+            <div class='message'>
+                <p style='color:green'>Ce libellé a bien été archivé</p>
+            </div>";
         }
         else
         {
@@ -178,9 +181,10 @@ switch($action)
         {
             $name = htmlspecialchars($_POST['name']);
             addLabel($name);
-            echo "<div class='messages'>
-                    <p style='color:green'>Le libellé ".$name." a bien été créé</p>
-                </div>";
+            echo "
+            <div class='message'>
+                <p style='color:green'>Le libellé ".$name." a bien été créé</p>
+            </div>";
             include("Vues/Label/dashboardLabel.php");
         }
         else

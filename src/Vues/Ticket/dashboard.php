@@ -123,7 +123,7 @@ function traitementClick() {
                     <div class='container ligne'>
                     <!--Tableau de bord-->
                     <div class='element-flexible list'>
-                      <h1>Les 10 derniers tickets</h1>
+                      <h1>Historique des tickets</h1>
                       <div class='cadre-table-scroll'>
                         <table class='table table-scroll'>
                           <thead>
@@ -160,6 +160,12 @@ function traitementClick() {
                       echo '</tbody>
                       </table>';
                   }
+                  else
+                  {
+                    echo '<div class="messages">
+                    <h2>L\'historique des tickets est vide</h2>
+                    </div>';
+                  }
                       break;
                     case 'webadmin' :
                       $tickets = Ticket::getTicketsWithoutTechnician();
@@ -179,7 +185,7 @@ function traitementClick() {
                                   <th>Demandeur</th>
                                   <th>Date de création</th>
                                   <th>Niveau d'urgence</th>
-                                  <th>Prendre en charge</th>
+                                  <th>Assigner à un technicien</th>
                                 </tr>
                             </thead>
                             <tbody>";

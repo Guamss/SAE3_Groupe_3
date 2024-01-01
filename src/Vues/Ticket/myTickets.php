@@ -48,11 +48,7 @@ if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='tech
                     <input type="hidden" name="label_ID" value="' . $ticket->getLabelID() . '">
                     <input type="hidden" name="status" value="' . $ticket->getStatus() . '">
                     <input type="hidden" name="desc" value="' . $ticket->getDescription() . '">
-                    <button type="submit">
-                        <span class="material-symbols-outlined">
-                            Modifier
-                        </span>
-                    </button>
+                    <button type="submit">Modifier</button>
                     </form>
                     </td>
                 </tr>';
@@ -60,6 +56,13 @@ if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='tech
         echo "</tbody>
         </table>
         </div>
+        </div>";
+    }
+    else
+    {
+        echo "
+        <div class='messages'>
+            <h2>Vous n'avez aucun ticket attribué</h2>
         </div>";
     }
 }

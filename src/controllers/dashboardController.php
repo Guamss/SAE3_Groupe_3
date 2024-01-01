@@ -100,10 +100,7 @@ switch($action)
         {
             $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['label_ID'], $_POST['desc'], $_POST['date'], $_POST['status'], $_POST['tec']);
             $ticket->setStatus($_POST['etat']);
-            echo "
-            <div class='message'>
-                <p style='color: green;'>Un ticket d'urgence ".$niveauxUrgence[$ticket->getUrgence()]." a été modifié pour l'état ".$_POST['etat']."</p>
-            </div>";
+            echo "<p style='color: green;'>Un ticket d'urgence ".$niveauxUrgence[$ticket->getUrgence()]." a été modifié pour l'état ".$_POST['etat']."</p>";
             include('Vues/Ticket/myTickets.php');
         }
         else
@@ -138,10 +135,7 @@ switch($action)
         {
             updateLabel($_POST['name'], $_POST['label_ID']);
             include('Vues/Label/dashboardLabel.php');
-            echo "
-            <div class='message'>
-                <p style='color:green'>Ce label a comme nouveau nom ".$_POST['name']." </p>
-            </div";
+            echo "<p style='color:green'>Ce label a comme nouveau nom ".$_POST['name']." </p>";
         }
         else
         {
@@ -165,10 +159,7 @@ switch($action)
         {
             archive($_POST['label_ID']);
             include('Vues/Label/dashboardLabel.php');
-            echo "
-            <div class='message'>
-                <p style='color:green'>Ce libellé a bien été archivé</p>
-            </div>";
+            echo "<p style='color:green'>Ce libellé a bien été archivé</p>";
         }
         else
         {
@@ -181,10 +172,7 @@ switch($action)
         {
             $name = htmlspecialchars($_POST['name']);
             addLabel($name);
-            echo "
-            <div class='message'>
-                <p style='color:green'>Le libellé ".$name." a bien été créé</p>
-            </div>";
+            echo "<p style='color:green'>Le libellé ".$name." a bien été créé</p>";
             include("Vues/Label/dashboardLabel.php");
         }
         else

@@ -4,7 +4,7 @@ class Ticket{
 /**------------------------DEFINITION DES CHAMPS------------------------------- */
 
     /**
-     *  UID du ticket
+     *  UserID du ticket
      * @var int
      */
 
@@ -45,10 +45,18 @@ class Ticket{
      * @var string
      */
     private $description;
+    
+    /**
+     *  description du ticket
+     * @var int
+     */
+    private $concernee;
+
+
         
 
 /* ------------------------ACESSEURS------------------------------- */
-    public function __construct($UID, $urgence_level, $label, $description, $date = null, $status = "Ouvert", $technician = null)
+    public function __construct($UID, $urgence_level, $label, $concernee, $description, $date = null, $status = "Ouvert", $technician = null)
     {
         $this->UID = $UID;
         $this->technician_ID = $technician;
@@ -56,7 +64,9 @@ class Ticket{
         $this->urgence_level = $urgence_level;
         $this->creation_date = $date ?: date("Y-m-d H:i:s"); // Utilise la date actuelle si $date n'est pas fourni
         $this->status = $status;
+        $this->concernee = $concernee;
         $this->description = $description;
+
     }
 
     /**
@@ -81,31 +91,35 @@ class Ticket{
     public function setTechnician(int $argtechnician_ID): void
     {
         $conn = Connexion::getConn();
-            $stmt = $conn->prepare("UPDATE Ticket
-                                    SET Technician_ID = ?
-                                    WHERE UID = ?
-                                    AND urgence_level = ?
-                                    AND Label_ID = ?
-                                    AND creation_date = ?
-                                    AND status = ?
-                                    AND description = ?;");
-            $uid = $this->UID;
-            $urgence = $this->urgence_level;
-            $label = $this->label_ID;
-            $date = $this->creation_date;
-            $status = $this->status;
-            $desc = htmlspecialchars($this->description);
-            $stmt->bind_param("iiiisss",
-                $argtechnician_ID,
-                $uid,
-                $urgence,
-                $label,
-                $date,
-                $status,
-                $desc);
-            $stmt->execute();
+        $stmt = $conn->prepare("UPDATE Ticket
+                                SET Technician_ID = ?
+                                WHERE UID = ?
+                                AND urgence_level = ?
+                                AND Label_ID = ?
+                                AND creation_date = ?
+                                AND status = ?
+                                AND description = ?
+                                AND concernee = ?;"); // Ajout du signe égal (=) avant concernee
+        $uid = $this->UID;
+        $urgence = $this->urgence_level;
+        $label = $this->label_ID;
+        $date = $this->creation_date;
+        $status = $this->status;
+        $desc = htmlspecialchars($this->description);
+        $concernee = $this->concernee;
+        $stmt->bind_param("iiiisssi",
+            $argtechnician_ID,
+            $uid,
+            $urgence,
+            $label,
+            $date,
+            $status,
+            $desc,
+            $concernee);
+        $stmt->execute();
         $this->technician_ID = $argtechnician_ID;
     }
+
 
     /**
      * Get urgence_level du ticket
@@ -160,14 +174,16 @@ class Ticket{
                                 AND Label_ID = ?
                                 AND creation_date = ?
                                 AND Technician_ID = ?
-                                AND description = ?;");
+                                AND description = ?
+                                AND concernee = ?;");
         $uid = $this->UID;
         $urgence = $this->urgence_level;
         $label = $this->label_ID;
         $date = $this->creation_date;
         $tec = $this->technician_ID;
         $desc = htmlspecialchars($this->description);
-        $stmt->bind_param("siisisis",
+        $concernee = $this->concernee;
+        $stmt->bind_param("siisisisi",
             $status,
             $uid,
             $urgence,
@@ -175,7 +191,8 @@ class Ticket{
             $label,
             $date,
             $tec,
-            $desc);
+            $desc,
+            $concernee);
         $stmt->execute();
         $this->status = $status;
     }
@@ -195,6 +212,33 @@ class Ticket{
     {
         $this->description = $description;
     }
+
+    /**
+     * Get concernee du ticket
+     */
+    public function getConcernee(): int
+    {
+        return (int)$this->concernee;
+    }
+
+    function getConcerneeLoginById($id): string
+    {
+        $request = "SELECT login FROM user JOIN ticket 
+                    ON user.UID = ticket.concernee
+                    WHERE ticket.concernee = ?";
+        $conn = Connexion::getConn();
+        $stmt = $conn->prepare($request);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while($row = $result->fetch_assoc())
+        {
+            $name = $row['login'];
+        }
+        return $name;
+    }
+
+    
 
     public static function getLastTickets(): array
     {
@@ -217,13 +261,15 @@ class Ticket{
             $creation_date = $row['creation_date'];
             $status = $row['status'];
             $description = $row['description'];
+            $concernee = $row['concernee'];
             $ticket = new Ticket($uid, 
                                 $urgence_level, 
                                 $label,
                                 $description, 
                                 $creation_date, 
                                 $status, 
-                                $techician);
+                                $techician,
+                                $concernee);
             $tickets[] = $ticket;
         }
         return $tickets;
@@ -248,13 +294,15 @@ class Ticket{
             $creation_date = $row['creation_date'];
             $status = $row['status'];
             $description = $row['description'];
+            $concernee = $row['concernee'];
             $ticket = new Ticket($uid, 
                                 $urgence_level, 
                                 $label,
                                 $description, 
                                 $creation_date, 
                                 $status, 
-                                $techician);
+                                $techician,
+                                $concernee);
             $tickets[] = $ticket;
         }
         return $tickets;
@@ -281,13 +329,15 @@ class Ticket{
             $creation_date = $row['creation_date'];
             $status = $row['status'];
             $description = $row['description'];
+            $concernee = $row['concernee'];
             $ticket = new Ticket($uid, 
                                 $urgence_level, 
                                 $label,
                                 $description, 
                                 $creation_date, 
                                 $status, 
-                                $techician);
+                                $techician,
+                                $concernee);
             $tickets[] = $ticket;
         }
         return $tickets;
@@ -312,16 +362,37 @@ class Ticket{
             $creation_date = $row['creation_date'];
             $status = $row['status'];
             $description = $row['description'];
+            $concernee = $row['concernee'];
             $ticket = new Ticket($uid, 
                                 $urgence_level, 
                                 $label,
                                 $description, 
                                 $creation_date, 
                                 $status, 
-                                $techician);
+                                $techician,
+                                $concernee);
             $tickets[] = $ticket;
         }
         return $tickets;
     }
+
+}
+function getAllUID(): array
+{
+    $concernees = array();
+
+    $request = "SELECT * FROM user ORDER BY login;";
+    $conn = Connexion::getConn();
+    $stmt = $conn->prepare($request);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while($row = $result->fetch_array())
+    {
+        $login = $row['login'];
+        $uid = $row['UID'];
+        $concernees[$uid] = array($login);
+    }
+    
+    return $concernees;
 }
 ?>

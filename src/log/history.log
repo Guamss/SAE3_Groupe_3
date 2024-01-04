@@ -5,3 +5,33 @@
 [2023-12-30 16:55:43] [INFO] Connexion - L'utilisateur gestion s'est connecté avec succès | Adresse IP : ::1
 [2023-12-30 16:56:06] [INFO] Inscription - L'administrateur web gestion a créé le technicien tec1avec succès | Adresse IP : ::1
 [2023-12-30 16:56:26] [INFO] Connexion - L'utilisateur tec1 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-02 11:49:13] [INFO] Connexion - L'utilisateur test2 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-02 12:17:21] [INFO] Ticket - L'utilisateur test2 a créé un ticket d'urgence Urgent | Adresse IP : ::1
+[2024-01-02 17:13:25] [INFO] Ticket - L'utilisateur test2 a créé un ticket d'urgence Urgent | Adresse IP : ::1
+[2024-01-02 17:33:35] [INFO] Ticket - L'utilisateur test2 a créé un ticket d'urgence Urgent | Adresse IP : ::1
+[2024-01-02 17:39:01] [INFO] Ticket - L'utilisateur test2 a créé un ticket d'urgence Urgent | Adresse IP : ::1
+[2024-01-03 10:18:03] [INFO] Connexion - L'utilisateur test2 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-03 10:19:36] [ERROR] Connexion - Un utilisateur a tenté de se connecter | Adresse IP : ::1
+[2024-01-03 10:20:11] [INFO] Ticket - L'utilisateur test2 a créé un ticket d'urgence Moyen | Adresse IP : ::1
+[2024-01-03 10:23:44] [ERROR] Inscription - Un utilisateur a tenté de créer un compte qui existe déjà | Adresse IP : ::1
+[2024-01-03 10:23:56] [INFO] Connexion - L'utilisateur gestion s'est connecté avec succès | Adresse IP : ::1
+[2024-01-03 10:44:25] [INFO] Connexion - L'utilisateur test2 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-03 12:07:33] [INFO] Ticket - L'utilisateur test2 a créé un ticket d'urgence Faible | Adresse IP : ::1
+[2024-01-03 12:12:39] [INFO] Ticket - L'utilisateur test2 a créé un ticket d'urgence Faible | Adresse IP : ::1
+[2024-01-03 12:17:30] [INFO] Connexion - L'utilisateur test2 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-03 13:45:31] [INFO] Ticket - L'utilisateur test2 a créé un ticket d'urgence Urgent | Adresse IP : ::1
+[2024-01-03 13:56:42] [INFO] Ticket - L'utilisateur test2 a créé un ticket d'urgence Moyen | Adresse IP : ::1
+[2024-01-03 14:12:56] [INFO] Ticket - L'utilisateur test2 a créé un ticket d'urgence Important | Adresse IP : ::1
+[2024-01-03 14:30:40] [INFO] Ticket - L'utilisateur test2 a créé un ticket d'urgence Urgent | Adresse IP : ::1
+[2024-01-03 14:37:11] [INFO] Ticket - L'utilisateur test2 a créé un ticket d'urgence Important | Adresse IP : ::1
+[2024-01-03 14:38:32] [INFO] Connexion - L'utilisateur test2 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-03 14:38:54] [INFO] Ticket - L'utilisateur test2 a créé un ticket d'urgence Faible | Adresse IP : ::1
+[2024-01-03 14:43:53] [INFO] Ticket - L'utilisateur test2 a créé un ticket d'urgence Urgent | Adresse IP : ::1
+[2024-01-04 13:57:27] [INFO] Inscription - L'utilisateur test3 a été créé avec succès | Adresse IP : ::1
+[2024-01-04 13:58:32] [INFO] Ticket - L'utilisateur test3 a créé un ticket d'urgence Faible | Adresse IP : ::1
+[2024-01-04 14:01:10] [INFO] Ticket - L'utilisateur test3 a créé un ticket d'urgence Urgent | Adresse IP : ::1
+[2024-01-04 15:37:04] [INFO] Ticket - L'utilisateur test3 a créé un ticket d'urgence Urgent | Adresse IP : ::1
+[2024-01-04 15:57:26] [INFO] Ticket - L'utilisateur test3 a créé un ticket d'urgence Urgent | Adresse IP : ::1
+[2024-01-04 16:03:36] [INFO] Ticket - L'utilisateur test3 a créé un ticket d'urgence Important | Adresse IP : ::1
+[2024-01-04 17:19:15] [INFO] Ticket - L'utilisateur test3 a créé un ticket d'urgence Important | Adresse IP : ::1
+[2024-01-04 17:51:21] [INFO] Ticket - L'utilisateur test3 a créé un ticket d'urgence Urgent | Adresse IP : ::1

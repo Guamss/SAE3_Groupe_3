@@ -19,7 +19,8 @@ class User
                         Label_ID, 
                         creation_date, 
                         status, 
-                        description FROM Ticket WHERE UID = ?";
+                        description,
+                        concernee FROM Ticket WHERE UID = ? AND concernee = ?";
             $conn = Connexion::getConn();
             $stmt = $conn->prepare($request);
             $stmt->bind_param("i", $this->uid);
@@ -34,14 +35,16 @@ class User
                     $label = $row['Label_ID'];
                     $creation_date = $row['creation_date'];
                     $status = $row['status'];
+                    $concernee = $row['concernee'];
                     $description = $row['description'];
                     $ticket = new Ticket($this->uid, 
-                                        $urgence_level, 
+                                        $urgence_level,
                                         $label,
-                                        $description, 
-                                        $creation_date, 
+                                        $description, // Utilisez $description pour la description
+                                        $creation_date,
                                         $status,
-                                        $techician);
+                                        $techician,
+                                        $concernee);
                     $this->tickets[] = $ticket;
                 }
             }
@@ -75,21 +78,26 @@ class User
                 Label_ID,
                 creation_date, 
                 status,
-                description
-            ) VALUES (?, ?, ?, ?, ?, ?)");
+                description,
+                concernee
+            ) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            
             $uid = $ticket->getUID();
             $urgence = $ticket->getUrgence();
             $label = $ticket->getLabelID();
-            $date = $ticket->getDate();
+            $date = date("Y-m-d H:i:s"); // Reformater la date si nécessaire
             $status = $ticket->getStatus();
             $desc = $ticket->getDescription();
-            $stmt->bind_param("iiisss",
+            $concernee = $ticket->getConcernee();
+            
+            $stmt->bind_param("iiisssi",
                 $uid,
                 $urgence,
                 $label,
                 $date,
                 $status,
-                $desc);
+                $desc,
+                $concernee);
             
             if ($stmt->execute())
             {
@@ -150,5 +158,4 @@ class User
         }
         return $technicians;
     }
-
 }

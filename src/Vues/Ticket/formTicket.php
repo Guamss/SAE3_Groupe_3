@@ -26,8 +26,21 @@
                 <option value="1" style="color: red;">Urgent</option>
             </select>
         <br>
+        <label for="concernee">Personne concernée par le problème :</label>
+            <select id="concernee" name="concernee" required>
+                <option value="" disabled selected>Personne concernée</option>
+                    <?php
+                    $concernees = getAllUID();
+                    var_dump($concernees);
+                    foreach ($concernees as $id => $concernee)
+                    {
+                        echo "<option value='" . htmlspecialchars($id) . "'>" . htmlspecialchars($concernee[0]) . "</option>";
+                    }
+                    ?>
+            </select>
+        <br>
         <label for="description">Description du problème :</label>
-            <textarea id="description" name="description" rows="4" placeholder="En quoi consiste votre problème ?" required></textarea>
+        <textarea id="description" name="description" rows="4" placeholder="En quoi consiste votre problème ?" required></textarea>
         <br>
         <input type="submit" value="Envoyer">
     </form>

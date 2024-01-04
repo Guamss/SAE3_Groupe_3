@@ -18,13 +18,14 @@ switch($action)
         break;
         
     case 'validerForm' :
-        if (isset($_POST['label'], $_POST['description'], $_POST['urgence']) & isset($_SESSION['user']))
+        if (isset($_POST['label'], $_POST['description'], $_POST['urgence'], $_POST['concernee']) & isset($_SESSION['user']))
         {
             $urgence = htmlspecialchars($_POST['urgence']);
             $desc = htmlspecialchars($_POST['description']);
             $label = $_POST['label'];
+            $concernee = htmlspecialchars($_POST['concernee']);
             $user = unserialize($_SESSION['user']);
-            $ticket = new Ticket($user->getUID(), $urgence, $label, $desc);
+            $ticket = new Ticket($user->getUID(), $urgence, $label, $concernee, $desc);
             $user->createTicket($ticket);
             $_SESSION['user'] = serialize($user);
         }
@@ -40,10 +41,10 @@ switch($action)
         break;
     
     case 'assignerTicketTec':
-        if (isset($_POST['uid'], $_POST['tec'], $_POST['urgence_level'], $_POST['date'], $_POST['label_ID'], $_POST['status'], $_POST['desc']) && unserialize($_SESSION['user'])->getRole() == 'technician')
+        if (isset($_POST['uid'], $_POST['tec'], $_POST['urgence_level'], $_POST['date'], $_POST['label_ID'], $_POST['status'], $_POST['desc'], $_POST['concernee']) && unserialize($_SESSION['user'])->getRole() == 'technician')
         {
             $tec = unserialize($_SESSION['user']);
-            $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['label_ID'], $_POST['desc'], $_POST['date'], $_POST['status'], $_POST['tec']);
+            $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['label_ID'], $_POST['desc'], $_POST['date'], $_POST['status'], $_POST['tec'], $_POST['concernee']);
             $ticket->setTechnician($tec->getUid());
             echo "<div class='messages'>
                     <p style='color: green;'>Un ticket d'urgence ".$niveauxUrgence[$ticket->getUrgence()]." vous a été attribué!</p>
@@ -58,9 +59,9 @@ switch($action)
         break;
 
     case 'validerFormWebadmin':
-        if (isset($_POST['uid'], $_POST['urgence_level'], $_POST['date'], $_POST['label_ID'], $_POST['status'], $_POST['desc']) && unserialize($_SESSION['user'])->getRole() == 'webadmin' && !empty($_POST['tec']))
+        if (isset($_POST['uid'], $_POST['urgence_level'], $_POST['date'], $_POST['label_ID'], $_POST['status'], $_POST['desc'], $_POST['concernee']) && unserialize($_SESSION['user'])->getRole() == 'webadmin' && !empty($_POST['tec']))
         {
-            $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['label_ID'], $_POST['desc'], $_POST['date'], $_POST['status']);
+            $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['label_ID'], $_POST['desc'], $_POST['date'], $_POST['status'], $_POST['concernee']);
             $ticket->setTechnician($_POST['tec']);
             echo "<div class='messages'>
                     <p style='color: green;'>Un ticket d'urgence ".$niveauxUrgence[$ticket->getUrgence()]." a été attribué à ".User::getLoginByUID($ticket->getTechnician())."</p>
@@ -74,7 +75,7 @@ switch($action)
         break;
     
     case 'assignerTicketWebadmin':
-        if (isset($_POST['uid'], $_POST['urgence_level'], $_POST['date'], $_POST['label_ID'], $_POST['status'], $_POST['desc']) && unserialize($_SESSION['user'])->getRole() == 'webadmin')
+        if (isset($_POST['uid'], $_POST['urgence_level'], $_POST['date'], $_POST['label_ID'], $_POST['status'], $_POST['desc'], $_POST['concernee']) && unserialize($_SESSION['user'])->getRole() == 'webadmin')
         {
             include("Vues/User/formAssignerTec.php");
         } 
@@ -96,9 +97,9 @@ switch($action)
         break;
     
     case 'validerModifierEtat': 
-        if (isset($_POST['uid'], $_POST['urgence_level'], $_POST['date'], $_POST['label_ID'], $_POST['status'], $_POST['desc'], $_POST['tec']) && unserialize($_SESSION['user'])->getRole() == 'technician' && !empty($_POST['etat']))
+        if (isset($_POST['uid'], $_POST['urgence_level'], $_POST['date'], $_POST['label_ID'], $_POST['status'], $_POST['desc'], $_POST['tec'], $_POST['concernee']) && unserialize($_SESSION['user'])->getRole() == 'technician' && !empty($_POST['etat']))
         {
-            $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['label_ID'], $_POST['desc'], $_POST['date'], $_POST['status'], $_POST['tec']);
+            $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['label_ID'], $_POST['desc'], $_POST['date'], $_POST['status'], $_POST['tec'], $_POST['concernee']);
             $ticket->setStatus($_POST['etat']);
             echo "<p style='color: green;'>Un ticket d'urgence ".$niveauxUrgence[$ticket->getUrgence()]." a été modifié pour l'état ".$_POST['etat']."</p>";
             include('Vues/Ticket/myTickets.php');
@@ -109,7 +110,7 @@ switch($action)
         }
         break;
     case 'modifierEtat' :
-        if (isset($_POST['uid'], $_POST['urgence_level'], $_POST['date'], $_POST['label_ID'], $_POST['status'], $_POST['desc']) && unserialize($_SESSION['user'])->getRole() == 'technician')
+        if (isset($_POST['uid'], $_POST['urgence_level'], $_POST['date'], $_POST['label_ID'], $_POST['status'], $_POST['desc'], $_POST['concernee']) && unserialize($_SESSION['user'])->getRole() == 'technician')
         {
             include('Vues/Ticket/formModifierEtat.php');
         }

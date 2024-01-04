@@ -79,6 +79,7 @@ function traitementClick() {
                                 <th>Libellé</th>
                                 <th class='description-column'>Description</th>
                                 <th>Demandeur</th>
+                                <th>Concerné</th>
                                 <th>Date de création</th>
                                 <th>Niveau d'urgence</th>
                                 <th>Technicien</th>
@@ -92,11 +93,13 @@ function traitementClick() {
                             $label = $ticket->getLabelID();
                             $technician_ID = $ticket->getTechnician();
                             $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
+                            $id = $ticket->getConcernee();                     
                             echo '
                             <tr> 
                               <td>'.getLabelNameById($label).'</td>
                               <td class="description-column">'.$ticket->getDescription().'</td>
                               <td>'.$user->getLogin().'</td>
+                              <td>'.$ticket->getConcerneeLoginById($id).'</td>
                               <td>'.$ticket->getDate().'</td>
                               <td>'.$niveauxUrgence[$urgence].'</td>
                               <td>'.$technician.'</td>
@@ -131,6 +134,7 @@ function traitementClick() {
                             <th>Libellé</th>
                             <th class='description-column'>Description</th>
                             <th>Demandeur</th>
+                            <th>Concerné</th>
                             <th>Date de création</th>
                             <th>Niveau d'urgence</th>
                             <th>Technicien</th>
@@ -183,6 +187,7 @@ function traitementClick() {
                                   <th>Libellé</th>
                                   <th class='description-column'>Description</th>
                                   <th>Demandeur</th>
+                                  <th>Concerné</th>
                                   <th>Date de création</th>
                                   <th>Niveau d'urgence</th>
                                   <th>Assigner à un technicien</th>
@@ -195,11 +200,13 @@ function traitementClick() {
                                 $label = $ticket->getLabelID();
                                 $urgence = $ticket->getUrgence();
                                 $login = User::getLoginByUID($uid);
+                                $concernee = $ticket->getConcernee();
                                 echo '
                                 <tr> 
                                   <td>'.getLabelNameById($label).'</td>
                                   <td class="description-column">'.$ticket->getDescription().'</td>
                                   <td>'.$login.'</td>
+                                  <td>'.$concernee.'</td>
                                   <td>'.$ticket->getDate().'</td>
                                   <td>'.$niveauxUrgence[$urgence].'</td>
                                   <td>
@@ -238,6 +245,7 @@ function traitementClick() {
                                   <th>Libellé</th>
                                   <th class='description-column'>Description</th>
                                   <th>Demandeur</th>
+                                  <th>Concerné</th>
                                   <th>Date de création</th>
                                   <th>Niveau d'urgence</th>
                                   <th>Prendre en charge</th>
@@ -250,12 +258,14 @@ function traitementClick() {
                                 $label = $ticket->getLabelID();
                                 $urgence = $ticket->getUrgence();
                                 $login = User::getLoginByUID($uid);
+                                $concernee = $ticket->getConcernee();
 
                                 echo '
                                 <tr> 
                                   <td>'.getLabelNameById($label).'</td>
                                   <td class="description-column">'.$ticket->getDescription().'</td>
                                   <td>'.$login.'</td>
+                                  <td>'.$concernee.'</td>
                                   <td>'.$ticket->getDate().'</td>
                                   <td>'.$niveauxUrgence[$urgence].'</td>
                                   <td>
@@ -297,6 +307,7 @@ function traitementClick() {
                             <th>Libellé</th>
                             <th class='description-column'>Description</th>
                             <th>Demandeur</th>
+                            <th>Concerné</th>
                             <th>Date de création</th>
                             <th>Niveau d'urgence</th>
                             <th>Technicien</th>

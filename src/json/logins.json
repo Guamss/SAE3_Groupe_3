@@ -1,6 +1,6 @@
 {
-    "adresse": "localhost",
-    "database": "SAE3",
+    "adresse": "127.0.0.1",
+    "database": "sae3",
     "user": "root",
-    "password": "minimonsterpma&"
+    "password": ""
 }

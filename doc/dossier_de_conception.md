@@ -89,7 +89,7 @@ Voici le MCD :
 ![MCD](img/MCD.png)
 
 Voici le MLD correspondant :<br>
-Ticket (<ins>Ticket_ID</ins>, #UID, #Technician_ID, urgence_level, #Label_ID, creation_date, status, description)
+Ticket (<ins>Ticket_ID</ins>, #UID, #Technician_ID, urgence_level, #Label_ID, creation_date, status, description, #concernee, IP)
 <br>
 User (<ins>UID</ins>, role,  login, password)<br>
 Label (<ins>Label_ID</ins>, name, archivé)<br>

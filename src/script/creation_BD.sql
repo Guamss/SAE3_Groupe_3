@@ -24,9 +24,12 @@ CREATE TABLE Ticket (
     creation_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status ENUM('Ouvert', 'En Cours', 'Fermé') DEFAULT 'Ouvert',
     description TEXT,
+    concernee INT,
+    IP VARCHAR(50),
     FOREIGN KEY (UID) REFERENCES User(UID),
     FOREIGN KEY (Technician_ID) REFERENCES User(UID),
-    FOREIGN KEY (Label_ID) REFERENCES Label(Label_ID)
+    FOREIGN KEY (Label_ID) REFERENCES Label(Label_ID),
+    FOREIGN key (concernee) REFERENCES User(UID)
 );
 
 

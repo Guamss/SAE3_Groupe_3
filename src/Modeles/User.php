@@ -15,15 +15,16 @@ class User
         {
             $request = "SELECT Ticket_ID, 
                         Technician_ID, 
+                        UID,
                         urgence_level, 
                         Label_ID, 
                         creation_date, 
                         status, 
                         description,
-                        concernee FROM Ticket WHERE UID = ? AND concernee = ?";
+                        concernee FROM Ticket WHERE UID = ? OR concernee = ?";
             $conn = Connexion::getConn();
             $stmt = $conn->prepare($request);
-            $stmt->bind_param("i", $this->uid);
+            $stmt->bind_param("ii", $this->uid, $this->uid);
             $stmt->execute();
             $result = $stmt->get_result();
             if ($result->num_rows > 0)
@@ -31,20 +32,21 @@ class User
                 while($row = $result->fetch_assoc()) 
                 {
                     $techician = $row['Technician_ID'];
+                    $uid = $row['UID'];
                     $urgence_level = $row['urgence_level'];
                     $label = $row['Label_ID'];
                     $creation_date = $row['creation_date'];
                     $status = $row['status'];
                     $concernee = $row['concernee'];
                     $description = $row['description'];
-                    $ticket = new Ticket($this->uid, 
+                    $ticket = new Ticket($uid,
                                         $urgence_level,
                                         $label,
-                                        $description, // Utilisez $description pour la description
+                                        $concernee,
+                                        $description,
                                         $creation_date,
                                         $status,
-                                        $techician,
-                                        $concernee);
+                                        $techician);
                     $this->tickets[] = $ticket;
                 }
             }
@@ -132,7 +134,7 @@ class User
                 $login = $row["login"];
             }
         }
-        return $login;
+        return (string)$login;
     }
 
     public static function getAllTechnicians(): array
@@ -157,5 +159,24 @@ class User
             }
         }
         return $technicians;
+    }
+
+    public static function getAllUID(): array
+    {
+        $concernees = array();
+    
+        $request = "SELECT * FROM user WHERE role='user' ORDER BY login;";
+        $conn = Connexion::getConn();
+        $stmt = $conn->prepare($request);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while($row = $result->fetch_array())
+        {
+            $login = $row['login'];
+            $uid = $row['UID'];
+            $concernees[$uid] = array($login);
+        }
+        
+        return $concernees;
     }
 }

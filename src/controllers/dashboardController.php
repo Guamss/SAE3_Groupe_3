@@ -159,8 +159,11 @@ switch($action)
         if (isset($_SESSION['user'], $_POST['label_ID']) && unserialize($_SESSION['user'])->getRole()=='webadmin')
         {
             archive($_POST['label_ID']);
+            echo "<div class='messages'>
+                    <p style='color:green'>Ce libellé a bien été archivé</p>
+                </div>";
             include('Vues/Label/dashboardLabel.php');
-            echo "<p style='color:green'>Ce libellé a bien été archivé</p>";
+            
         }
         else
         {
@@ -173,7 +176,9 @@ switch($action)
         {
             $name = htmlspecialchars($_POST['name']);
             addLabel($name);
-            echo "<p style='color:green'>Le libellé ".$name." a bien été créé</p>";
+            echo "<div class='messages'>
+                    <p style='color:green'>Le libellé ".$name." a bien été créé</p>
+                </div>";
             include("Vues/Label/dashboardLabel.php");
         }
         else

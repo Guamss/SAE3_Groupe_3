@@ -93,13 +93,13 @@ function traitementClick() {
                             $label = $ticket->getLabelID();
                             $technician_ID = $ticket->getTechnician();
                             $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
-                            $id = $ticket->getConcernee();                     
+                            $id = $ticket->getConcernee();                   
                             echo '
                             <tr> 
                               <td>'.getLabelNameById($label).'</td>
                               <td class="description-column">'.$ticket->getDescription().'</td>
-                              <td>'.$user->getLogin().'</td>
-                              <td>'.$ticket->getConcerneeLoginById($id).'</td>
+                              <td>'.User::getLoginByUID($ticket->getUID()).'</td>
+                              <td>'.User::getLoginByUID($id).'</td>
                               <td>'.$ticket->getDate().'</td>
                               <td>'.$niveauxUrgence[$urgence].'</td>
                               <td>'.$technician.'</td>
@@ -150,11 +150,13 @@ function traitementClick() {
                           $technician_ID = $ticket->getTechnician();
                           $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
                           $urgence = $ticket->getUrgence();
+                          $id = $ticket->getConcernee();
                           echo '
                           <tr> 
                             <td>'.getLabelNameById($label).'</td>
                             <td class="description-column">'.$ticket->getDescription().'</td>
-                            <td>'.$login.'</td>
+                            <td>'.User::getLoginByUID($ticket->getUID()).'</td>
+                            <td>'.User::getLoginByUID($id).'</td>
                             <td>'.$ticket->getDate().'</td>
                             <td>'.$niveauxUrgence[$urgence].'</td>
                             <td>'.$technician.'</td>
@@ -200,13 +202,13 @@ function traitementClick() {
                                 $label = $ticket->getLabelID();
                                 $urgence = $ticket->getUrgence();
                                 $login = User::getLoginByUID($uid);
-                                $concernee = $ticket->getConcernee();
+                                $id = $ticket->getConcernee();
                                 echo '
                                 <tr> 
                                   <td>'.getLabelNameById($label).'</td>
                                   <td class="description-column">'.$ticket->getDescription().'</td>
-                                  <td>'.$login.'</td>
-                                  <td>'.$concernee.'</td>
+                                  <td>'.User::getLoginByUID($ticket->getUID()).'</td>
+                                  <td>'.User::getLoginByUID($id).'</td>
                                   <td>'.$ticket->getDate().'</td>
                                   <td>'.$niveauxUrgence[$urgence].'</td>
                                   <td>
@@ -225,8 +227,10 @@ function traitementClick() {
                         }
                         else
                         {
-                          echo "<h2>Rien ne s'affiche?</h2>
-                          <p>Tout les tickets ont déjà un technicien attribué.</p>";
+                          echo "<div class='messages'>
+                                  <h2>Rien ne s'affiche?</h2>
+                                  <p>Tout les tickets ont déjà un technicien attribué.</p>
+                                </div>";                         
                         }
                         break;
                       case 'technician' :
@@ -258,14 +262,14 @@ function traitementClick() {
                                 $label = $ticket->getLabelID();
                                 $urgence = $ticket->getUrgence();
                                 $login = User::getLoginByUID($uid);
-                                $concernee = $ticket->getConcernee();
+                                $id = $ticket->getConcernee();
 
                                 echo '
                                 <tr> 
                                   <td>'.getLabelNameById($label).'</td>
                                   <td class="description-column">'.$ticket->getDescription().'</td>
-                                  <td>'.$login.'</td>
-                                  <td>'.$concernee.'</td>
+                                  <td>'.User::getLoginByUID($ticket->getUID()).'</td>
+                                  <td>'.User::getLoginByUID($id).'</td>
                                   <td>'.$ticket->getDate().'</td>
                                   <td>'.$niveauxUrgence[$urgence].'</td>
                                   <td>
@@ -285,8 +289,10 @@ function traitementClick() {
                         }
                         else
                         {
-                          echo "<h2>Rien ne s'affiche?</h2>
-                          <p>Tout les tickets ont déjà un technicien attribué.</p>";
+                          echo "<div class='messages'>
+                                  <h2>Rien ne s'affiche?</h2>
+                                  <p>Tout les tickets ont déjà un technicien attribué.</p>
+                                </div>";
                         }
                   }
                 }
@@ -323,11 +329,13 @@ function traitementClick() {
                           $technician_ID = $ticket->getTechnician();
                           $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
                           $urgence = $ticket->getUrgence();
+                          $id = $ticket->getConcernee();
                           echo '
                           <tr> 
                             <td>'.getLabelNameById($label).'</td>
                             <td class="description-column">'.$ticket->getDescription().'</td>
-                            <td>'.$login.'</td>
+                            <td>'.User::getLoginByUID($ticket->getUID()).'</td>
+                            <td>'.User::getLoginByUID($id).'</td>
                             <td>'.$ticket->getDate().'</td>
                             <td>'.$niveauxUrgence[$urgence].'</td>
                             <td>'.$technician.'</td>

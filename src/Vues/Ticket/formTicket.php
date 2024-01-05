@@ -30,7 +30,7 @@
             <select id="concernee" name="concernee" required>
                 <option value="" disabled selected>Personne concernée</option>
                     <?php
-                    $concernees = getAllUID();
+                    $concernees = User::getAllUID();
                     var_dump($concernees);
                     foreach ($concernees as $id => $concernee)
                     {

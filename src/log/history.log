@@ -35,3 +35,30 @@
 [2024-01-04 16:03:36] [INFO] Ticket - L'utilisateur test3 a créé un ticket d'urgence Important | Adresse IP : ::1
 [2024-01-04 17:19:15] [INFO] Ticket - L'utilisateur test3 a créé un ticket d'urgence Important | Adresse IP : ::1
 [2024-01-04 17:51:21] [INFO] Ticket - L'utilisateur test3 a créé un ticket d'urgence Urgent | Adresse IP : ::1
+[2024-01-05 11:51:50] [INFO] Connexion - L'utilisateur test2 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-05 11:53:39] [INFO] Connexion - L'utilisateur test2 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-05 12:03:43] [INFO] Connexion - L'utilisateur test3 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-05 12:08:21] [INFO] Connexion - L'utilisateur test3 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-05 12:08:24] [INFO] Connexion - L'utilisateur test3 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-05 12:10:24] [INFO] Connexion - L'utilisateur test3 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-05 12:12:30] [INFO] Connexion - L'utilisateur test3 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-05 12:32:34] [INFO] Connexion - L'utilisateur admin s'est connecté avec succès | Adresse IP : ::1
+[2024-01-05 12:33:10] [ERROR] Connexion - Un utilisateur a tenté de se connecter | Adresse IP : ::1
+[2024-01-05 12:33:29] [INFO] Inscription - L'utilisateur user a été créé avec succès | Adresse IP : ::1
+[2024-01-05 12:34:01] [ERROR] Connexion - Un utilisateur a tenté de se connecter | Adresse IP : ::1
+[2024-01-05 12:34:25] [INFO] Connexion - L'utilisateur gestion s'est connecté avec succès | Adresse IP : ::1
+[2024-01-05 12:43:07] [INFO] Inscription - L'administrateur web gestion a créé le technicien tec1 avec succès | Adresse IP : ::1
+[2024-01-05 12:43:20] [INFO] Inscription - L'administrateur web gestion a créé le technicien tec2 avec succès | Adresse IP : ::1
+[2024-01-05 12:43:32] [INFO] Inscription - L'administrateur web gestion a créé le technicien tec3 avec succès | Adresse IP : ::1
+[2024-01-05 12:44:19] [INFO] Connexion - L'utilisateur user s'est connecté avec succès | Adresse IP : ::1
+[2024-01-05 12:44:52] [INFO] Inscription - L'utilisateur user2 a été créé avec succès | Adresse IP : ::1
+[2024-01-05 12:46:59] [INFO] Ticket - L'utilisateur user2 a créé un ticket d'urgence Faible | Adresse IP : ::1
+[2024-01-05 12:47:47] [ERROR] Inscription - Un utilisateur a tenté de créer un compte qui existe déjà | Adresse IP : ::1
+[2024-01-05 12:47:56] [INFO] Connexion - L'utilisateur user s'est connecté avec succès | Adresse IP : ::1
+[2024-01-05 12:48:24] [INFO] Connexion - L'utilisateur user2 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-05 13:18:24] [ERROR] Inscription - Un utilisateur a tenté de créer un compte qui existe déjà | Adresse IP : ::1
+[2024-01-05 13:18:39] [INFO] Connexion - L'utilisateur user s'est connecté avec succès | Adresse IP : ::1
+[2024-01-05 13:19:18] [INFO] Ticket - L'utilisateur user a créé un ticket d'urgence Important | Adresse IP : ::1
+[2024-01-05 13:31:05] [ERROR] Connexion - Un utilisateur a tenté de se connecter | Adresse IP : ::1
+[2024-01-05 13:31:26] [INFO] Connexion - L'utilisateur user2 s'est connecté avec succès | Adresse IP : ::1
+[2024-01-05 13:39:13] [INFO] Connexion - L'utilisateur gestion s'est connecté avec succès | Adresse IP : ::1

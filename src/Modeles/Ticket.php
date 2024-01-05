@@ -216,9 +216,9 @@ class Ticket{
     /**
      * Get concernee du ticket
      */
-    public function getConcernee(): int
+    public function getConcernee()
     {
-        return (int)$this->concernee;
+        return $this->concernee;
     }
 
     function getConcerneeLoginById($id): string
@@ -263,13 +263,13 @@ class Ticket{
             $description = $row['description'];
             $concernee = $row['concernee'];
             $ticket = new Ticket($uid, 
-                                $urgence_level, 
+                                $urgence_level,
                                 $label,
-                                $description, 
-                                $creation_date, 
-                                $status, 
-                                $techician,
-                                $concernee);
+                                $concernee,
+                                $description,
+                                $creation_date,
+                                $status,
+                                $techician);
             $tickets[] = $ticket;
         }
         return $tickets;
@@ -296,13 +296,13 @@ class Ticket{
             $description = $row['description'];
             $concernee = $row['concernee'];
             $ticket = new Ticket($uid, 
-                                $urgence_level, 
+                                $urgence_level,
                                 $label,
-                                $description, 
-                                $creation_date, 
-                                $status, 
-                                $techician,
-                                $concernee);
+                                $concernee,
+                                $description,
+                                $creation_date,
+                                $status,
+                                $techician);
             $tickets[] = $ticket;
         }
         return $tickets;
@@ -331,13 +331,13 @@ class Ticket{
             $description = $row['description'];
             $concernee = $row['concernee'];
             $ticket = new Ticket($uid, 
-                                $urgence_level, 
+                                $urgence_level,
                                 $label,
-                                $description, 
-                                $creation_date, 
-                                $status, 
-                                $techician,
-                                $concernee);
+                                $concernee,
+                                $description,
+                                $creation_date,
+                                $status,
+                                $techician);
             $tickets[] = $ticket;
         }
         return $tickets;
@@ -364,35 +364,16 @@ class Ticket{
             $description = $row['description'];
             $concernee = $row['concernee'];
             $ticket = new Ticket($uid, 
-                                $urgence_level, 
+                                $urgence_level,
                                 $label,
-                                $description, 
-                                $creation_date, 
-                                $status, 
-                                $techician,
-                                $concernee);
+                                $concernee,
+                                $description,
+                                $creation_date,
+                                $status,
+                                $techician);
             $tickets[] = $ticket;
         }
         return $tickets;
     }
-
-}
-function getAllUID(): array
-{
-    $concernees = array();
-
-    $request = "SELECT * FROM user ORDER BY login;";
-    $conn = Connexion::getConn();
-    $stmt = $conn->prepare($request);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    while($row = $result->fetch_array())
-    {
-        $login = $row['login'];
-        $uid = $row['UID'];
-        $concernees[$uid] = array($login);
-    }
-    
-    return $concernees;
 }
 ?>

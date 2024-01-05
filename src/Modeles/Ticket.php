@@ -50,13 +50,15 @@ class Ticket{
      *  description du ticket
      * @var int
      */
+    private $IP;
+
     private $concernee;
 
 
         
 
 /* ------------------------ACESSEURS------------------------------- */
-    public function __construct($UID, $urgence_level, $label, $concernee, $description, $date = null, $status = "Ouvert", $technician = null)
+    public function __construct($UID, $urgence_level, $label, $concernee, $description, $IP, $date = null, $status = "Ouvert", $technician = null)
     {
         $this->UID = $UID;
         $this->technician_ID = $technician;
@@ -66,7 +68,13 @@ class Ticket{
         $this->status = $status;
         $this->concernee = $concernee;
         $this->description = $description;
+        $this->IP = $IP;
+    }
 
+
+    public function getIP(): string
+    {
+        return $this->IP;
     }
 
     /**
@@ -94,22 +102,25 @@ class Ticket{
         $stmt = $conn->prepare("UPDATE Ticket
                                 SET Technician_ID = ?
                                 WHERE UID = ?
+                                AND IP = ?
                                 AND urgence_level = ?
                                 AND Label_ID = ?
                                 AND creation_date = ?
                                 AND status = ?
                                 AND description = ?
-                                AND concernee = ?;"); // Ajout du signe égal (=) avant concernee
+                                AND concernee = ?;");
         $uid = $this->UID;
+        $ip = $this->IP;
         $urgence = $this->urgence_level;
         $label = $this->label_ID;
         $date = $this->creation_date;
         $status = $this->status;
         $desc = htmlspecialchars($this->description);
         $concernee = $this->concernee;
-        $stmt->bind_param("iiiisssi",
+        $stmt->bind_param("iisiisssi",
             $argtechnician_ID,
             $uid,
+            $ip,
             $urgence,
             $label,
             $date,
@@ -169,6 +180,7 @@ class Ticket{
         $stmt = $conn->prepare("UPDATE Ticket
                                 SET status = ?
                                 WHERE UID = ?
+                                AND IP = ?
                                 AND urgence_level = ?
                                 AND status = ?
                                 AND Label_ID = ?
@@ -176,6 +188,7 @@ class Ticket{
                                 AND Technician_ID = ?
                                 AND description = ?
                                 AND concernee = ?;");
+        $ip = $this->IP;
         $uid = $this->UID;
         $urgence = $this->urgence_level;
         $label = $this->label_ID;
@@ -183,9 +196,10 @@ class Ticket{
         $tec = $this->technician_ID;
         $desc = htmlspecialchars($this->description);
         $concernee = $this->concernee;
-        $stmt->bind_param("siisisisi",
+        $stmt->bind_param("sisisisisi",
             $status,
             $uid,
+            $ip,
             $urgence,
             $this->status,
             $label,
@@ -220,31 +234,13 @@ class Ticket{
     {
         return $this->concernee;
     }
-
-    function getConcerneeLoginById($id): string
-    {
-        $request = "SELECT login FROM user JOIN ticket 
-                    ON user.UID = ticket.concernee
-                    WHERE ticket.concernee = ?";
-        $conn = Connexion::getConn();
-        $stmt = $conn->prepare($request);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        while($row = $result->fetch_assoc())
-        {
-            $name = $row['login'];
-        }
-        return $name;
-    }
-
     
-
     public static function getLastTickets(): array
     {
         $tickets = array();
         $requete = "SELECT * 
                     FROM Ticket
+                    WHERE status != 'Fermé'
                     ORDER BY creation_date DESC
                     LIMIT 10;";
 
@@ -258,6 +254,7 @@ class Ticket{
             $techician = $row['Technician_ID'];
             $urgence_level = $row['urgence_level'];
             $label = $row['Label_ID'];
+            $ip = $row['IP'];
             $creation_date = $row['creation_date'];
             $status = $row['status'];
             $description = $row['description'];
@@ -267,9 +264,11 @@ class Ticket{
                                 $label,
                                 $concernee,
                                 $description,
+                                $ip,
                                 $creation_date,
                                 $status,
-                                $techician);
+                                $techician
+                                );
             $tickets[] = $ticket;
         }
         return $tickets;
@@ -291,6 +290,7 @@ class Ticket{
             $techician = $row['Technician_ID'];
             $urgence_level = $row['urgence_level'];
             $label = $row['Label_ID'];
+            $ip = $row['IP'];
             $creation_date = $row['creation_date'];
             $status = $row['status'];
             $description = $row['description'];
@@ -300,9 +300,11 @@ class Ticket{
                                 $label,
                                 $concernee,
                                 $description,
+                                $ip,
                                 $creation_date,
                                 $status,
-                                $techician);
+                                $techician
+                                );
             $tickets[] = $ticket;
         }
         return $tickets;
@@ -328,6 +330,7 @@ class Ticket{
             $label = $row['Label_ID'];
             $creation_date = $row['creation_date'];
             $status = $row['status'];
+            $ip = $row['IP'];
             $description = $row['description'];
             $concernee = $row['concernee'];
             $ticket = new Ticket($uid, 
@@ -335,6 +338,7 @@ class Ticket{
                                 $label,
                                 $concernee,
                                 $description,
+                                $ip,
                                 $creation_date,
                                 $status,
                                 $techician);
@@ -361,6 +365,7 @@ class Ticket{
             $label = $row['Label_ID'];
             $creation_date = $row['creation_date'];
             $status = $row['status'];
+            $ip = $row['IP'];
             $description = $row['description'];
             $concernee = $row['concernee'];
             $ticket = new Ticket($uid, 
@@ -368,6 +373,7 @@ class Ticket{
                                 $label,
                                 $concernee,
                                 $description,
+                                $ip,
                                 $creation_date,
                                 $status,
                                 $techician);

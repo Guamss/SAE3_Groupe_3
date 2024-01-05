@@ -21,6 +21,7 @@ if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='tech
             <th>Date de création</th>
             <th>Niveau d'urgence</th>
             <th>Etat</th>
+            <th>Adresse IP</th>
             <th>Modifier l'état</th>
             </tr>
         </thead>
@@ -39,6 +40,7 @@ if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='tech
                     <td>'.$ticket->getDate().'</td>
                     <td>'.$niveauxUrgence[$urgence].'</td>
                     <td>'.$ticket->getStatus().'</td>
+                    <td>'.$ticket->getIP().'</td>
                     <td>
                     <form method="POST" action="index.php?uc=dashboard&action=modifierEtat">
                     <input type="hidden" name="uid" value="' . $ticket->getUID() . '">
@@ -48,6 +50,9 @@ if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='tech
                     <input type="hidden" name="label_ID" value="' . $ticket->getLabelID() . '">
                     <input type="hidden" name="status" value="' . $ticket->getStatus() . '">
                     <input type="hidden" name="desc" value="' . $ticket->getDescription() . '">
+                    <input type="hidden" name="concernee" value="' . $ticket->getConcernee() . '">
+                    <input type="hidden" name="IP" value="' . $ticket->getIP() . '">
+                    
                     <button type="submit">Modifier</button>
                     </form>
                     </td>

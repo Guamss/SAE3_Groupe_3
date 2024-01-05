@@ -13,15 +13,9 @@ class User
         $this->uid = $argUid;
         if ($this->role == "user")
         {
-            $request = "SELECT Ticket_ID, 
-                        Technician_ID, 
-                        UID,
-                        urgence_level, 
-                        Label_ID, 
-                        creation_date, 
-                        status, 
-                        description,
-                        concernee FROM Ticket WHERE UID = ? OR concernee = ?";
+            $request = "SELECT * FROM Ticket WHERE 
+            (UID = ? OR concernee = ?)
+            AND status != 'Fermé';";
             $conn = Connexion::getConn();
             $stmt = $conn->prepare($request);
             $stmt->bind_param("ii", $this->uid, $this->uid);
@@ -29,7 +23,7 @@ class User
             $result = $stmt->get_result();
             if ($result->num_rows > 0)
             {
-                while($row = $result->fetch_assoc()) 
+                while($row = $result->fetch_assoc())
                 {
                     $techician = $row['Technician_ID'];
                     $uid = $row['UID'];
@@ -37,6 +31,7 @@ class User
                     $label = $row['Label_ID'];
                     $creation_date = $row['creation_date'];
                     $status = $row['status'];
+                    $ip = $row['IP'];
                     $concernee = $row['concernee'];
                     $description = $row['description'];
                     $ticket = new Ticket($uid,
@@ -44,6 +39,7 @@ class User
                                         $label,
                                         $concernee,
                                         $description,
+                                        $ip,
                                         $creation_date,
                                         $status,
                                         $techician);
@@ -81,8 +77,9 @@ class User
                 creation_date, 
                 status,
                 description,
-                concernee
-            ) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                concernee,
+                IP
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             
             $uid = $ticket->getUID();
             $urgence = $ticket->getUrgence();
@@ -91,15 +88,17 @@ class User
             $status = $ticket->getStatus();
             $desc = $ticket->getDescription();
             $concernee = $ticket->getConcernee();
+            $ip = $ticket->getIP();
             
-            $stmt->bind_param("iiisssi",
+            $stmt->bind_param("iiisssis",
                 $uid,
                 $urgence,
                 $label,
                 $date,
                 $status,
                 $desc,
-                $concernee);
+                $concernee,
+                $ip);
             
             if ($stmt->execute())
             {
@@ -108,9 +107,8 @@ class User
                     2 => 'Important',
                     3 => 'Moyen',
                     4 => 'Faible');
-                $ipAddress = $_SERVER['REMOTE_ADDR'];
                 $details = 'L\'utilisateur '.$this->login.' a créé un ticket d\'urgence '.$niveauxUrgence[$urgence].'';
-                $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Ticket', $details, $ipAddress);
+                $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Ticket', $details, $ip);
                 write("log", "history.log", $message);
             }
             $this->tickets[] = $ticket;
@@ -161,11 +159,11 @@ class User
         return $technicians;
     }
 
-    public static function getAllUID(): array
+    public static function getAllUser(): array
     {
         $concernees = array();
     
-        $request = "SELECT * FROM user WHERE role='user' ORDER BY login;";
+        $request = "SELECT * FROM User WHERE role='user' ORDER BY login;";
         $conn = Connexion::getConn();
         $stmt = $conn->prepare($request);
         $stmt->execute();

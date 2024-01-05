@@ -15,12 +15,15 @@
             echo '<input type="hidden" name="desc" value="' . $_POST['desc'] . '">';
             echo '<input type="hidden" name="date" value="' . $_POST['date'] . '">';
             echo '<input type="hidden" name="status" value="' . $_POST['status'] . '">';
+            echo '<input type="hidden" name="concernee" value="' . $_POST['concernee'] . '">';
+            echo '<input type="hidden" name="IP" value="' . $_POST['IP'] . '">';
+
         ?>
         <label for="tec">Sélectionnez un technicien :</label>
         <select name="tec" id="tec" required>
         <option value="" disabled selected>Aucun technicien sélectionné</option>
             <?php
-                $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['Label_ID'], $_POST['desc'], $_POST['date'], $_POST['status'], $_POST['tec']);
+                $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['Label_ID'], $_POST['concernee'], $_POST['desc'], $_POST['IP'], $_POST['date'], $_POST['status'], $_POST['tec']);
                 $tecs = User::getAllTechnicians();
                 foreach ($tecs as $tec) {
                     echo '<option value="' . $tec->getUID() . '">' . $tec->getLogin() . '</option>';

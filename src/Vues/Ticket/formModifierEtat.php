@@ -16,12 +16,15 @@
             echo '<input type="hidden" name="date" value="' . $_POST['date'] . '">';
             echo '<input type="hidden" name="status" value="' . $_POST['status'] . '">';
             echo '<input type="hidden" name="tec" value="' . $_POST['tec'] . '">';
+            echo '<input type="hidden" name="concernee" value="' . $_POST['concernee'] . '">';
+            echo '<input type="hidden" name="IP" value="' . $_POST['IP'] . '">';
+
             echo "
         <label for='etat'>Modifier l'état du Ticket :</label>
         <select name='etat' id='etat' required>
         <option value='' disabled selected>".$_POST['status']."</option>";
         
-                $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['Label_ID'], $_POST['desc'], $_POST['date'], $_POST['status'], $_POST['tec']);
+                $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['Label_ID'], $_POST['concernee'], $_POST['desc'], $_POST['IP'], $_POST['date'], $_POST['status'], $_POST['tec']);
                 foreach ($states as $state) 
                 {
                     if ($state != "Ouvert" && $_POST['status'] != $state)

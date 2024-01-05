@@ -84,6 +84,7 @@ function traitementClick() {
                                 <th>Niveau d'urgence</th>
                                 <th>Technicien</th>
                                 <th>Etat</th>
+                                <th>Adresse IP</th>
                               </tr>
                           </thead>
                           <tbody>";
@@ -104,6 +105,7 @@ function traitementClick() {
                               <td>'.$niveauxUrgence[$urgence].'</td>
                               <td>'.$technician.'</td>
                               <td>'.$ticket->getStatus().'</td>
+                              <td>'.$ticket->getIP().'</td>
                             </tr>';
                         }
                         echo '</tbody>
@@ -139,6 +141,7 @@ function traitementClick() {
                             <th>Niveau d'urgence</th>
                             <th>Technicien</th>
                             <th>Etat</th>
+                            <th>Adresse IP</th>
                           </tr>
                       </thead>
                       <tbody>";
@@ -161,6 +164,7 @@ function traitementClick() {
                             <td>'.$niveauxUrgence[$urgence].'</td>
                             <td>'.$technician.'</td>
                             <td>'.$ticket->getStatus().'</td>
+                            <td>'.$ticket->getIP().'</td>
                           </tr>';
                       }
                       echo '</tbody>
@@ -192,6 +196,7 @@ function traitementClick() {
                                   <th>Concerné</th>
                                   <th>Date de création</th>
                                   <th>Niveau d'urgence</th>
+                                  <th>Adresse IP</th>
                                   <th>Assigner à un technicien</th>
                                 </tr>
                             </thead>
@@ -211,6 +216,7 @@ function traitementClick() {
                                   <td>'.User::getLoginByUID($id).'</td>
                                   <td>'.$ticket->getDate().'</td>
                                   <td>'.$niveauxUrgence[$urgence].'</td>
+                                  <td>'.$ticket->getIP().'</td>
                                   <td>
                                     <form method="POST" action="index.php?uc=dashboard&action=assignerTicketWebadmin">
                                     <input type="hidden" name="uid" value="' . $ticket->getUID() . '">
@@ -219,6 +225,8 @@ function traitementClick() {
                                     <input type="hidden" name="label_ID" value="' . $ticket->getLabelID() . '">
                                     <input type="hidden" name="status" value="' . $ticket->getStatus() . '">
                                     <input type="hidden" name="desc" value="' . $ticket->getDescription() . '">
+                                    <input type="hidden" name="concernee" value="' . $ticket->getConcernee() . '">
+                                    <input type="hidden" name="IP" value="' . $ticket->getIP() . '">
                                     <button type="submit">+</button>
                                     </form>
                                   </td>
@@ -252,6 +260,7 @@ function traitementClick() {
                                   <th>Concerné</th>
                                   <th>Date de création</th>
                                   <th>Niveau d'urgence</th>
+                                  <th>Adresse IP</th>
                                   <th>Prendre en charge</th>
                                 </tr>
                             </thead>
@@ -272,6 +281,7 @@ function traitementClick() {
                                   <td>'.User::getLoginByUID($id).'</td>
                                   <td>'.$ticket->getDate().'</td>
                                   <td>'.$niveauxUrgence[$urgence].'</td>
+                                  <td>'.$ticket->getIP().'</td>
                                   <td>
                                     <form method="POST" action="index.php?uc=dashboard&action=assignerTicketTec">
                                     <input type="hidden" name="uid" value="' . $ticket->getUID() . '">
@@ -281,6 +291,8 @@ function traitementClick() {
                                     <input type="hidden" name="label_ID" value="' . $ticket->getLabelID() . '">
                                     <input type="hidden" name="status" value="' . $ticket->getStatus() . '">
                                     <input type="hidden" name="desc" value="' . $ticket->getDescription() . '">
+                                    <input type="hidden" name="concernee" value="' . $ticket->getConcernee() . '">
+                                    <input type="hidden" name="IP" value="' . $ticket->getIP() . '">
                                     <button type="submit">+</button>
                                     </form>
                                   </td>
@@ -315,9 +327,6 @@ function traitementClick() {
                             <th>Demandeur</th>
                             <th>Concerné</th>
                             <th>Date de création</th>
-                            <th>Niveau d'urgence</th>
-                            <th>Technicien</th>
-                            <th>Etat</th>
                           </tr>
                       </thead>
                       <tbody>";
@@ -326,9 +335,6 @@ function traitementClick() {
                           $uid = $ticket->getUID();
                           $login = User::getLoginByUID($uid);
                           $label = $ticket->getLabelID();
-                          $technician_ID = $ticket->getTechnician();
-                          $technician = $technician_ID == null ? "Aucun technicien" : User::getLoginByUID($technician_ID);
-                          $urgence = $ticket->getUrgence();
                           $id = $ticket->getConcernee();
                           echo '
                           <tr> 
@@ -337,13 +343,17 @@ function traitementClick() {
                             <td>'.User::getLoginByUID($ticket->getUID()).'</td>
                             <td>'.User::getLoginByUID($id).'</td>
                             <td>'.$ticket->getDate().'</td>
-                            <td>'.$niveauxUrgence[$urgence].'</td>
-                            <td>'.$technician.'</td>
-                            <td>'.$ticket->getStatus().'</td>
                           </tr>';
                       }
                       echo '</tbody>
                       </table>';
+                  }
+                  else
+                  {
+                      echo "<div class='messages'>
+                      <h2>Rien ne s'affiche?</h2>
+                      <p>Aucun ticket n'a été créé jusqu'à présent ou tout les tickets ont été fermé par un technicien.</p>
+                      </div>";
                   }
                 }
               ?>

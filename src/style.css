@@ -845,3 +845,14 @@ footer p{
   }
 /*Fin MENU*/
 }
+
+#submitButton.disabled
+{
+    background-color: #808080;
+    cursor: not-allowed;
+}
+
+#submitButton.disabled:hover
+{
+    background-color: #808080;
+}

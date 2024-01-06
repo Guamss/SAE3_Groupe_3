@@ -15,7 +15,7 @@ switch($action)
         break;
     
     case 'validerFormTec' :
-        if ((isset($_SESSION["user"], $_POST['pwd'], $_POST['login'])) && unserialize($_SESSION['user'])->getRole() == 'webadmin' && !(empty($_POST['pwd']) && empty($_POST['login'])))
+        if ((isset($_SESSION["user"], $_POST['pwd'], $_POST['login'])) && unserialize($_SESSION['user'])->getRole() == 'webadmin' && !empty($_POST['pwd']) && !empty($_POST['login']))
         {
             include('Modeles/rc4.php');
             try
@@ -107,6 +107,10 @@ switch($action)
             {
                 header('Location: index.php?uc=inscription&action=errorConnexion');
             }
+        }
+        else if (isset($_SESSION['user']))
+        {
+            header('Location: index.php');
         }
         else
         {
@@ -209,6 +213,10 @@ switch($action)
                 }
             } 
         }
+        else if(isset($_SESSION['user']))
+        {
+            header('Location: index.php');
+        }
         else
         {
             header('Location: index.php?uc=inscription&action=errorInscription');
@@ -256,36 +264,57 @@ switch($action)
         break;
 
     case 'errorInscriptionDupli' :
-        echo "<div class='messages'>
-                <p style='color:red;'>Une erreure est survenue, l'utilisateur existe déjà !</p>
-            </div>";
-        include('Vues/User/formInscription.php');
-        $ipAddress = $_SERVER['REMOTE_ADDR'];
-        $details = 'Un utilisateur a tenté de créer un compte qui existe déjà';
-        $message = getLogMessage(date('Y-m-d H:i:s'), 'ERROR', 'Inscription', $details, $ipAddress);
-        write("log", $logfile, $message);
+        if (isset($_SESSION['user']))
+        {
+            header('Location: index.php');
+        }
+        else
+        {
+            echo "<div class='messages'>
+                    <p style='color:red;'>Une erreure est survenue, l'utilisateur existe déjà !</p>
+                </div>";
+            include('Vues/User/formInscription.php');
+            $ipAddress = $_SERVER['REMOTE_ADDR'];
+            $details = 'Un utilisateur a tenté de créer un compte qui existe déjà';
+            $message = getLogMessage(date('Y-m-d H:i:s'), 'ERROR', 'Inscription', $details, $ipAddress);
+            write("log", $logfile, $message);
+        }
         break;
     
     case 'errorInscription':
-        echo "<div class='messages'>
-                <p style='color:red;'>Une erreure est survenue, vérifiez bien votre saisie !</p>
-            </div>";
-        include('Vues/User/formInscription.php');
-        $ipAddress = $_SERVER['REMOTE_ADDR'];
-        $details = 'Un utilisateur a tenté de créer un compte mais une erreur est survenue';
-        $message = getLogMessage(date('Y-m-d H:i:s'), 'ERROR', 'Inscription', $details, $ipAddress);
-        write("log", $logfile, $message);
+        if (isset($_SESSION['user']))
+        {
+            header('Location: index.php');
+        }
+        else
+        {
+            echo "<div class='messages'>
+                    <p style='color:red;'>Une erreure est survenue, vérifiez bien votre saisie !</p>
+                </div>";
+            include('Vues/User/formInscription.php');
+            $ipAddress = $_SERVER['REMOTE_ADDR'];
+            $details = 'Un utilisateur a tenté de créer un compte mais une erreur est survenue';
+            $message = getLogMessage(date('Y-m-d H:i:s'), 'ERROR', 'Inscription', $details, $ipAddress);
+            write("log", $logfile, $message);
+        }
         break;
     
     case 'errorConnexion':
-        echo "<div class='messages'>
-                <p style='color:red;'>Nous n'avons pas trouvé votre utilisateur !</p>
-            </div>";
-        include('Vues/User/formConnexion.php');
-        $ipAddress = $_SERVER['REMOTE_ADDR'];
-        $details = 'Un utilisateur a tenté de se connecter';
-        $message = getLogMessage(date('Y-m-d H:i:s'), 'ERROR', 'Connexion', $details, $ipAddress);
-        write("log", $logfile, $message);
+        if (isset($_SESSION['user']))
+        {
+            header('Location: index.php');
+        }
+        else
+        {
+            echo "<div class='messages'>
+                    <p style='color:red;'>Nous n'avons pas trouvé votre utilisateur !</p>
+                </div>";
+            include('Vues/User/formConnexion.php');
+            $ipAddress = $_SERVER['REMOTE_ADDR'];
+            $details = 'Un utilisateur a tenté de se connecter';
+            $message = getLogMessage(date('Y-m-d H:i:s'), 'ERROR', 'Connexion', $details, $ipAddress);
+            write("log", $logfile, $message);
+        }
         break;
 
     default :

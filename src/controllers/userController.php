@@ -154,7 +154,7 @@ switch($action)
                 $num2 = $_POST["num2"];
                 $captcha = $_POST['captcha'];
             
-                if ($num1 + $num2 == $captcha) 
+                if ($num1 + $num2 == $captcha)
                 {
                     $_POST['pwd'] = rc4Encrypt($_POST['pwd']);
             
@@ -197,6 +197,10 @@ switch($action)
                     {
                         header('Location: index.php?uc=inscription&action=errorInscription');
                     }
+                }
+                else
+                {
+                    header('Location: index.php?uc=inscription&action=errorInscription');
                 }
             } 
             catch (Exception $e) 

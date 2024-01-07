@@ -22,4 +22,8 @@ else
 {
     echo '<h2>Le fichier de journal n\'existe pas</h2>';
 }
+echo '<br>
+      <br>
+      <br>
+      <br>';
 ?>

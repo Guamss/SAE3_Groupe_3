@@ -8,8 +8,10 @@
 
     function init()
     {
+        var header = document.getElementsByTagName('header');
+        var headerHeight = header[0].clientHeight;
         var iframe = document.getElementById("iframe");
         iframe.setAttribute("width", window.innerWidth);
-        iframe.setAttribute("height", window.innerHeight);
+        iframe.setAttribute("height", window.innerHeight + headerHeight);
     }
 </script>

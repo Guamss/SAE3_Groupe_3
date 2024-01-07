@@ -1,4 +1,15 @@
 
 <div class="iframe">
-    <iframe src="http://192.168.1.34:3838/sae3/" width="1850" height="1080"></iframe>
+    <iframe id ="iframe" src="http://192.168.1.34:3838/sae3/"></iframe>
 </div>
+
+<script>
+    window.onload = init;
+
+    function init()
+    {
+        var iframe = document.getElementById("iframe");
+        iframe.setAttribute("width", window.innerWidth);
+        iframe.setAttribute("height", window.innerHeight);
+    }
+</script>

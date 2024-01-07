@@ -32,47 +32,21 @@ CREATE TABLE Ticket (
     FOREIGN key (concernee) REFERENCES User(UID)
 );
 
-
-
--- ajout des contraintes
-ALTER TABLE User
-ADD CONSTRAINT unique_login UNIQUE (login);
-
--- ajout des contraintes
-ALTER TABLE User
-ADD CONSTRAINT unique_login UNIQUE (login);
-
 -- ajout des procédures
 
 -- ajouter un utilisateur
 DELIMITER $$
-CREATE PROCEDURE Insert_User(
+CREATE PROCEDURE AddUser(
     IN p_login VARCHAR(50),
     IN p_password VARCHAR(50)
 )
 BEGIN
-    IF LENGTH(p_password) >= 8 and LENGTH(p_password) <= 30 THEN
+    IF LENGTH(p_password) >= 10 and LENGTH(p_password) <= 60 THEN
         INSERT INTO User (login, password)
         VALUES (p_login, p_password);
     ELSE
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le mot de passe doit avoir au moins 8 caractères.';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le mot de passe doit avoir au moins 5 caractères et maximum 30.';
     END IF;
-END $$
-DELIMITER ;
-
--- regarder les tickets qui ont été crées pour un utilisateur 
-DELIMITER $$
-CREATE PROCEDURE UserTickets(
-	IN userID INT
-)
-BEGIN
-    SET @query = CONCAT('SELECT t.Ticket_ID, t.Label_ID, t.urgence_level, t.creation_date, t.status, t.description
-                         FROM Ticket t
-                         INNER JOIN User u ON t.UID = u.UID
-                         WHERE u.UID = ', userID);
-    PREPARE statement FROM @query;
-    EXECUTE statement;
-    DEALLOCATE PREPARE statement;
 END $$
 DELIMITER ;
 
@@ -82,7 +56,9 @@ CREATE PROCEDURE AddTicket(
     IN p_UID INT,
     IN p_Label_ID INT,  
     IN p_urgence_level INT,
-    IN p_description TEXT
+    IN p_description TEXT,
+    IN p_concernee INT,
+    IN p_IP INT
 )
 BEGIN
     DECLARE user_exists INT;
@@ -90,8 +66,8 @@ BEGIN
     SELECT COUNT(*) INTO user_exists FROM User WHERE UID = p_UID;
 
     IF p_urgence_level BETWEEN 1 AND 4 AND user_exists = 1 THEN
-        INSERT INTO Ticket (UID, Label_ID, urgence_level, description)
-        VALUES (p_UID, p_Label_ID, p_urgence_level, p_description);
+        INSERT INTO Ticket (UID, Label_ID, urgence_level, description, concernee, IP)
+        VALUES (p_UID, p_Label_ID, p_urgence_level, p_description, p_concernee, p_IP);
     ELSE
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Les informations données ne sont pas correct';
     END IF;
@@ -111,35 +87,6 @@ DELIMITER ;
 
 -- fermer un ticket
 DELIMITER $$
-
-CREATE PROCEDURE DeleteTicket(
-    IN p_UID INT,
-    IN p_TicketID INT
-)
-BEGIN
-    DECLARE ticket_exists INT;
-    DECLARE user_good INT;
-
-    SELECT COUNT(*) INTO ticket_exists FROM Ticket WHERE Ticket_ID = p_TicketID;
-    SELECT COUNT(*) INTO user_good FROM Ticket WHERE Ticket_ID = p_TicketID AND UID = p_UID;
-
-    IF ticket_exists > 0 AND user_good > 0 THEN
-        DELETE FROM Ticket WHERE Ticket_ID = p_TicketID;
-    ELSE
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Les informations données ne sont pas correct';
-    END IF;
-END $$
-DELIMITER ;
-
--- Procédure pour afficher les tickets créés au cours des 7 derniers jours
-DELIMITER $$
-CREATE PROCEDURE TicketsCreatedLast7Days()
-BEGIN
-    SELECT Ticket_ID, UID, Technician_ID, Label_ID, urgence_level, creation_date, status, description
-    FROM Ticket
-    WHERE creation_date >= CURDATE() - INTERVAL 7 DAY;
-END $$
-DELIMITER ;
 
 -- procedure permettant d'assigner un technicien a un ticket 
 DELIMITER $$

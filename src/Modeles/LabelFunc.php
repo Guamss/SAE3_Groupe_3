@@ -13,8 +13,7 @@ function archive($id): void
 
 function addLabel($name): void
 {
-    $request = "INSERT INTO Label
-                (name) VALUES (?);";
+    $request = "CALL addLabel(?);";
     $conn = Connexion::getConn();
     $stmt = $conn->prepare($request);
     $stmt->bind_param("s", $name);

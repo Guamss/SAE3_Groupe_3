@@ -1,6 +1,7 @@
 
 
 <?php
+date_default_timezone_set('Europe/Paris');
 include "Modeles/Ticket.php";
 include "Modeles/LabelFunc.php";
 include_once "Modeles/User.php";

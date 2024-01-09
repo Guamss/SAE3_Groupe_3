@@ -70,35 +70,21 @@ class User
         if ($this->role == "user")
         {
             $conn = Connexion::getConn();
-            $stmt = $conn->prepare("INSERT INTO Ticket (
-                UID,
-                urgence_level,
-                Label_ID,
-                creation_date, 
-                status,
-                description,
-                concernee,
-                IP
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            
+            $stmt = $conn->prepare("CALL addTicket(?, ?, ?, ?, ?, ?);");
             $uid = $ticket->getUID();
-            $urgence = $ticket->getUrgence();
             $label = $ticket->getLabelID();
-            $date = date("Y-m-d H:i:s"); // Reformater la date si nécessaire
-            $status = $ticket->getStatus();
+            $urgence = $ticket->getUrgence();
             $desc = $ticket->getDescription();
             $concernee = $ticket->getConcernee();
             $ip = $ticket->getIP();
             
-            $stmt->bind_param("iiisssis",
-                $uid,
-                $urgence,
-                $label,
-                $date,
-                $status,
-                $desc,
-                $concernee,
-                $ip);
+            $stmt->bind_param("iiisis",
+                    $uid,
+                    $label,
+                    $urgence,
+                    $desc,
+                    $concernee,
+                    $ip);
             
             if ($stmt->execute())
             {

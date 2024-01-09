@@ -1,5 +1,5 @@
-CREATE database SAE3_groupe3;
-USE SAE3_groupe3;
+CREATE database SAE3;
+USE SAE3;
 
 -- creation des tables
 CREATE TABLE User (
@@ -58,7 +58,7 @@ CREATE PROCEDURE AddTicket(
     IN p_urgence_level INT,
     IN p_description TEXT,
     IN p_concernee INT,
-    IN p_IP INT
+    IN p_IP VARCHAR(50)
 )
 BEGIN
     DECLARE user_exists INT;

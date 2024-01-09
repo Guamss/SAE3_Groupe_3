@@ -64,11 +64,11 @@ class Ticket{
         $this->technician_ID = $technician;
         $this->label_ID = $label;
         $this->urgence_level = $urgence_level;
-        $this->creation_date = $date ?: date("Y-m-d H:i:s"); // Utilise la date actuelle si $date n'est pas fourni
         $this->status = $status;
         $this->concernee = $concernee;
         $this->description = $description;
         $this->IP = $IP;
+        $this->creation_date = $date ?: date("Y-m-d H:i:s");
     }
 
 

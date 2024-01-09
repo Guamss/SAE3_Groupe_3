@@ -160,11 +160,11 @@ switch($action)
             
                     $conn = Connexion::getConn();
                     
-                    $stmt = $conn->prepare('INSERT INTO User (role, login, password) VALUES (?, ?, ?);');
+                    $stmt = $conn->prepare('CALL addUser(?, ?);');
                     $login = htmlspecialchars($_POST['login']);
                     $pwd = htmlspecialchars($_POST['pwd']);
                     $role = "user";
-                    $stmt->bind_param("sss", $role, $login, $pwd);
+                    $stmt->bind_param("ss", $login, $pwd);
                     
                     if ($stmt->execute()) 
                     {

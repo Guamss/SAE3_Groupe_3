@@ -1,16 +1,50 @@
 <?php
-
+/**
+ * Classe représentant un utilisateur.
+ */
 class User
 {
+
+     /**------------------------DÉFINITION DES CHAMPS------------------------------- */
+
+    /**
+     * UID de l'utilisateur.
+     * @var int
+     */
     private $uid;
+
+    /**
+     * Rôle de l'utilisateur
+     * @var string
+     */
     private $role;
+
+    /**
+     * Login de l'utilisateur.
+     * @var string
+     */
     private $login;
+
+    /**
+     * Tableau des tickets associés à l'utilisateur.
+     * @var array
+     */
     private $tickets = array();
+
+    /**
+     * Constructeur de la classe User.
+     *
+     * @param int    $argUid   UID de l'utilisateur.
+     * @param string $argLogin Login de l'utilisateur.
+     * @param string $argRole  Rôle de l'utilisateur.
+     */
     public function __construct($argUid, $argLogin, $argRole)
     {
         $this->login = $argLogin;
         $this->role = $argRole;
         $this->uid = $argUid;
+
+        // Si l'utilisateur est un utilisateur standard, récupère ses tickets non fermés.
         if ($this->role == "user")
         {
             $request = "SELECT * FROM Ticket WHERE 
@@ -49,22 +83,55 @@ class User
         }   
     }
 
+    /* ------------------------METHODES------------------------------- */
+
+    /**
+     * Obtient le login de l'utilisateur.
+     *
+     * @return string Le login de l'utilisateur.
+     */
     public function getLogin(): string
     {
         return $this->login;
     }
+
+    /**
+     * Obtient le rôle de l'utilisateur.
+     *
+     * @return string Le rôle de l'utilisateur.
+     */
     public function getRole(): string
     {
         return $this->role;
     }
+
+    /**
+     * Obtient l'UID de l'utilisateur.
+     *
+     * @return int L'UID de l'utilisateur.
+     */
     public function getUid(): int
     {
         return $this->uid;
     }
+
+    /**
+     * Obtient les tickets associés à l'utilisateur.
+     *
+     * @return array Un tableau d'objets Ticket représentant les tickets associés à l'utilisateur.
+     */
     public function getTickets(): array
     {
         return $this->tickets;
     }
+
+    /**
+     * Crée un nouveau ticket pour l'utilisateur.
+     *
+     * @param Ticket $ticket Le nouveau ticket à créer.
+     *
+     * @return void
+     */
     public function createTicket(Ticket $ticket): void
     {
         if ($this->role == "user")
@@ -101,6 +168,14 @@ class User
         }
     }
 
+
+    /**
+     * Obtient le login d'un utilisateur à partir de son UID.
+     *
+     * @param int $uid L'UID de l'utilisateur.
+     *
+     * @return string Le login de l'utilisateur correspondant à l'UID donné.
+     */
     public static function getLoginByUID(int $uid): string
     {
         $requete = "SELECT login 
@@ -121,6 +196,11 @@ class User
         return (string)$login;
     }
 
+    /**
+     * Obtient tous les techniciens enregistrés dans le système.
+     *
+     * @return array Un tableau d'objets User représentant tous les techniciens.
+     */
     public static function getAllTechnicians(): array
     {
         $technicians = array();
@@ -145,6 +225,11 @@ class User
         return $technicians;
     }
 
+    /**
+     * Obtient tous les utilisateurs standard enregistrés dans le système.
+     *
+     * @return array Un tableau associatif des utilisateurs standard, indexé par UID, contenant le login.
+     */
     public static function getAllUser(): array
     {
         $concernees = array();

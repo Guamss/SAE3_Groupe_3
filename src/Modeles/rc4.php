@@ -1,17 +1,25 @@
 <?php
+/**
+ * Chiffre le texte donné en utilisant l'algorithme RC4 avec la clé spécifiée.
+ *
+ * @param string $text Le texte à chiffrer.
+ *
+ * @return string Le texte chiffré au format hexadécimal.
+ */
 function rc4Encrypt($text) 
 {
+    // Lire la clé de cryptage depuis le fichier JSON
     $json = file_get_contents('json/key.json');
     $data = json_decode($json, true);
     $key = $data["key"];
 
     $keyStream = initializeKeyStream($key);
-    $encryptedText = '';
+    $textChiffre = '';
 
     $i = $j = 0;
-    $textLength = strlen($text);
+    $longueurTexte = strlen($text);
 
-    for ($k = 0; $k < $textLength; $k++) {
+    for ($k = 0; $k < $longueurTexte; $k++) {
         $i = ($i + 1) % 256;
         $j = ($j + $keyStream[$i]) % 256;
 
@@ -20,21 +28,29 @@ function rc4Encrypt($text)
         $keyStream[$j] = $temp;
 
         $char = ord($text[$k]) ^ $keyStream[($keyStream[$i] + $keyStream[$j]) % 256];
-        $encryptedText .= chr($char);
+        $textChiffre .= chr($char);
     }
 
-    return bin2hex($encryptedText);
+    return bin2hex($textChiffre);
 }
 
-function rc4Decrypt($key, $encryptedText) {
+/**
+ * Déchiffre le texte chiffré donné en utilisant l'algorithme RC4 avec la clé spécifiée.
+ *
+ * @param string $key           La clé utilisée pour le déchiffrement.
+ * @param string $texteChiffre Le texte chiffré au format hexadécimal.
+ *
+ * @return string Le texte déchiffré.
+ */
+function rc4Decrypt($key, $texteChiffre) {
     $keyStream = initializeKeyStream($key);
-    $encryptedText = hex2bin($encryptedText);
-    $decryptedText = '';
+    $texteChiffre = hex2bin($texteChiffre);
+    $texteDechiffre = '';
 
     $i = $j = 0;
-    $textLength = strlen($encryptedText);
+    $longueurTexte = strlen($texteChiffre);
 
-    for ($k = 0; $k < $textLength; $k++) {
+    for ($k = 0; $k < $longueurTexte; $k++) {
         $i = ($i + 1) % 256;
         $j = ($j + $keyStream[$i]) % 256;
 
@@ -42,27 +58,33 @@ function rc4Decrypt($key, $encryptedText) {
         $keyStream[$i] = $keyStream[$j];
         $keyStream[$j] = $temp;
 
-        $char = ord($encryptedText[$k]) ^ $keyStream[($keyStream[$i] + $keyStream[$j]) % 256];
-        $decryptedText .= chr($char);
+        $char = ord($texteChiffre[$k]) ^ $keyStream[($keyStream[$i] + $keyStream[$j]) % 256];
+        $texteDechiffre .= chr($char);
     }
 
-    return $decryptedText;
+    return $texteDechiffre;
 }
 
+/**
+ * Initialise le flux de clé RC4 en fonction de la clé fournie.
+ *
+ * @param string $key La clé utilisée pour initialiser le flux de clé RC4.
+ *
+ * @return array Le flux de clé RC4 initialisé.
+ */
 function initializeKeyStream($key) {
-    $keyLength = strlen($key);
-    $keyStream = range(0, 255);
+    $longueurCle = strlen($key);
+    $fluxCle = range(0, 255);
     $j = 0;
 
     for ($i = 0; $i < 256; $i++) {
-        $j = ($j + $keyStream[$i] + ord($key[$i % $keyLength])) % 256;
+        $j = ($j + $fluxCle[$i] + ord($key[$i % $longueurCle])) % 256;
 
-        $temp = $keyStream[$i];
-        $keyStream[$i] = $keyStream[$j];
-        $keyStream[$j] = $temp;
+        $temp = $fluxCle[$i];
+        $fluxCle[$i] = $fluxCle[$j];
+        $fluxCle[$j] = $temp;
     }
 
-    return $keyStream;
+    return $fluxCle;
 }
-
 ?>

@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * Archive le label avec l'ID spécifié en mettant le champ 'archivé' à 1.
+ *
+ * @param int $id L'ID du label à archiver.
+ *
+ * @return void
+ */
 function archive($id): void
 {
     $request = "UPDATE Label
@@ -11,6 +17,13 @@ function archive($id): void
     $stmt->execute();
 }
 
+/**
+ * Ajoute un nouveau label avec le nom spécifié en appelant la procédure addLabel.
+ *
+ * @param string $name Le nom du label à ajouter.
+ *
+ * @return void
+ */
 function addLabel($name): void
 {
     $request = "CALL addLabel(?);";
@@ -20,18 +33,33 @@ function addLabel($name): void
     $stmt->execute();
 }
 
+/**
+ * Met à jour le nom du label avec l'ID spécifié.
+ *
+ * @param string $name Le nouveau nom du label.
+ * @param int    $id   L'ID du label à mettre à jour.
+ *
+ * @return void
+ */
 function updateLabel($name, $id): void
 {
     $request = "UPDATE Label
-    SET name = ?
-    WHERE Label_ID = ?";
-$conn = Connexion::getConn();
-$stmt = $conn->prepare($request);
-$stmt->bind_param("si", $name, $id);
-$stmt->execute();
+                SET name = ?
+                WHERE Label_ID = ?";
+    $conn = Connexion::getConn();
+    $stmt = $conn->prepare($request);
+    $stmt->bind_param("si", $name, $id);
+    $stmt->execute();
 }
 
-function getLabelNameById($id): string
+/**
+ * Récupère le nom du label associé à l'ID spécifié.
+ *
+ * @param int $id L'ID du label à récupérer.
+ *
+ * @return string|null Le nom du label, ou null si l'ID n'existe pas.
+ */
+function getLabelNameById($id): ?string
 {
     $request = "SELECT name FROM Label WHERE Label_ID=?";
     $conn = Connexion::getConn();
@@ -49,7 +77,13 @@ function getLabelNameById($id): string
     }
     return null;
 }
-    
+
+/**
+ * Récupère tous les labels non archivés de la base de données.
+ *
+ * @return array Un tableau associatif contenant les informations sur chaque label.
+ *               La clé est l'ID du label, la valeur est un tableau contenant le nom et l'état d'archivage.
+ */
 function getAllLabels(): array
 {
     $labels = array();
@@ -72,6 +106,4 @@ function getAllLabels(): array
     }
     return $labels;
 }
-
-
 ?>

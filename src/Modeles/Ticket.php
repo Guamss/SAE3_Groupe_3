@@ -1,63 +1,78 @@
 <?php
+/**
+ * Classe Ticket.
+ */
 class Ticket{
 
-/**------------------------DEFINITION DES CHAMPS------------------------------- */
+    /**------------------------DÉFINITION DES CHAMPS------------------------------- */
 
     /**
-     *  UserID du ticket
+     * UserID du ticket.
      * @var int
      */
-
     private $UID;
 
     /**
-     *  Id du technicien assigné au ticket
+     * ID du technicien assigné au ticket.
      * @var int
      */
     private $technician_ID;
 
     /**
-     *  niveau d'urgence du ticket
+     * Niveau d'urgence du ticket.
      * @var int
      */
     private $urgence_level;
     
     /**
-     *  date de création du ticket
+     * Date de création du ticket.
      * @var string
      */
     private $creation_date;
     
     /**
-     *  label_id du ticket
+     * Label_ID du ticket.
      * @var int
      */
     private $label_ID;
     
     /**
-     *  Status du ticket
+     * Statut du ticket.
      * @var string
      */
     private $status;
     
     /**
-     *  description du ticket
+     * Description du ticket.
      * @var string
      */
     private $description;
     
     /**
-     *  description du ticket
+     * Adresse IP associée au ticket.
      * @var int
      */
     private $IP;
 
+    /**
+     * Entité concernée par le ticket.
+     * @var mixed
+     */
     private $concernee;
-
-
-        
-
-/* ------------------------ACESSEURS------------------------------- */
+    
+    /**
+     * Constructeur de la classe Ticket.
+     *
+     * @param int    $UID           UserID du ticket.
+     * @param int    $urgence_level Niveau d'urgence du ticket.
+     * @param int    $label         Label_ID du ticket.
+     * @param mixed  $concernee     Entité concernée par le ticket.
+     * @param string $description   Description du ticket.
+     * @param int    $IP            Adresse IP associée au ticket.
+     * @param string $date          Date de création du ticket (optionnel, par défaut la date actuelle).
+     * @param string $status        Statut du ticket (optionnel, par défaut "Ouvert").
+     * @param int    $technician    ID du technicien assigné au ticket (optionnel, par défaut null).
+     */
     public function __construct($UID, $urgence_level, $label, $concernee, $description, $IP, $date = null, $status = "Ouvert", $technician = null)
     {
         $this->UID = $UID;
@@ -71,14 +86,23 @@ class Ticket{
         $this->creation_date = $date ?: date("Y-m-d H:i:s");
     }
 
+    /* ------------------------METHODES------------------------------- */
 
+
+    /**
+     * Obtient l'adresse IP associée au ticket.
+     *
+     * @return string L'adresse IP associée au ticket.
+     */
     public function getIP(): string
     {
         return $this->IP;
     }
 
-    /**
-     * Get the value of UID
+   /**
+     * Obtient le UserID du ticket.
+     *
+     * @return int Le UserID du ticket.
      */
     public function getUID(): int
     {
@@ -86,7 +110,9 @@ class Ticket{
     }
 
     /**
-     * Get Technicien_ID du ticket
+     * Obtient l'ID du technicien assigné au ticket.
+     *
+     * @return int|null L'ID du technicien assigné au ticket, ou null s'il n'y en a pas.
      */
     public function getTechnician()
     {
@@ -94,7 +120,21 @@ class Ticket{
     }
 
     /**
-     * Set Technicien_ID du ticket
+     * Obtient le niveau d'urgence du ticket.
+     *
+     * @return int Le niveau d'urgence du ticket.
+     */
+    public function getUrgence(): int
+    {
+        return $this->urgence_level;
+    }
+
+    /**
+     * Définit l'ID du technicien assigné au ticket.
+     *
+     * @param int $argtechnician_ID Le nouvel ID du technicien.
+     *
+     * @return void
      */
     public function setTechnician(int $argtechnician_ID): void
     {
@@ -131,17 +171,12 @@ class Ticket{
         $this->technician_ID = $argtechnician_ID;
     }
 
-
     /**
-     * Get urgence_level du ticket
-     */
-    public function getUrgence(): int
-    {
-        return $this->urgence_level;
-    }
-
-    /**
-     * Set urgence_level du ticket
+     * Définit le niveau d'urgence du ticket.
+     *
+     * @param int $argUrgence_level Le nouveau niveau d'urgence.
+     *
+     * @return void
      */
     public function setUrgence(int $argUrgence_level): void
     {
@@ -149,7 +184,9 @@ class Ticket{
     }
 
     /**
-     * Get creation_date du ticket
+     * Obtient la date de création du ticket.
+     *
+     * @return string La date de création du ticket.
      */
     public function getDate(): string
     {
@@ -157,14 +194,19 @@ class Ticket{
     }
 
     /**
-     * Get title du ticket
+     * Obtient le Label_ID du ticket.
+     *
+     * @return int Le Label_ID du ticket.
      */
     public function getLabelID(): string
     {
         return $this->label_ID;
     }
+
     /**
-     * Get status du ticket
+     * Obtient le statut du ticket.
+     *
+     * @return string Le statut du ticket.
      */
     public function getStatus(): string
     {
@@ -172,7 +214,11 @@ class Ticket{
     }
 
     /**
-     * Set status du ticket
+     * Définit le statut du ticket.
+     *
+     * @param string $status Le nouveau statut du ticket.
+     *
+     * @return void
      */
     public function setStatus(string $status)
     {
@@ -212,7 +258,9 @@ class Ticket{
     }
 
     /**
-     * Get description du ticket
+     * Obtient la description du ticket.
+     *
+     * @return string La description du ticket.
      */
     public function getDescription(): string
     {
@@ -220,7 +268,11 @@ class Ticket{
     }
 
     /**
-     * Set description du ticket
+     * Définit la description du ticket.
+     *
+     * @param string $description La nouvelle description du ticket.
+     *
+     * @return void
      */
     public function setDescription(string $description)
     {
@@ -228,13 +280,20 @@ class Ticket{
     }
 
     /**
-     * Get concernee du ticket
+     * Obtient la personne concernée par le ticket.
+     *
+     * @return mixed La personne concernée par le ticket.
      */
     public function getConcernee()
     {
         return $this->concernee;
     }
     
+    /**
+     * Obtient les dix derniers tickets non fermés, triés par date de création.
+     *
+     * @return array Un tableau d'objets Ticket représentant les dix derniers tickets non fermés.
+     */
     public static function getLastTickets(): array
     {
         $tickets = array();
@@ -274,6 +333,11 @@ class Ticket{
         return $tickets;
     }
     
+    /**
+     * Obtient les tickets sans technicien assigné.
+     *
+     * @return array Un tableau d'objets Ticket représentant les tickets sans technicien assigné.
+     */
     public static function getTicketsWithoutTechnician(): array
     {
         $tickets = array();
@@ -310,6 +374,13 @@ class Ticket{
         return $tickets;
     }
 
+    /**
+     * Obtient les tickets assignés à un technicien spécifique.
+     *
+     * @param int $technician_ID L'ID du technicien.
+     *
+     * @return array Un tableau d'objets Ticket représentant les tickets assignés au technicien spécifié.
+     */
     public static function getTicketsWithTechnician($technician_ID): array
     {
         $tickets = array();
@@ -347,6 +418,11 @@ class Ticket{
         return $tickets;
     }
 
+    /**
+     * Obtient les tickets fermés.
+     *
+     * @return array Un tableau d'objets Ticket représentant les tickets fermés.
+     */
     public static function getClosedTickets(): array
     {
         $tickets = array();

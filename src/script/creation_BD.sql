@@ -32,6 +32,12 @@ CREATE TABLE Ticket (
     FOREIGN key (concernee) REFERENCES User(UID)
 );
 
+-- password : monstrewebadmin&
+INSERT INTO `User`(role, login, password) VALUES ('webadmin', 'gestion', 'e03c30822e8C19f335ae15982227a264');
+
+--password : monstreadmin&
+INSERT INTO `User`(role, login, password) VALUES ('sysadmin', 'admin', 'e03c30822e8c19e534a11d9269');
+
 -- ajout des procédures
 
 -- ajouter un utilisateur

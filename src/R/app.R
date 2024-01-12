@@ -70,16 +70,13 @@ ui = fluidPage(
              ),
              sidebarLayout(
                sidebarPanel(
-                 h4("Calculer la probabilité que le nombre de visiteur pour le prochain mois choisi soit inférieur ou supérieur à la moyenne ou à la médiane :"),
+                 h4("Calculer la probabilité que le nombre de visiteur pour le prochain mois soit inférieur ou supérieur à la moyenne :"),
                  fluidRow(
-                   column(4,
+                   column(6,
                           selectInput("mois_future", "Mois :", choices = mois_disponibles)
                    ),
-                   column(4,
+                   column(6,
                           selectInput("position", "Position :", choices = c("inférieur", "supérieur"))
-                   ),
-                   column(4,
-                          selectInput("statistique", "Statistique :", choices = c("moyenne", "mediane"))
                    ),
                    column(12,
                           actionButton("calculer_probabilite", "Calculer", class = "btn-primary")
@@ -253,28 +250,28 @@ server = function(input, output) {
       })
       
       output$interpretation_stats = renderUI({
-        if(!is.null(moyenne_visiteurs) && !is.null(mediane_visiteurs)){
-          if(moyenne_visiteurs > mediane_visiteurs){
-            renderText("la moyenne est supérieur a la médianne ce qui veu dire ???")
+        interpretations <- character(0)  # Initialisation d'un vecteur de caractères vide
+        
+        if (!is.null(moyenne_visiteurs) && !is.null(mediane_visiteurs) && !is.null(ecart_type_visiteurs)) {
+          if (moyenne_visiteurs > mediane_visiteurs) {
+            interpretations <- c(interpretations, "La moyenne est supérieure à la médiane, c'est-à-dire qu'il y a une concentration plus importante de valeurs basses qui tirent la moyenne vers le bas. \n")
           }
-          if(moyenne_visiteurs < mediane_visiteurs){
-            renderText("la moyenne est inférieur a la médianne ce qui veut dire que ???")
+          if (moyenne_visiteurs < mediane_visiteurs) {
+            interpretations <- c(interpretations, "La moyenne est inférieure à la médiane, c'est-à-dire qu'il y a une concentration plus importante de valeurs élevées qui tirent la moyenne vers le haut. \n")
           }
+          if (ecart_type_visiteurs > (moyenne_visiteurs/2)) {
+            interpretations <- c(interpretations, "Le résultat de l'écart type nous montre que certaines données sont très éloignées de la moyenne. \n")
+          }
+          if (ecart_type_visiteurs < mediane_visiteurs/2) {
+            interpretations <- c(interpretations, "Le résultat de l'écart type nous montre que certaines données sont très éloignées de la médiane. \n")
+          }
+        } else {
+          interpretations <- c(interpretations, "Veuillez sélectionner plus de calcul de statistiques pour avoir une interprétation plus approfondie. \n")
         }
-        if(!is.null(moyenne_visiteurs) && !is.null(ecart_type_visiteurs)){
-          if(ecart_type_visiteurs > (moyenne_visiteurs/2)){
-            renderText("Le résultats de l'écart Type nous montre que certaine donné sont trés éloignée de la moyenne")
-          }
-        }
-        if(!is.null(mediane_visiteurs) && !is.null(ecart_type_visiteurs)){
-          if(ecart_type_visiteurs < mediane_visiteurs/2){
-            renderText("Le résultats de l'écart Type nous montre que certaine donné sont trés éloignée de la médianne")
-          }
-        }else{
-          renderText("Veuillez sélectionner plus de calcule de statistique pour avoir une interprétation plus approfondie")
-        }
+        
+        renderText(paste(interpretations, collapse = "\n"))
       })
-      
+    
     } else {
       output$resultat_stats = renderText("Veuillez sélectionner une période valide")
     }
@@ -341,31 +338,22 @@ server = function(input, output) {
   
   observeEvent(input$calculer_probabilite, {
     
-    # Sélection des données pour le mois choisi
     donnees_mois_choisi <- filter(data, mois == input$mois_future)
+    print(donnees_mois_choisi)
     
-    # Calcul de la moyenne et de la médiane du mois choisi
     moyenne_mois_choisi <- mean(donnees_mois_choisi$nombre_visiteurs)
-    mediane_mois_choisi <- median(donnees_mois_choisi$nombre_visiteurs)
-    
-    # Sélection de la statistique choisie (moyenne ou médiane)
-    statistique_choisie <- ifelse(input$statistique == "moyenne", moyenne_mois_choisi, mediane_mois_choisi)
-    
-    # Calcul de l'écart-type du mois choisi
     ecart_type_mois_choisi <- sd(donnees_mois_choisi$nombre_visiteurs)
     
-    # Calcul de la probabilité
     if (input$position == "inférieur") {
-      probabilite <- pnorm(statistique_choisie, mean = moyenne_mois_choisi, sd = ecart_type_mois_choisi)
+      probabilite <- pnorm(moyenne_mois_choisi, mean = moyenne_mois_choisi, sd = ecart_type_mois_choisi)
     } else {
-      probabilite = 1 - pnorm(statistique_choisie, mean = moyenne_mois_choisi, sd = ecart_type_mois_choisi)
+      probabilite = 1 - pnorm(moyenne_mois_choisi, mean = moyenne_mois_choisi, sd = ecart_type_mois_choisi)
     }
     
-    # Affichage du résultat
+    # Affichage du résultat avec un arrondi plus précis
     output$probabilite_result = renderText({
-      paste("La probabilité que le nombre de visiteurs du prochain mois de", input$mois_future,
-            "soit", input$position, "à la", input$statistique, "est de",
-            round(probabilite * 100, 2), "%.")
+      paste("La probabilité que le nombre de visiteurs du prochain mois choisi soit", input$position, "à la moyenne est de",
+            round(probabilite * 100, 5), "%.")
     })
   })
   

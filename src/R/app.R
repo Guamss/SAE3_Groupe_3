@@ -70,7 +70,7 @@ ui = fluidPage(
              ),
              sidebarLayout(
                sidebarPanel(
-                 h4("Calculer la probabilité que le nombre de visiteur pour le prochain mois soit inférieur ou supérieur à la moyenne :"),
+                 h4("Calculer la probabilité que le nombre de visiteurs pour le prochain mois soit inférieur ou supérieur à la moyenne :"),
                  fluidRow(
                    column(6,
                           selectInput("mois_future", "Mois :", choices = mois_disponibles)
@@ -89,7 +89,7 @@ ui = fluidPage(
                mainPanel(
                  style = "text-align: center;",
                  wellPanel(
-                   h4("Graphique des moyennes et des médiannes du nombre de visiteur pour chaque mois toutes années confondue :"),
+                   h4("Graphique des moyennes et des médianes du nombre de visiteur pour chaque mois toutes années confondue :"),
                    plotOutput("graphique_moyenne")
                  )
                )
@@ -115,7 +115,7 @@ ui = fluidPage(
                           numericInput("ajouter_annee", "Année :", value = 2024)
                    )
                  ),
-                 numericInput("ajouter_visiteur", "Nombre de visiteur :", value = 0),
+                 numericInput("ajouter_visiteur", "Nombre de visiteurs :", value = 0),
                  actionButton("ajouter", "Ajouter", class = "btn-primary mt-3")
                ),
                
@@ -131,7 +131,7 @@ ui = fluidPage(
                           selectInput("modifier_annee", "Année :", choices = annees_disponibles)
                    )
                  ),
-                 numericInput("modifier_visiteur", "Nombre de visiteur :", value = 0),
+                 numericInput("modifier_visiteur", "Nombre de visiteurs :", value = 0),
                  actionButton("modifier", "Modifier",class = "btn-primary mt-3")
                ),
                
@@ -311,9 +311,9 @@ server = function(input, output) {
     if(nrow(date_existante_modif) > 0){
       data[data$mois == mois_modifier & data$annee == annee_modifier, "nombre_visiteurs"] <- visiteur_modifier
       
-      showNotification("Le nombre de visiteur a bien était changer !", type = "message")
+      showNotification("Le nombre de visiteur a bien était changée !", type = "message")
     }else {
-      showNotification("La date choises n'existe pas. Veuillez sélectionner une autre date.", type = "warning")
+      showNotification("La date choisie n'existe pas. Veuillez sélectionner une autre date.", type = "warning")
     }
   })
   
@@ -328,9 +328,9 @@ server = function(input, output) {
       
       write.table(data, "sae.csv", sep = ";", row.names = FALSE, quote = FALSE, col.names = TRUE)
       
-      showNotification("Ces données ont bien était supprimer !", type = "message")
+      showNotification("Ces données ont bien été supprimées !", type = "message")
     }else {
-      showNotification("La date choises n'existe pas. Veuillez sélectionner une autre date.", type = "warning")
+      showNotification("La date choisie n'existe pas. Veuillez sélectionner une autre date.", type = "warning")
     }
   })
   

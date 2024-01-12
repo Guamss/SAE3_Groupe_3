@@ -17,7 +17,7 @@
     elseif (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='user')
     {
         echo '
-        <h2>Vous êtes conecté</h2>
+        <h2>Vous êtes connecté</h2>
         <p>Bonjour '.unserialize($_SESSION['user'])->getLogin().' si vous rencontrez un problème n\'hésitez pas à rédiger un ticket.</p>';
     }
     ?>

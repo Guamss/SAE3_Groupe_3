@@ -70,7 +70,7 @@ ui = fluidPage(
              ),
              sidebarLayout(
                sidebarPanel(
-                 h4("Calculer la probabilité que le nombre de visiteurs pour le prochain mois soit inférieur ou supérieur à la moyenne :"),
+                 h4("Calculer la probabilité que le nombre de visiteurs pour le prochain mois soit inférieur ou supérieur à la médianne :"),
                  fluidRow(
                    column(6,
                           selectInput("mois_future", "Mois :", choices = mois_disponibles)
@@ -342,12 +342,13 @@ server = function(input, output) {
     print(donnees_mois_choisi)
     
     moyenne_mois_choisi <- mean(donnees_mois_choisi$nombre_visiteurs)
+    mediane_mois_choisi <- median(donnees_mois_choisi$nombre_visiteurs)
     ecart_type_mois_choisi <- sd(donnees_mois_choisi$nombre_visiteurs)
     
     if (input$position == "inférieur") {
-      probabilite <- pnorm(moyenne_mois_choisi, mean = moyenne_mois_choisi, sd = ecart_type_mois_choisi)
+      probabilite <- pnorm(mediane_mois_choisi, mean = moyenne_mois_choisi, sd = ecart_type_mois_choisi)
     } else {
-      probabilite = 1 - pnorm(moyenne_mois_choisi, mean = moyenne_mois_choisi, sd = ecart_type_mois_choisi)
+      probabilite = 1 - pnorm(mediane_mois_choisi, mean = moyenne_mois_choisi, sd = ecart_type_mois_choisi)
     }
     
     # Affichage du résultat avec un arrondi plus précis
@@ -362,13 +363,13 @@ server = function(input, output) {
       group_by(mois) %>%
       summarize(moyenne = mean(nombre_visiteurs), mediane = median(nombre_visiteurs))
     
-    ggplot(moyennes_medians_par_mois, aes(x = mois)) +
+    ggplot(moyennes_medians_par_mois, aes(x = reorder(mois, as.integer(factor(mois, levels = month.name))), y = nombre_visiteurs)) +
       geom_point(aes(y = moyenne, color = "Moyenne"), size = 5) +
       geom_point(aes(y = mediane, color = "Médiane"), size = 5) +
       geom_segment(aes(x = mois, xend = mois, y = 0, yend = moyenne), color = "gray", size = 1) +
       geom_segment(aes(x = mois, xend = mois, y = 0, yend = mediane), color = "gray", size = 1) +
       geom_text(aes(y = moyenne, label = round(moyenne, 1)), vjust = -0.5, hjust = 1.5, color = "black", size = 3.5) +
-      geom_text(aes(y = mediane, label = round(mediane, 1)), vjust = -0.5, hjust = -0.5, color = "black", size = 3) +
+      geom_text(aes(y = mediane, label = round(mediane, 1)), vjust = -0.5, hjust = -0.5, color = "black", size = 3.5) +
       labs(title = "Moyennes et Médianes du Nombre de Visiteurs par Mois",
            x = "Mois",
            y = "Nombre de Visiteurs") +

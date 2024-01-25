@@ -1,0 +1,299 @@
+\doxysection{Ticket Class Reference}
+\hypertarget{classTicket}{}\label{classTicket}\index{Ticket@{Ticket}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTicket_a90e640febfe85e71a53962bee96529c0}{\+\_\+\+\_\+construct}} (\$UID, \$urgence\+\_\+level, \$label, \$concernee, \$description, \$IP, \$date=null, \$status=\"{}Ouvert\"{}, \$technician=null)
+\item 
+\mbox{\hyperlink{classTicket_aeddfd4b9d7c39f7f21e530b5c76d169b}{get\+IP}} ()
+\item 
+\mbox{\hyperlink{classTicket_a7915cfd95ff7c1c39919aaff383b5b04}{get\+UID}} ()
+\item 
+\mbox{\hyperlink{classTicket_a54a8a3bc6c6091b451739268dc76d416}{get\+Technician}} ()
+\item 
+\mbox{\hyperlink{classTicket_a6f936158d1c6e5ef8172da1ec5acc9f8}{get\+Urgence}} ()
+\item 
+\mbox{\hyperlink{classTicket_a3c900ec718267ae961f377d478c10883}{set\+Technician}} (int \$argtechnician\+\_\+\+ID)
+\item 
+\mbox{\hyperlink{classTicket_a705cce4405d5bd3f7da1e0406996fd52}{set\+Urgence}} (int \$arg\+Urgence\+\_\+level)
+\item 
+\mbox{\hyperlink{classTicket_a1af13beaa9cf57155f33e6e2c00fa503}{get\+Date}} ()
+\item 
+\mbox{\hyperlink{classTicket_afc19a847862aea5c2469278289fd349c}{get\+Label\+ID}} ()
+\item 
+\mbox{\hyperlink{classTicket_af09548afeefddb6c2c258eb33a4cb5ca}{get\+Status}} ()
+\item 
+\mbox{\hyperlink{classTicket_a2669165052fb6cc79ebee590de6d0c9a}{set\+Status}} (string \$status)
+\item 
+\mbox{\hyperlink{classTicket_ac3eb08afa061b3e15cdc91c2456fdc86}{get\+Description}} ()
+\item 
+\mbox{\hyperlink{classTicket_a05065768c713dbbb949e8b3580a05fda}{set\+Description}} (string \$description)
+\item 
+\mbox{\hyperlink{classTicket_a73686a31eb601a6006e4b65c3b14f2bc}{get\+Concernee}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classTicket_ac71d8db1f542dcec44c6d128a43b106f}{get\+Last\+Tickets}} ()
+\item 
+static \mbox{\hyperlink{classTicket_a659b8e00bc21729e430a571d139021a0}{get\+Tickets\+Without\+Technician}} ()
+\item 
+static \mbox{\hyperlink{classTicket_a72299fa7d50d4c9a0a3aef545c5904fe}{get\+Tickets\+With\+Technician}} (\$technician\+\_\+\+ID)
+\item 
+static \mbox{\hyperlink{classTicket_afde46f1114d3a5d8a1cceaabc0d75245}{get\+Closed\+Tickets}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Classe \doxylink{classTicket}{Ticket}. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classTicket_a90e640febfe85e71a53962bee96529c0}\label{classTicket_a90e640febfe85e71a53962bee96529c0} 
+\index{Ticket@{Ticket}!\_\_construct@{\_\_construct}}
+\index{\_\_construct@{\_\_construct}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{\_\_construct()}{\_\_construct()}}
+{\footnotesize\ttfamily Ticket\+::\+\_\+\+\_\+construct (\begin{DoxyParamCaption}\item[{}]{\$\+UID,  }\item[{}]{\$urgence\+\_\+level,  }\item[{}]{\$label,  }\item[{}]{\$concernee,  }\item[{}]{\$description,  }\item[{}]{\$\+IP,  }\item[{}]{\$date = {\ttfamily null},  }\item[{}]{\$status = {\ttfamily \"{}Ouvert\"{}},  }\item[{}]{\$technician = {\ttfamily null} }\end{DoxyParamCaption})}
+
+Constructeur de la classe \doxylink{classTicket}{Ticket}.
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$\+UID} & User\+ID du ticket. \\
+\hline
+int & {\em \$urgence\+\_\+level} & Niveau d\textquotesingle{}urgence du ticket. \\
+\hline
+int & {\em \$label} & Label\+\_\+\+ID du ticket. \\
+\hline
+mixed & {\em \$concernee} & Entité concernée par le ticket. \\
+\hline
+string & {\em \$description} & Description du ticket. \\
+\hline
+int & {\em \$\+IP} & Adresse IP associée au ticket. \\
+\hline
+string & {\em \$date} & Date de création du ticket (optionnel, par défaut la date actuelle). \\
+\hline
+string & {\em \$status} & Statut du ticket (optionnel, par défaut \"{}\+Ouvert\"{}). \\
+\hline
+int & {\em \$technician} & ID du technicien assigné au ticket (optionnel, par défaut null). \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classTicket_afde46f1114d3a5d8a1cceaabc0d75245}\label{classTicket_afde46f1114d3a5d8a1cceaabc0d75245} 
+\index{Ticket@{Ticket}!getClosedTickets@{getClosedTickets}}
+\index{getClosedTickets@{getClosedTickets}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getClosedTickets()}{getClosedTickets()}}
+{\footnotesize\ttfamily static Ticket\+::get\+Closed\+Tickets (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Obtient les tickets fermés.
+
+\begin{DoxyReturn}{Returns}
+array Un tableau d\textquotesingle{}objets \doxylink{classTicket}{Ticket} représentant les tickets fermés. 
+\end{DoxyReturn}
+\Hypertarget{classTicket_a73686a31eb601a6006e4b65c3b14f2bc}\label{classTicket_a73686a31eb601a6006e4b65c3b14f2bc} 
+\index{Ticket@{Ticket}!getConcernee@{getConcernee}}
+\index{getConcernee@{getConcernee}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getConcernee()}{getConcernee()}}
+{\footnotesize\ttfamily Ticket\+::get\+Concernee (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Obtient la personne concernée par le ticket.
+
+\begin{DoxyReturn}{Returns}
+mixed La personne concernée par le ticket. 
+\end{DoxyReturn}
+\Hypertarget{classTicket_a1af13beaa9cf57155f33e6e2c00fa503}\label{classTicket_a1af13beaa9cf57155f33e6e2c00fa503} 
+\index{Ticket@{Ticket}!getDate@{getDate}}
+\index{getDate@{getDate}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getDate()}{getDate()}}
+{\footnotesize\ttfamily Ticket\+::get\+Date (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Obtient la date de création du ticket.
+
+\begin{DoxyReturn}{Returns}
+string La date de création du ticket. 
+\end{DoxyReturn}
+\Hypertarget{classTicket_ac3eb08afa061b3e15cdc91c2456fdc86}\label{classTicket_ac3eb08afa061b3e15cdc91c2456fdc86} 
+\index{Ticket@{Ticket}!getDescription@{getDescription}}
+\index{getDescription@{getDescription}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getDescription()}{getDescription()}}
+{\footnotesize\ttfamily Ticket\+::get\+Description (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Obtient la description du ticket.
+
+\begin{DoxyReturn}{Returns}
+string La description du ticket. 
+\end{DoxyReturn}
+\Hypertarget{classTicket_aeddfd4b9d7c39f7f21e530b5c76d169b}\label{classTicket_aeddfd4b9d7c39f7f21e530b5c76d169b} 
+\index{Ticket@{Ticket}!getIP@{getIP}}
+\index{getIP@{getIP}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getIP()}{getIP()}}
+{\footnotesize\ttfamily Ticket\+::get\+IP (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Obtient l\textquotesingle{}adresse IP associée au ticket.
+
+\begin{DoxyReturn}{Returns}
+string L\textquotesingle{}adresse IP associée au ticket. 
+\end{DoxyReturn}
+\Hypertarget{classTicket_afc19a847862aea5c2469278289fd349c}\label{classTicket_afc19a847862aea5c2469278289fd349c} 
+\index{Ticket@{Ticket}!getLabelID@{getLabelID}}
+\index{getLabelID@{getLabelID}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getLabelID()}{getLabelID()}}
+{\footnotesize\ttfamily Ticket\+::get\+Label\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Obtient le Label\+\_\+\+ID du ticket.
+
+\begin{DoxyReturn}{Returns}
+int Le Label\+\_\+\+ID du ticket. 
+\end{DoxyReturn}
+\Hypertarget{classTicket_ac71d8db1f542dcec44c6d128a43b106f}\label{classTicket_ac71d8db1f542dcec44c6d128a43b106f} 
+\index{Ticket@{Ticket}!getLastTickets@{getLastTickets}}
+\index{getLastTickets@{getLastTickets}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getLastTickets()}{getLastTickets()}}
+{\footnotesize\ttfamily static Ticket\+::get\+Last\+Tickets (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Obtient les dix derniers tickets non fermés, triés par date de création.
+
+\begin{DoxyReturn}{Returns}
+array Un tableau d\textquotesingle{}objets \doxylink{classTicket}{Ticket} représentant les dix derniers tickets non fermés. 
+\end{DoxyReturn}
+\Hypertarget{classTicket_af09548afeefddb6c2c258eb33a4cb5ca}\label{classTicket_af09548afeefddb6c2c258eb33a4cb5ca} 
+\index{Ticket@{Ticket}!getStatus@{getStatus}}
+\index{getStatus@{getStatus}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getStatus()}{getStatus()}}
+{\footnotesize\ttfamily Ticket\+::get\+Status (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Obtient le statut du ticket.
+
+\begin{DoxyReturn}{Returns}
+string Le statut du ticket. 
+\end{DoxyReturn}
+\Hypertarget{classTicket_a54a8a3bc6c6091b451739268dc76d416}\label{classTicket_a54a8a3bc6c6091b451739268dc76d416} 
+\index{Ticket@{Ticket}!getTechnician@{getTechnician}}
+\index{getTechnician@{getTechnician}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getTechnician()}{getTechnician()}}
+{\footnotesize\ttfamily Ticket\+::get\+Technician (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Obtient l\textquotesingle{}ID du technicien assigné au ticket.
+
+\begin{DoxyReturn}{Returns}
+int\texorpdfstring{$\vert$}{|}null L\textquotesingle{}ID du technicien assigné au ticket, ou null s\textquotesingle{}il n\textquotesingle{}y en a pas. 
+\end{DoxyReturn}
+\Hypertarget{classTicket_a659b8e00bc21729e430a571d139021a0}\label{classTicket_a659b8e00bc21729e430a571d139021a0} 
+\index{Ticket@{Ticket}!getTicketsWithoutTechnician@{getTicketsWithoutTechnician}}
+\index{getTicketsWithoutTechnician@{getTicketsWithoutTechnician}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getTicketsWithoutTechnician()}{getTicketsWithoutTechnician()}}
+{\footnotesize\ttfamily static Ticket\+::get\+Tickets\+Without\+Technician (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Obtient les tickets sans technicien assigné.
+
+\begin{DoxyReturn}{Returns}
+array Un tableau d\textquotesingle{}objets \doxylink{classTicket}{Ticket} représentant les tickets sans technicien assigné. 
+\end{DoxyReturn}
+\Hypertarget{classTicket_a72299fa7d50d4c9a0a3aef545c5904fe}\label{classTicket_a72299fa7d50d4c9a0a3aef545c5904fe} 
+\index{Ticket@{Ticket}!getTicketsWithTechnician@{getTicketsWithTechnician}}
+\index{getTicketsWithTechnician@{getTicketsWithTechnician}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getTicketsWithTechnician()}{getTicketsWithTechnician()}}
+{\footnotesize\ttfamily static Ticket\+::get\+Tickets\+With\+Technician (\begin{DoxyParamCaption}\item[{}]{\$technician\+\_\+\+ID }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Obtient les tickets assignés à un technicien spécifique.
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$technician\+\_\+\+ID} & L\textquotesingle{}ID du technicien.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array Un tableau d\textquotesingle{}objets \doxylink{classTicket}{Ticket} représentant les tickets assignés au technicien spécifié. 
+\end{DoxyReturn}
+\Hypertarget{classTicket_a7915cfd95ff7c1c39919aaff383b5b04}\label{classTicket_a7915cfd95ff7c1c39919aaff383b5b04} 
+\index{Ticket@{Ticket}!getUID@{getUID}}
+\index{getUID@{getUID}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getUID()}{getUID()}}
+{\footnotesize\ttfamily Ticket\+::get\+UID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Obtient le User\+ID du ticket.
+
+\begin{DoxyReturn}{Returns}
+int Le User\+ID du ticket. 
+\end{DoxyReturn}
+\Hypertarget{classTicket_a6f936158d1c6e5ef8172da1ec5acc9f8}\label{classTicket_a6f936158d1c6e5ef8172da1ec5acc9f8} 
+\index{Ticket@{Ticket}!getUrgence@{getUrgence}}
+\index{getUrgence@{getUrgence}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{getUrgence()}{getUrgence()}}
+{\footnotesize\ttfamily Ticket\+::get\+Urgence (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Obtient le niveau d\textquotesingle{}urgence du ticket.
+
+\begin{DoxyReturn}{Returns}
+int Le niveau d\textquotesingle{}urgence du ticket. 
+\end{DoxyReturn}
+\Hypertarget{classTicket_a05065768c713dbbb949e8b3580a05fda}\label{classTicket_a05065768c713dbbb949e8b3580a05fda} 
+\index{Ticket@{Ticket}!setDescription@{setDescription}}
+\index{setDescription@{setDescription}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{setDescription()}{setDescription()}}
+{\footnotesize\ttfamily Ticket\+::set\+Description (\begin{DoxyParamCaption}\item[{string}]{\$description }\end{DoxyParamCaption})}
+
+Définit la description du ticket.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$description} & La nouvelle description du ticket.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{classTicket_a2669165052fb6cc79ebee590de6d0c9a}\label{classTicket_a2669165052fb6cc79ebee590de6d0c9a} 
+\index{Ticket@{Ticket}!setStatus@{setStatus}}
+\index{setStatus@{setStatus}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{setStatus()}{setStatus()}}
+{\footnotesize\ttfamily Ticket\+::set\+Status (\begin{DoxyParamCaption}\item[{string}]{\$status }\end{DoxyParamCaption})}
+
+Définit le statut du ticket.
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$status} & Le nouveau statut du ticket.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{classTicket_a3c900ec718267ae961f377d478c10883}\label{classTicket_a3c900ec718267ae961f377d478c10883} 
+\index{Ticket@{Ticket}!setTechnician@{setTechnician}}
+\index{setTechnician@{setTechnician}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{setTechnician()}{setTechnician()}}
+{\footnotesize\ttfamily Ticket\+::set\+Technician (\begin{DoxyParamCaption}\item[{int}]{\$argtechnician\+\_\+\+ID }\end{DoxyParamCaption})}
+
+Définit l\textquotesingle{}ID du technicien assigné au ticket.
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$argtechnician\+\_\+\+ID} & Le nouvel ID du technicien.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{classTicket_a705cce4405d5bd3f7da1e0406996fd52}\label{classTicket_a705cce4405d5bd3f7da1e0406996fd52} 
+\index{Ticket@{Ticket}!setUrgence@{setUrgence}}
+\index{setUrgence@{setUrgence}!Ticket@{Ticket}}
+\doxysubsubsection{\texorpdfstring{setUrgence()}{setUrgence()}}
+{\footnotesize\ttfamily Ticket\+::set\+Urgence (\begin{DoxyParamCaption}\item[{int}]{\$arg\+Urgence\+\_\+level }\end{DoxyParamCaption})}
+
+Définit le niveau d\textquotesingle{}urgence du ticket.
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$arg\+Urgence\+\_\+level} & Le nouveau niveau d\textquotesingle{}urgence.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Modeles/Ticket.\+php\end{DoxyCompactItemize}

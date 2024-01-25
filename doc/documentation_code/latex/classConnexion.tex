@@ -1,0 +1,33 @@
+\doxysection{Connexion Class Reference}
+\hypertarget{classConnexion}{}\label{classConnexion}\index{Connexion@{Connexion}}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classConnexion_a5b1e9e270da9bb2852227d12a4e42c12}{get\+Conn}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Classe \doxylink{classConnexion}{Connexion}
+
+Une classe pour gérer la connexion à la base de données en utilisant My\+SQLi. 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classConnexion_a5b1e9e270da9bb2852227d12a4e42c12}\label{classConnexion_a5b1e9e270da9bb2852227d12a4e42c12} 
+\index{Connexion@{Connexion}!getConn@{getConn}}
+\index{getConn@{getConn}!Connexion@{Connexion}}
+\doxysubsubsection{\texorpdfstring{getConn()}{getConn()}}
+{\footnotesize\ttfamily static Connexion\+::get\+Conn (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Obtient l\textquotesingle{}instance de connexion à la base de données.
+
+Lit la configuration de la base de données à partir d\textquotesingle{}un fichier JSON et établit une connexion à la base de données en utilisant My\+SQLi. Si le fichier JSON est absent ou comporte des configurations manquantes, il utilise des valeurs par défaut.
+
+\begin{DoxyReturn}{Returns}
+mysqli L\textquotesingle{}instance de connexion à la base de données My\+SQLi. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Modeles/Connexion.\+php\end{DoxyCompactItemize}

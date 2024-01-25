@@ -1,0 +1,155 @@
+\doxysection{User Class Reference}
+\hypertarget{classUser}{}\label{classUser}\index{User@{User}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classUser_aeec96379c8edb2180001c71d08f4d90e}{\+\_\+\+\_\+construct}} (\$arg\+Uid, \$arg\+Login, \$arg\+Role)
+\item 
+\mbox{\hyperlink{classUser_abb7fb2783594f43943adcaa292f060e4}{get\+Login}} ()
+\item 
+\mbox{\hyperlink{classUser_a48631449aeb5aa95800fa8f3a17eac11}{get\+Role}} ()
+\item 
+\mbox{\hyperlink{classUser_acefc123ba7acfbe2b3ef3b770c459aa0}{get\+Uid}} ()
+\item 
+\mbox{\hyperlink{classUser_a5afc45c09a1aab6e00494ddae5e21446}{get\+Tickets}} ()
+\item 
+\mbox{\hyperlink{classUser_ac5f7d230595adb79d9c29d988a9fe784}{create\+Ticket}} (\mbox{\hyperlink{classTicket}{Ticket}} \$ticket)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classUser_a93d1bf4f2204d6fee11379165daad5ce}{get\+Login\+By\+UID}} (int \$uid)
+\item 
+static \mbox{\hyperlink{classUser_a18e721f9d1c9f20a13e841d688bb6c0f}{get\+All\+Technicians}} ()
+\item 
+static \mbox{\hyperlink{classUser_abfc6f9cea34105ab5be3520cb4e064bb}{get\+All\+User}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Classe représentant un utilisateur. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classUser_aeec96379c8edb2180001c71d08f4d90e}\label{classUser_aeec96379c8edb2180001c71d08f4d90e} 
+\index{User@{User}!\_\_construct@{\_\_construct}}
+\index{\_\_construct@{\_\_construct}!User@{User}}
+\doxysubsubsection{\texorpdfstring{\_\_construct()}{\_\_construct()}}
+{\footnotesize\ttfamily User\+::\+\_\+\+\_\+construct (\begin{DoxyParamCaption}\item[{}]{\$arg\+Uid,  }\item[{}]{\$arg\+Login,  }\item[{}]{\$arg\+Role }\end{DoxyParamCaption})}
+
+Constructeur de la classe \doxylink{classUser}{User}.
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$arg\+Uid} & UID de l\textquotesingle{}utilisateur. \\
+\hline
+string & {\em \$arg\+Login} & Login de l\textquotesingle{}utilisateur. \\
+\hline
+string & {\em \$arg\+Role} & Rôle de l\textquotesingle{}utilisateur. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classUser_ac5f7d230595adb79d9c29d988a9fe784}\label{classUser_ac5f7d230595adb79d9c29d988a9fe784} 
+\index{User@{User}!createTicket@{createTicket}}
+\index{createTicket@{createTicket}!User@{User}}
+\doxysubsubsection{\texorpdfstring{createTicket()}{createTicket()}}
+{\footnotesize\ttfamily User\+::create\+Ticket (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTicket}{Ticket}}}]{\$ticket }\end{DoxyParamCaption})}
+
+Crée un nouveau ticket pour l\textquotesingle{}utilisateur.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\doxylink{classTicket}{Ticket} & {\em \$ticket} & Le nouveau ticket à créer.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\Hypertarget{classUser_a18e721f9d1c9f20a13e841d688bb6c0f}\label{classUser_a18e721f9d1c9f20a13e841d688bb6c0f} 
+\index{User@{User}!getAllTechnicians@{getAllTechnicians}}
+\index{getAllTechnicians@{getAllTechnicians}!User@{User}}
+\doxysubsubsection{\texorpdfstring{getAllTechnicians()}{getAllTechnicians()}}
+{\footnotesize\ttfamily static User\+::get\+All\+Technicians (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Obtient tous les techniciens enregistrés dans le système.
+
+\begin{DoxyReturn}{Returns}
+array Un tableau d\textquotesingle{}objets \doxylink{classUser}{User} représentant tous les techniciens. 
+\end{DoxyReturn}
+\Hypertarget{classUser_abfc6f9cea34105ab5be3520cb4e064bb}\label{classUser_abfc6f9cea34105ab5be3520cb4e064bb} 
+\index{User@{User}!getAllUser@{getAllUser}}
+\index{getAllUser@{getAllUser}!User@{User}}
+\doxysubsubsection{\texorpdfstring{getAllUser()}{getAllUser()}}
+{\footnotesize\ttfamily static User\+::get\+All\+User (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Obtient tous les utilisateurs standard enregistrés dans le système.
+
+\begin{DoxyReturn}{Returns}
+array Un tableau associatif des utilisateurs standard, indexé par UID, contenant le login. 
+\end{DoxyReturn}
+\Hypertarget{classUser_abb7fb2783594f43943adcaa292f060e4}\label{classUser_abb7fb2783594f43943adcaa292f060e4} 
+\index{User@{User}!getLogin@{getLogin}}
+\index{getLogin@{getLogin}!User@{User}}
+\doxysubsubsection{\texorpdfstring{getLogin()}{getLogin()}}
+{\footnotesize\ttfamily User\+::get\+Login (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Obtient le login de l\textquotesingle{}utilisateur.
+
+\begin{DoxyReturn}{Returns}
+string Le login de l\textquotesingle{}utilisateur. 
+\end{DoxyReturn}
+\Hypertarget{classUser_a93d1bf4f2204d6fee11379165daad5ce}\label{classUser_a93d1bf4f2204d6fee11379165daad5ce} 
+\index{User@{User}!getLoginByUID@{getLoginByUID}}
+\index{getLoginByUID@{getLoginByUID}!User@{User}}
+\doxysubsubsection{\texorpdfstring{getLoginByUID()}{getLoginByUID()}}
+{\footnotesize\ttfamily static User\+::get\+Login\+By\+UID (\begin{DoxyParamCaption}\item[{int}]{\$uid }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Obtient le login d\textquotesingle{}un utilisateur à partir de son UID.
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$uid} & L\textquotesingle{}UID de l\textquotesingle{}utilisateur.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string Le login de l\textquotesingle{}utilisateur correspondant à l\textquotesingle{}UID donné. 
+\end{DoxyReturn}
+\Hypertarget{classUser_a48631449aeb5aa95800fa8f3a17eac11}\label{classUser_a48631449aeb5aa95800fa8f3a17eac11} 
+\index{User@{User}!getRole@{getRole}}
+\index{getRole@{getRole}!User@{User}}
+\doxysubsubsection{\texorpdfstring{getRole()}{getRole()}}
+{\footnotesize\ttfamily User\+::get\+Role (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Obtient le rôle de l\textquotesingle{}utilisateur.
+
+\begin{DoxyReturn}{Returns}
+string Le rôle de l\textquotesingle{}utilisateur. 
+\end{DoxyReturn}
+\Hypertarget{classUser_a5afc45c09a1aab6e00494ddae5e21446}\label{classUser_a5afc45c09a1aab6e00494ddae5e21446} 
+\index{User@{User}!getTickets@{getTickets}}
+\index{getTickets@{getTickets}!User@{User}}
+\doxysubsubsection{\texorpdfstring{getTickets()}{getTickets()}}
+{\footnotesize\ttfamily User\+::get\+Tickets (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Obtient les tickets associés à l\textquotesingle{}utilisateur.
+
+\begin{DoxyReturn}{Returns}
+array Un tableau d\textquotesingle{}objets \doxylink{classTicket}{Ticket} représentant les tickets associés à l\textquotesingle{}utilisateur. 
+\end{DoxyReturn}
+\Hypertarget{classUser_acefc123ba7acfbe2b3ef3b770c459aa0}\label{classUser_acefc123ba7acfbe2b3ef3b770c459aa0} 
+\index{User@{User}!getUid@{getUid}}
+\index{getUid@{getUid}!User@{User}}
+\doxysubsubsection{\texorpdfstring{getUid()}{getUid()}}
+{\footnotesize\ttfamily User\+::get\+Uid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Obtient l\textquotesingle{}UID de l\textquotesingle{}utilisateur.
+
+\begin{DoxyReturn}{Returns}
+int L\textquotesingle{}UID de l\textquotesingle{}utilisateur. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\+Modeles/User.\+php\end{DoxyCompactItemize}

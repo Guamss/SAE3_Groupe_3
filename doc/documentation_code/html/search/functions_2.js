@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['getalltechnicians_0',['getAllTechnicians',['../classUser.html#a18e721f9d1c9f20a13e841d688bb6c0f',1,'User']]],
+  ['getalluser_1',['getAllUser',['../classUser.html#abfc6f9cea34105ab5be3520cb4e064bb',1,'User']]],
+  ['getclosedtickets_2',['getClosedTickets',['../classTicket.html#afde46f1114d3a5d8a1cceaabc0d75245',1,'Ticket']]],
+  ['getconcernee_3',['getConcernee',['../classTicket.html#a73686a31eb601a6006e4b65c3b14f2bc',1,'Ticket']]],
+  ['getconn_4',['getConn',['../classConnexion.html#a5b1e9e270da9bb2852227d12a4e42c12',1,'Connexion']]],
+  ['getdate_5',['getDate',['../classTicket.html#a1af13beaa9cf57155f33e6e2c00fa503',1,'Ticket']]],
+  ['getdescription_6',['getDescription',['../classTicket.html#ac3eb08afa061b3e15cdc91c2456fdc86',1,'Ticket']]],
+  ['getip_7',['getIP',['../classTicket.html#aeddfd4b9d7c39f7f21e530b5c76d169b',1,'Ticket']]],
+  ['getlabelid_8',['getLabelID',['../classTicket.html#afc19a847862aea5c2469278289fd349c',1,'Ticket']]],
+  ['getlasttickets_9',['getLastTickets',['../classTicket.html#ac71d8db1f542dcec44c6d128a43b106f',1,'Ticket']]],
+  ['getlogin_10',['getLogin',['../classUser.html#abb7fb2783594f43943adcaa292f060e4',1,'User']]],
+  ['getloginbyuid_11',['getLoginByUID',['../classUser.html#a93d1bf4f2204d6fee11379165daad5ce',1,'User']]],
+  ['getrole_12',['getRole',['../classUser.html#a48631449aeb5aa95800fa8f3a17eac11',1,'User']]],
+  ['getstatus_13',['getStatus',['../classTicket.html#af09548afeefddb6c2c258eb33a4cb5ca',1,'Ticket']]],
+  ['gettechnician_14',['getTechnician',['../classTicket.html#a54a8a3bc6c6091b451739268dc76d416',1,'Ticket']]],
+  ['gettickets_15',['getTickets',['../classUser.html#a5afc45c09a1aab6e00494ddae5e21446',1,'User']]],
+  ['getticketswithouttechnician_16',['getTicketsWithoutTechnician',['../classTicket.html#a659b8e00bc21729e430a571d139021a0',1,'Ticket']]],
+  ['getticketswithtechnician_17',['getTicketsWithTechnician',['../classTicket.html#a72299fa7d50d4c9a0a3aef545c5904fe',1,'Ticket']]],
+  ['getuid_18',['getUid',['../classUser.html#acefc123ba7acfbe2b3ef3b770c459aa0',1,'User']]],
+  ['getuid_19',['getUID',['../classTicket.html#a7915cfd95ff7c1c39919aaff383b5b04',1,'Ticket']]],
+  ['geturgence_20',['getUrgence',['../classTicket.html#a6f936158d1c6e5ef8172da1ec5acc9f8',1,'Ticket']]]
+];

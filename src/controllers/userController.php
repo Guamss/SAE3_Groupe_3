@@ -32,8 +32,8 @@ switch($action)
                     $user = unserialize($_SESSION['user']);
                     $ipAddress = $_SERVER['REMOTE_ADDR'];
                     $details = 'L\'administrateur web '.$user->getLogin().' a créé le technicien '.$login.' avec succès';
-                    $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Inscription', $details, $ipAddress);
-                    write("log", $logfile, $message);
+                    $message = getLogMessage(date('d/m/Y H:i:s'), 'INFO', 'Inscription', $details, $ipAddress);
+                    write("log/user/", $logUser, $message);
                     echo "<div class='messages'>
                     <h2>Le technicien ".$_POST['login']." a bien été créé.</h2>
                     <br>
@@ -100,6 +100,8 @@ switch($action)
                 }
                 else
                 {
+                    $_SESSION['login_cpy'] = $_POST['login'];
+                    $_SESSION['pwd_cpy'] = rc4Decrypt($_POST['pwd']);
                     header('Location: index.php?uc=inscription&action=errorConnexion');
                 }
             }
@@ -122,7 +124,7 @@ switch($action)
             $ipAddress = $_SERVER['REMOTE_ADDR'];
             $details = 'L\'utilisateur '.$_POST['login'].' s\'est connecté avec succès';
             $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Connexion', $details, $ipAddress);
-            write("log", $logfile, $message);
+            write("log/user/", $logUser, $message);
             $_SESSION['user'] = serialize(new User($uid, $_POST['login'], $role));
         }
         echo "<div class='messages'>
@@ -147,7 +149,6 @@ switch($action)
         if (isset($_POST['login'], $_POST['pwd'], $_POST['captcha'], $_POST['num1'], $_POST['num2']) && (empty($_SESSION["user"]) && !empty($_POST["pwd"]) && !empty($_POST["login"]) && !empty($_POST["num1"]) & !empty($_POST["num2"]) & !empty($_POST["captcha"])))
         {
             include("Modeles/rc4.php");
-
             try 
             {
                 $num1 = $_POST["num1"];
@@ -185,8 +186,8 @@ switch($action)
                         $_SESSION['user'] = serialize(new User($uid, $login, $role));
                         $ipAddress = $_SERVER['REMOTE_ADDR'];
                         $details = 'L\'utilisateur '.$login.' a été créé avec succès';
-                        $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Inscription', $details, $ipAddress);
-                        write("log", $logfile, $message);
+                        $message = getLogMessage(date('d/m/Y H:i:s'), 'INFO', 'Inscription', $details, $ipAddress);
+                        write("log/user/", $logUser, $message);
                         echo "<div class='messages'>
                                 <h2>Votre compte a bien été créé !</h2>
                                 <br>
@@ -203,12 +204,13 @@ switch($action)
                     header('Location: index.php?uc=inscription&action=errorInscription');
                 }
             } 
-            catch (Exception $e) 
+            catch (Exception $e)
             {
                 $errorCode = $e->getCode();
             
                 if ($errorCode == 1062) 
                 {
+                    $_SESSION['login_cpy'] = $_POST['login'];
                     header('Location: index.php?uc=inscription&action=errorInscriptionDupli');
                 } 
                 else 
@@ -223,6 +225,7 @@ switch($action)
         }
         else
         {
+            
             header('Location: index.php?uc=inscription&action=errorInscription');
         }
         break;
@@ -237,8 +240,8 @@ switch($action)
             $user = unserialize($_SESSION['user']);
             $ipAddress = $_SERVER['REMOTE_ADDR'];
             $details = 'L\'administrateur web '.$user->getLogin().' a tenté de créer un technicien déjà existant';
-            $message = getLogMessage(date('Y-m-d H:i:s'), 'ERROR', 'Inscription', $details, $ipAddress);
-            write("log", $logfile, $message);
+            $message = getLogMessage(date('d/m/Y H:i:s'), 'ERROR', 'Inscription', $details, $ipAddress);
+            write("log/user/", $logUser, $message);
             include('Vues/User/formCreationTec.php');
         }
         else
@@ -257,8 +260,8 @@ switch($action)
             $user = unserialize($_SESSION['user']);
             $ipAddress = $_SERVER['REMOTE_ADDR'];
             $details = 'L\'administrateur web '.$user->getLogin().' a tenté de créer un technicien mais une erreur est survenue';
-            $message = getLogMessage(date('Y-m-d H:i:s'), 'ERROR', 'Inscription', $details, $ipAddress);
-            write("log", $logfile, $message);
+            $message = getLogMessage(date('d/m/Y H:i:s'), 'ERROR', 'Inscription', $details, $ipAddress);
+            write("log/user/", $logUser, $message);
             include('Vues/User/formCreationTec.php');
         }
         else
@@ -279,9 +282,10 @@ switch($action)
                 </div>";
             include('Vues/User/formInscription.php');
             $ipAddress = $_SERVER['REMOTE_ADDR'];
-            $details = 'Un utilisateur a tenté de créer un compte qui existe déjà';
-            $message = getLogMessage(date('Y-m-d H:i:s'), 'ERROR', 'Inscription', $details, $ipAddress);
-            write("log", $logfile, $message);
+            $login_cpy = $_SESSION['login_cpy'];
+            $details = 'Un utilisateur a tenté de créer le compte '.$login_cpy.' qui existe déjà';
+            $message = getLogMessage(date('d/m/Y H:i:s'), 'ERROR', 'Inscription', $details, $ipAddress);
+            write("log/user/", $logUser, $message);
         }
         break;
     
@@ -298,8 +302,8 @@ switch($action)
             include('Vues/User/formInscription.php');
             $ipAddress = $_SERVER['REMOTE_ADDR'];
             $details = 'Un utilisateur a tenté de créer un compte mais une erreur est survenue';
-            $message = getLogMessage(date('Y-m-d H:i:s'), 'ERROR', 'Inscription', $details, $ipAddress);
-            write("log", $logfile, $message);
+            $message = getLogMessage(date('d/m/Y H:i:s'), 'ERROR', 'Inscription', $details, $ipAddress);
+            write("log/user/", $logUser, $message);
         }
         break;
     
@@ -315,9 +319,13 @@ switch($action)
                 </div>";
             include('Vues/User/formConnexion.php');
             $ipAddress = $_SERVER['REMOTE_ADDR'];
-            $details = 'Un utilisateur a tenté de se connecter';
-            $message = getLogMessage(date('Y-m-d H:i:s'), 'ERROR', 'Connexion', $details, $ipAddress);
-            write("log", $logfile, $message);
+            $login_cpy = $_SESSION['login_cpy'];
+            $pwd_cpy = $_SESSION['pwd_cpy'];
+            $details = 'Un utilisateur a tenté de se connecter avec le login '.$login_cpy.' et le mot de passe '.$pwd_cpy.'';
+            $message = getLogMessage(date('d/m/Y H:i:s'), 'ERROR', 'Connexion', $details, $ipAddress);
+            write("log/user/", $logUser, $message);
+            unset($_SESSION['login_cpy']);
+            unset($_SESSION['pwd_cpy']);
         }
         break;
 

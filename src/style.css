@@ -72,6 +72,15 @@ body{
     position: relative;
 }
 
+.nav-item-profil
+{
+  color:#ECE5D8;
+  font-weight:bold;
+  font-size: 14px;
+  margin-top:5px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
 
 
 .nav_profil

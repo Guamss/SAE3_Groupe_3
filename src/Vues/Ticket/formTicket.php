@@ -25,13 +25,21 @@
         </select>
         <br>
         <label for="concernee">Personne concernée par le problème :</label>
-        <select id="concernee" name="concernee" required>
-            <option value="" disabled selected>Personne concernée</option>
+        <select id="concernee" name="concernee">
             <?php
+            $username = unserialize($_SESSION['user'])->getLogin();
             $concernees = User::getAllUser();
             foreach ($concernees as $id => $concernee) {
-                echo "<option value='" . htmlspecialchars($id) . "'>" . htmlspecialchars($concernee[0]) . "</option>";
+                if ($concernee[0] == $username)
+                {
+                    $userid = htmlspecialchars($id);
+                }
+                else
+                {
+                    echo "<option value='" . htmlspecialchars($id) . "'>" . htmlspecialchars($concernee[0]) . "</option>";
+                }
             }
+            echo "<option value='".$userid."' selected>".$username."</option>";
             ?>
         </select>
         <br>
@@ -51,11 +59,11 @@
 
         var submitButton = document.getElementById('submitButton');
 
-        if (urgence !== '' && label !== '' && concernee !== '' && description !== '') {
+        if (description !== '') {
             submitButton.disabled = false;
             submitButton.classList.remove('disabled');
         } else {
-            submitButton.disabled = true;
+            submitButton.disabled = true;   
             submitButton.classList.add('disabled');
         }
     }

@@ -37,12 +37,14 @@ function rc4Encrypt($text)
 /**
  * Déchiffre le texte chiffré donné en utilisant l'algorithme RC4 avec la clé spécifiée.
  *
- * @param string $key           La clé utilisée pour le déchiffrement.
  * @param string $texteChiffre Le texte chiffré au format hexadécimal.
  *
  * @return string Le texte déchiffré.
  */
-function rc4Decrypt($key, $texteChiffre) {
+function rc4Decrypt($texteChiffre) {
+    $json = file_get_contents('json/key.json');
+    $data = json_decode($json, true);
+    $key = $data['key'];
     $keyStream = initializeKeyStream($key);
     $texteChiffre = hex2bin($texteChiffre);
     $texteDechiffre = '';

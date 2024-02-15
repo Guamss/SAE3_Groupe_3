@@ -1,6 +1,9 @@
 
 
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 date_default_timezone_set('Europe/Paris');
 include "Modeles/Ticket.php";
 include "Modeles/LabelFunc.php";
@@ -11,8 +14,9 @@ include "Vues/header.php";
 include "Modeles/logsFunc.php";
 
 $states = array("Ouvert", "En Cours", "Fermé");
-
-$logfile = "history.log";
+$actualDate = date("d-m-Y");
+$logUser = "historyUser_".$actualDate.".csv";
+$logTicket = "historyTicket".$actualDate.".csv";
 
 $niveauxUrgence = array(
   1 => 'Urgent',
@@ -55,12 +59,14 @@ switch($uc)
       header('Location: index.php');
     }
     break;
-  case 'inscription' :
-    include('controllers/userController.php');
-    break;
-  default :
-    include('Vues/accueil.php');
-    break;
+  
+    case 'inscription' :
+      include('controllers/userController.php');
+      break;
+  
+    default :
+      include('Vues/accueil.php');
+      break;
 }
 
 include "Vues/footer.php";?>

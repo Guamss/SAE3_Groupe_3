@@ -76,7 +76,8 @@
               }
                 echo '
                 <div class="nav_profil">
-                  <a class="lien_profil material-symbols-outlined" href="index.php?uc=profile" style="font-size: 30px;">account_circle</a>
+                  <a class="nav-item-profil" href="index.php?uc=profile">'.$user->getLogin().'</a>
+                  <a class="lien_profil material-symbols-outlined" href="index.php?uc=profile" style="font-size: 30px; margin-left:10px">account_circle</a>
                 </div>';
             }
             else

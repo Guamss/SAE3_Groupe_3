@@ -169,6 +169,17 @@ class Ticket{
             $concernee);
         $stmt->execute();
         $this->technician_ID = $argtechnician_ID;
+        $niveauxUrgence = array(
+            1 => 'Urgent',
+            2 => 'Important',
+            3 => 'Moyen',
+            4 => 'Faible');
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $details = 'L\'administrateur web a attribué un ticket d\'urgence '.$niveauxUrgence[$urgence].' concernant '.User::getLoginByUID($concernee).' au sujet de '.getLabelNameById($label).' au technicien '.User::getLoginByUID($argtechnician_ID).'';
+        $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Ticket', $details, $ip);
+        $actualDate = date("d-m-Y");
+        $logTicket = "historyTicket".$actualDate.".csv";
+        write("log/ticket/", $logTicket, $message);
     }
 
     /**
@@ -255,6 +266,17 @@ class Ticket{
             $concernee);
         $stmt->execute();
         $this->status = $status;
+        $niveauxUrgence = array(
+            1 => 'Urgent',
+            2 => 'Important',
+            3 => 'Moyen',
+            4 => 'Faible');
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $details = 'Un technicien a changé l\'état en "'.$status.'" d\'un ticket d\'urgence '.$niveauxUrgence[$urgence].' concernant '.User::getLoginByUID($concernee).' au sujet de '.getLabelNameById($label).'';
+        $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Ticket', $details, $ip);
+        $actualDate = date("d-m-Y");
+        $logTicket = "historyTicket".$actualDate.".csv";
+        write("log/ticket/", $logTicket, $message);
     }
 
     /**

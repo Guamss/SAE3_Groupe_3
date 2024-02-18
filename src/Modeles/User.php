@@ -137,7 +137,7 @@ class User
         if ($this->role == "user")
         {
             $conn = Connexion::getConn();
-            $stmt = $conn->prepare("CALL addTicket(?, ?, ?, ?, ?, ?);");
+            $stmt = $conn->prepare("CALL AddTicket(?, ?, ?, ?, ?, ?);");
             $uid = $ticket->getUID();
             $label = $ticket->getLabelID();
             $urgence = $ticket->getUrgence();

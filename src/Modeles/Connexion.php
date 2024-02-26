@@ -50,7 +50,7 @@ class Connexion
         $json = file_get_contents('json/logins.json');
         $config = json_decode($json, true);
 
-        if ($config !== null && is_array($config)) 
+        if ($config !== null && is_array($config))
         {
             self::$adresse = $config['adresse'] ?? self::$adresse;
             self::$bd = $config['database'] ?? self::$bd;

@@ -134,52 +134,61 @@ class Ticket{
      *
      * @param int $argtechnician_ID Le nouvel ID du technicien.
      *
-     * @return void
+     * @return bool
      */
-    public function setTechnician(int $argtechnician_ID): void
+    public function setTechnician(int $argtechnician_ID): bool
     {
         $conn = Connexion::getConn();
-        $stmt = $conn->prepare("UPDATE Ticket
-                                SET Technician_ID = ?
-                                WHERE UID = ?
-                                AND IP = ?
-                                AND urgence_level = ?
-                                AND Label_ID = ?
-                                AND creation_date = ?
-                                AND status = ?
-                                AND description = ?
-                                AND concernee = ?;");
-        $uid = $this->UID;
-        $ip = $this->IP;
-        $urgence = $this->urgence_level;
-        $label = $this->label_ID;
-        $date = $this->creation_date;
-        $status = $this->status;
-        $desc = htmlspecialchars($this->description);
-        $concernee = $this->concernee;
-        $stmt->bind_param("iisiisssi",
-            $argtechnician_ID,
-            $uid,
-            $ip,
-            $urgence,
-            $label,
-            $date,
-            $status,
-            $desc,
-            $concernee);
-        $stmt->execute();
-        $this->technician_ID = $argtechnician_ID;
-        $niveauxUrgence = array(
-            1 => 'Urgent',
-            2 => 'Important',
-            3 => 'Moyen',
-            4 => 'Faible');
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $details = 'L\'administrateur web a attribué un ticket d\'urgence '.$niveauxUrgence[$urgence].' concernant '.User::getLoginByUID($concernee).' au sujet de '.getLabelNameById($label).' au technicien '.User::getLoginByUID($argtechnician_ID).'';
-        $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Ticket', $details, $ip);
-        $actualDate = date("d-m-Y");
-        $logTicket = "historyTicket".$actualDate.".csv";
-        write("log/ticket/", $logTicket, $message);
+        try
+        {
+            $stmt = $conn->prepare("UPDATE Ticket
+                                    SET Technician_ID = ?
+                                    WHERE UID = ?
+                                    AND IP = ?
+                                    AND urgence_level = ?
+                                    AND Label_ID = ?
+                                    AND creation_date = ?
+                                    AND status = ?
+                                    AND description = ?
+                                    AND concernee = ?;");
+            $uid = $this->UID;
+            $ip = $this->IP;
+            $urgence = $this->urgence_level;
+            $label = $this->label_ID;
+            $date = $this->creation_date;
+            $status = $this->status;
+            $desc = htmlspecialchars($this->description);
+            $concernee = $this->concernee;
+            $stmt->bind_param("iisiisssi",
+                $argtechnician_ID,
+                $uid,
+                $ip,
+                $urgence,
+                $label,
+                $date,
+                $status,
+                $desc,
+                $concernee);
+            $stmt->execute();
+            $this->technician_ID = $argtechnician_ID;
+            $niveauxUrgence = array(
+                1 => 'Urgent',
+                2 => 'Important',
+                3 => 'Moyen',
+                4 => 'Faible');
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $details = 'L\'administrateur web a attribué un ticket d\'urgence '.$niveauxUrgence[$urgence].' concernant '.User::getLoginByUID($concernee).' au sujet de '.getLabelNameById($label).' au technicien '.User::getLoginByUID($argtechnician_ID).'';
+            $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Ticket', $details, $ip);
+            $actualDate = date("d-m-Y");
+            $logTicket = "historyTicket".$actualDate.".csv";
+            write("log/ticket/", $logTicket, $message);
+            return true;
+        }
+        catch (Exception $e)
+        {
+            echo "Erreur d'actualisation de la colonne : ", $e;
+        }
+        return false;
     }
 
     /**
@@ -229,54 +238,63 @@ class Ticket{
      *
      * @param string $status Le nouveau statut du ticket.
      *
-     * @return void
+     * @return bool
      */
-    public function setStatus(string $status)
+    public function setStatus(string $status) : bool
     {
         $conn = Connexion::getConn();
-        $stmt = $conn->prepare("UPDATE Ticket
-                                SET status = ?
-                                WHERE UID = ?
-                                AND IP = ?
-                                AND urgence_level = ?
-                                AND status = ?
-                                AND Label_ID = ?
-                                AND creation_date = ?
-                                AND Technician_ID = ?
-                                AND description = ?
-                                AND concernee = ?;");
-        $ip = $this->IP;
-        $uid = $this->UID;
-        $urgence = $this->urgence_level;
-        $label = $this->label_ID;
-        $date = $this->creation_date;
-        $tec = $this->technician_ID;
-        $desc = htmlspecialchars($this->description);
-        $concernee = $this->concernee;
-        $stmt->bind_param("sisisisisi",
-            $status,
-            $uid,
-            $ip,
-            $urgence,
-            $this->status,
-            $label,
-            $date,
-            $tec,
-            $desc,
-            $concernee);
-        $stmt->execute();
-        $this->status = $status;
-        $niveauxUrgence = array(
-            1 => 'Urgent',
-            2 => 'Important',
-            3 => 'Moyen',
-            4 => 'Faible');
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $details = 'Un technicien a changé l\'état en "'.$status.'" d\'un ticket d\'urgence '.$niveauxUrgence[$urgence].' concernant '.User::getLoginByUID($concernee).' au sujet de '.getLabelNameById($label).'';
-        $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Ticket', $details, $ip);
-        $actualDate = date("d-m-Y");
-        $logTicket = "historyTicket".$actualDate.".csv";
-        write("log/ticket/", $logTicket, $message);
+        try
+        {
+            $stmt = $conn->prepare("UPDATE Ticket
+                                    SET status = ?
+                                    WHERE UID = ?
+                                    AND IP = ?
+                                    AND urgence_level = ?
+                                    AND status = ?
+                                    AND Label_ID = ?
+                                    AND creation_date = ?
+                                    AND Technician_ID = ?
+                                    AND description = ?
+                                    AND concernee = ?;");
+            $ip = $this->IP;
+            $uid = $this->UID;
+            $urgence = $this->urgence_level;
+            $label = $this->label_ID;
+            $date = $this->creation_date;
+            $tec = $this->technician_ID;
+            $desc = htmlspecialchars($this->description);
+            $concernee = $this->concernee;
+            $stmt->bind_param("sisisisisi",
+                $status,
+                $uid,
+                $ip,
+                $urgence,
+                $this->status,
+                $label,
+                $date,
+                $tec,
+                $desc,
+                $concernee);
+            $stmt->execute();
+            $this->status = $status;
+            $niveauxUrgence = array(
+                1 => 'Urgent',
+                2 => 'Important',
+                3 => 'Moyen',
+                4 => 'Faible');
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $details = 'Un technicien a changé l\'état en "'.$status.'" d\'un ticket d\'urgence '.$niveauxUrgence[$urgence].' concernant '.User::getLoginByUID($concernee).' au sujet de '.getLabelNameById($label).'';
+            $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Ticket', $details, $ip);
+            $actualDate = date("d-m-Y");
+            $logTicket = "historyTicket".$actualDate.".csv";
+            write("log/ticket/", $logTicket, $message);
+            return true;
+        }
+        catch (Exception $e)
+        {
+            echo "Erreur d'actualisation de la colonne : ", $e;
+        }
+        return false;
     }
 
     /**
@@ -296,7 +314,7 @@ class Ticket{
      *
      * @return void
      */
-    public function setDescription(string $description)
+    public function setDescription(string $description): void
     {
         $this->description = $description;
     }
@@ -326,33 +344,41 @@ class Ticket{
                     LIMIT 10;";
 
         $conn = Connexion::getConn();
-        $stmt = $conn->prepare($requete);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        while($row = $result->fetch_assoc())
+        try
         {
-            $uid = $row['UID'];
-            $techician = $row['Technician_ID'];
-            $urgence_level = $row['urgence_level'];
-            $label = $row['Label_ID'];
-            $ip = $row['IP'];
-            $creation_date = $row['creation_date'];
-            $status = $row['status'];
-            $description = $row['description'];
-            $concernee = $row['concernee'];
-            $ticket = new Ticket($uid, 
-                                $urgence_level,
-                                $label,
-                                $concernee,
-                                $description,
-                                $ip,
-                                $creation_date,
-                                $status,
-                                $techician
-                                );
-            $tickets[] = $ticket;
+            $stmt = $conn->prepare($requete);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            while($row = $result->fetch_assoc())
+            {
+                $uid = $row['UID'];
+                $techician = $row['Technician_ID'];
+                $urgence_level = $row['urgence_level'];
+                $label = $row['Label_ID'];
+                $ip = $row['IP'];
+                $creation_date = $row['creation_date'];
+                $status = $row['status'];
+                $description = $row['description'];
+                $concernee = $row['concernee'];
+                $ticket = new Ticket($uid, 
+                                    $urgence_level,
+                                    $label,
+                                    $concernee,
+                                    $description,
+                                    $ip,
+                                    $creation_date,
+                                    $status,
+                                    $techician
+                                    );
+                $tickets[] = $ticket;
+            }
+            return $tickets;
         }
-        return $tickets;
+        catch (Exception $e)
+        {
+            echo "Erreur de selection : ", $e;
+        }
+        return array();
     }
     
     /**
@@ -367,33 +393,41 @@ class Ticket{
                     FROM Ticket 
                     WHERE Technician_ID IS NULL;";
         $conn = Connexion::getConn();
-        $stmt = $conn->prepare($requete);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        while($row = $result->fetch_assoc())
+        try
         {
-            $uid = $row['UID'];
-            $techician = $row['Technician_ID'];
-            $urgence_level = $row['urgence_level'];
-            $label = $row['Label_ID'];
-            $ip = $row['IP'];
-            $creation_date = $row['creation_date'];
-            $status = $row['status'];
-            $description = $row['description'];
-            $concernee = $row['concernee'];
-            $ticket = new Ticket($uid, 
-                                $urgence_level,
-                                $label,
-                                $concernee,
-                                $description,
-                                $ip,
-                                $creation_date,
-                                $status,
-                                $techician
-                                );
-            $tickets[] = $ticket;
+            $stmt = $conn->prepare($requete);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            while($row = $result->fetch_assoc())
+            {
+                $uid = $row['UID'];
+                $techician = $row['Technician_ID'];
+                $urgence_level = $row['urgence_level'];
+                $label = $row['Label_ID'];
+                $ip = $row['IP'];
+                $creation_date = $row['creation_date'];
+                $status = $row['status'];
+                $description = $row['description'];
+                $concernee = $row['concernee'];
+                $ticket = new Ticket($uid, 
+                                    $urgence_level,
+                                    $label,
+                                    $concernee,
+                                    $description,
+                                    $ip,
+                                    $creation_date,
+                                    $status,
+                                    $techician
+                                    );
+                $tickets[] = $ticket;
+            }
+            return $tickets;
         }
-        return $tickets;
+        catch (Exception $e)
+        {
+            echo "Erreur de selection : ", $e;
+        }
+        return array();
     }
 
     /**
@@ -411,33 +445,41 @@ class Ticket{
                     WHERE Technician_ID = ?
                     AND status != 'Fermé';";
         $conn = Connexion::getConn();
-        $stmt = $conn->prepare($requete);
-        $stmt->bind_param("i", $technician_ID);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        while($row = $result->fetch_assoc())
+        try
         {
-            $uid = $row['UID'];
-            $techician = $row['Technician_ID'];
-            $urgence_level = $row['urgence_level'];
-            $label = $row['Label_ID'];
-            $creation_date = $row['creation_date'];
-            $status = $row['status'];
-            $ip = $row['IP'];
-            $description = $row['description'];
-            $concernee = $row['concernee'];
-            $ticket = new Ticket($uid, 
-                                $urgence_level,
-                                $label,
-                                $concernee,
-                                $description,
-                                $ip,
-                                $creation_date,
-                                $status,
-                                $techician);
-            $tickets[] = $ticket;
+            $stmt = $conn->prepare($requete);
+            $stmt->bind_param("i", $technician_ID);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            while($row = $result->fetch_assoc())
+            {
+                $uid = $row['UID'];
+                $techician = $row['Technician_ID'];
+                $urgence_level = $row['urgence_level'];
+                $label = $row['Label_ID'];
+                $creation_date = $row['creation_date'];
+                $status = $row['status'];
+                $ip = $row['IP'];
+                $description = $row['description'];
+                $concernee = $row['concernee'];
+                $ticket = new Ticket($uid, 
+                                    $urgence_level,
+                                    $label,
+                                    $concernee,
+                                    $description,
+                                    $ip,
+                                    $creation_date,
+                                    $status,
+                                    $techician);
+                $tickets[] = $ticket;
+            }
+            return $tickets;
         }
-        return $tickets;
+        catch(Exception $e)
+        {
+            echo "Erreur de selection : ", $e;
+        }
+        return array();
     }
 
     /**
@@ -452,32 +494,40 @@ class Ticket{
                     FROM Ticket 
                     WHERE status = 'Fermé';";
         $conn = Connexion::getConn();
-        $stmt = $conn->prepare($requete);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        while($row = $result->fetch_assoc())
+        try
         {
-            $uid = $row['UID'];
-            $techician = $row['Technician_ID'];
-            $urgence_level = $row['urgence_level'];
-            $label = $row['Label_ID'];
-            $creation_date = $row['creation_date'];
-            $status = $row['status'];
-            $ip = $row['IP'];
-            $description = $row['description'];
-            $concernee = $row['concernee'];
-            $ticket = new Ticket($uid, 
-                                $urgence_level,
-                                $label,
-                                $concernee,
-                                $description,
-                                $ip,
-                                $creation_date,
-                                $status,
-                                $techician);
-            $tickets[] = $ticket;
+            $stmt = $conn->prepare($requete);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            while($row = $result->fetch_assoc())
+            {
+                $uid = $row['UID'];
+                $techician = $row['Technician_ID'];
+                $urgence_level = $row['urgence_level'];
+                $label = $row['Label_ID'];
+                $creation_date = $row['creation_date'];
+                $status = $row['status'];
+                $ip = $row['IP'];
+                $description = $row['description'];
+                $concernee = $row['concernee'];
+                $ticket = new Ticket($uid, 
+                                    $urgence_level,
+                                    $label,
+                                    $concernee,
+                                    $description,
+                                    $ip,
+                                    $creation_date,
+                                    $status,
+                                    $techician);
+                $tickets[] = $ticket;
+            }
+            return $tickets;
         }
-        return $tickets;
+        catch (Exception $e)
+        {
+            echo "Erreur de selection : ", $e;
+        }
+        return array();
     }
 }
 ?>

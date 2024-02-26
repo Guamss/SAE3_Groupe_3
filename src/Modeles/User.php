@@ -51,34 +51,41 @@ class User
             (UID = ? OR concernee = ?)
             AND status != 'Fermé';";
             $conn = Connexion::getConn();
-            $stmt = $conn->prepare($request);
-            $stmt->bind_param("ii", $this->uid, $this->uid);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            if ($result->num_rows > 0)
+            try
             {
-                while($row = $result->fetch_assoc())
+                $stmt = $conn->prepare($request);
+                $stmt->bind_param("ii", $this->uid, $this->uid);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                if ($result->num_rows > 0)
                 {
-                    $techician = $row['Technician_ID'];
-                    $uid = $row['UID'];
-                    $urgence_level = $row['urgence_level'];
-                    $label = $row['Label_ID'];
-                    $creation_date = $row['creation_date'];
-                    $status = $row['status'];
-                    $ip = $row['IP'];
-                    $concernee = $row['concernee'];
-                    $description = $row['description'];
-                    $ticket = new Ticket($uid,
-                                        $urgence_level,
-                                        $label,
-                                        $concernee,
-                                        $description,
-                                        $ip,
-                                        $creation_date,
-                                        $status,
-                                        $techician);
-                    $this->tickets[] = $ticket;
+                    while($row = $result->fetch_assoc())
+                    {
+                        $techician = $row['Technician_ID'];
+                        $uid = $row['UID'];
+                        $urgence_level = $row['urgence_level'];
+                        $label = $row['Label_ID'];
+                        $creation_date = $row['creation_date'];
+                        $status = $row['status'];
+                        $ip = $row['IP'];
+                        $concernee = $row['concernee'];
+                        $description = $row['description'];
+                        $ticket = new Ticket($uid,
+                                            $urgence_level,
+                                            $label,
+                                            $concernee,
+                                            $description,
+                                            $ip,
+                                            $creation_date,
+                                            $status,
+                                            $techician);
+                        $this->tickets[] = $ticket;
+                    }
                 }
+            }
+            catch(Exception $e)
+            {
+                echo "Erreur initialisation utilisateur :", $e;
             }
         }   
     }
@@ -130,44 +137,53 @@ class User
      *
      * @param Ticket $ticket Le nouveau ticket à créer.
      *
-     * @return void
+     * @return bool
      */
-    public function createTicket(Ticket $ticket): void
+    public function createTicket(Ticket $ticket): bool
     {
         if ($this->role == "user")
         {
             $conn = Connexion::getConn();
-            $stmt = $conn->prepare("CALL AddTicket(?, ?, ?, ?, ?, ?);");
-            $uid = $ticket->getUID();
-            $label = $ticket->getLabelID();
-            $urgence = $ticket->getUrgence();
-            $desc = $ticket->getDescription();
-            $concernee = $ticket->getConcernee();
-            $ip = $ticket->getIP();
-            
-            $stmt->bind_param("iiisis",
-                    $uid,
-                    $label,
-                    $urgence,
-                    $desc,
-                    $concernee,
-                    $ip);
-            
-            if ($stmt->execute())
+            try
             {
-                $niveauxUrgence = array(
-                    1 => 'Urgent',
-                    2 => 'Important',
-                    3 => 'Moyen',
-                    4 => 'Faible');
-                $details = 'L\'utilisateur '.$this->login.' a créé un ticket d\'urgence '.$niveauxUrgence[$urgence].' concernant '.User::getLoginByUID($concernee).' au sujet de '.getLabelNameById($label).'';
-                $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Ticket', $details, $ip);
-                $actualDate = date("d-m-Y");
-                $logTicket = "historyTicket".$actualDate.".csv";
-                write("log/ticket/", $logTicket, $message);
+                $stmt = $conn->prepare("CALL AddTicket(?, ?, ?, ?, ?, ?);");
+                $uid = $ticket->getUID();
+                $label = $ticket->getLabelID();
+                $urgence = $ticket->getUrgence();
+                $desc = $ticket->getDescription();
+                $concernee = $ticket->getConcernee();
+                $ip = $ticket->getIP();
+                
+                $stmt->bind_param("iiisis",
+                        $uid,
+                        $label,
+                        $urgence,
+                        $desc,
+                        $concernee,
+                        $ip);
+                
+                if ($stmt->execute())
+                {
+                    $niveauxUrgence = array(
+                        1 => 'Urgent',
+                        2 => 'Important',
+                        3 => 'Moyen',
+                        4 => 'Faible');
+                    $details = 'L\'utilisateur '.$this->login.' a créé un ticket d\'urgence '.$niveauxUrgence[$urgence].' concernant '.User::getLoginByUID($concernee).' au sujet de '.getLabelNameById($label).'';
+                    $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Ticket', $details, $ip);
+                    $actualDate = date("d-m-Y");
+                    $logTicket = "historyTicket".$actualDate.".csv";
+                    write("log/ticket/", $logTicket, $message);
+                }
+                $this->tickets[] = $ticket;
+                return true;
             }
-            $this->tickets[] = $ticket;
+            catch (Exception $e)
+            {
+                echo "Erreur de création du ticket : ", $e;
+            }
         }
+        return false;
     }
 
 
@@ -184,18 +200,26 @@ class User
                     FROM User
                     WHERE UID=?";
         $conn = Connexion::getConn();
-        $stmt = $conn->prepare($requete);
-        $stmt->bind_param("i", $uid);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows == 1)
+        try
         {
-            while($row = $result->fetch_assoc())
+            $stmt = $conn->prepare($requete);
+            $stmt->bind_param("i", $uid);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows == 1)
             {
-                $login = $row["login"];
+                while($row = $result->fetch_assoc())
+                {
+                    $login = $row["login"];
+                }
             }
+            return (string)$login;
         }
-        return (string)$login;
+        catch (Exception $e)
+        {
+            echo "Erreur de sélection : ", $e;
+        }
+        return "unknown user";
     }
 
     /**
@@ -211,20 +235,28 @@ class User
                     FROM User
                     WHERE role='technician';";
         $conn = Connexion::getConn();
-        $stmt = $conn->prepare($request);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0)
+        try
         {
-            while($row = $result->fetch_array())
+            $stmt = $conn->prepare($request);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0)
             {
-                $uid = $row['UID'];
-                $role = $row['role'];
-                $login = $row['login'];
-                $technicians[] = new User($uid, $login, $role);
+                while($row = $result->fetch_array())
+                {
+                    $uid = $row['UID'];
+                    $role = $row['role'];
+                    $login = $row['login'];
+                    $technicians[] = new User($uid, $login, $role);
+                }
             }
+            return $technicians;
         }
-        return $technicians;
+        catch (Exception $e)
+        {
+            echo "Erreur de selection : ", $e;
+        }
+        return array();
     }
 
     /**
@@ -235,19 +267,26 @@ class User
     public static function getAllUser(): array
     {
         $concernees = array();
-    
         $request = "SELECT * FROM User WHERE role='user' ORDER BY login;";
         $conn = Connexion::getConn();
-        $stmt = $conn->prepare($request);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        while($row = $result->fetch_array())
+        try
         {
-            $login = $row['login'];
-            $uid = $row['UID'];
-            $concernees[$uid] = array($login);
+            $stmt = $conn->prepare($request);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            while($row = $result->fetch_array())
+            {
+                $login = $row['login'];
+                $uid = $row['UID'];
+                $concernees[$uid] = array($login);
+            }
+            
+            return $concernees;
         }
-        
-        return $concernees;
+        catch (Exception $e)
+        {
+            echo "Erreur de selection : ", $e;
+        }
+        return array();
     }
 }

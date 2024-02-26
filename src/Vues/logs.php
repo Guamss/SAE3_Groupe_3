@@ -1,45 +1,45 @@
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script type="text/javascript">
-            function DownloadFile(fileName, url) {
-            $.ajax({
-                url: url,
-                cache: false,
-                xhr: function () {
-                    var xhr = new XMLHttpRequest();
-                    xhr.onreadystatechange = function () {
-                        if (xhr.readyState == 2) {
-                            if (xhr.status == 200) {
-                                xhr.responseType = "blob";
-                            } else {
-                                xhr.responseType = "text";
-                            }
-                        }
-                    };
-                    return xhr;
-                },
-                success: function (data)
-                {
-                    //Convert the Byte Data to BLOB object.
-                    var blob = new Blob([data], { type: "application/octetstream" });
- 
-                    //Check the Browser type and download the File.
-                    var isIE = false || !!document.documentMode;
-                    if (isIE) {
-                        window.navigator.msSaveBlob(blob, fileName);
+    function DownloadFile(fileName, url) {
+    $.ajax({
+        url: url,
+        cache: false,
+        xhr: function () {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 2) {
+                    if (xhr.status == 200) {
+                        xhr.responseType = "blob";
                     } else {
-                        var url = window.URL || window.webkitURL;
-                        link = url.createObjectURL(blob);
-                        var a = $("<a />");
-                        a.attr("download", fileName);
-                        a.attr("href", link);
-                        $("body").append(a);
-                        a[0].click();
-                        $("body").remove(a);
+                        xhr.responseType = "text";
                     }
                 }
-            });
-        };
+            };
+            return xhr;
+        },
+        success: function (data)
+        {
+            //Convert the Byte Data to BLOB object.
+            var blob = new Blob([data], { type: "application/octetstream" });
+
+            //Check the Browser type and download the File.
+            var isIE = false || !!document.documentMode;
+            if (isIE) {
+                window.navigator.msSaveBlob(blob, fileName);
+            } else {
+                var url = window.URL || window.webkitURL;
+                link = url.createObjectURL(blob);
+                var a = $("<a />");
+                a.attr("download", fileName);
+                a.attr("href", link);
+                $("body").append(a);
+                a[0].click();
+                $("body").remove(a);
+            }
+        }
+    });
+    };
 </script>
 
 
@@ -62,14 +62,14 @@ if (file_exists("log/") && (file_exists("log/user") && file_exists("log/ticket")
         <a href='index.php?uc=logs&dir=user'>User</a>
         <a href='index.php?uc=logs&dir=ticket'>Ticket</a>
     </div>
-    <div class='wrap_tab'>
-    <table class='table_files'>
-        <h3 class='dir'>Répertoire $actual_dir</h3>
-        <tbody>";
+    <div class='wrap_tab'>";
 
     switch($actual_dir)
     {
         case "user" :
+            echo "<table class='table_files'>
+            <h3 class='dir'>Répertoire $actual_dir</h3>
+            <tbody>";
             $cpt = 0;
             $files = list_dir("log/user");
             foreach ($files as $file) {
@@ -96,6 +96,9 @@ if (file_exists("log/") && (file_exists("log/user") && file_exists("log/ticket")
 
 
         case "ticket" :
+            echo "<table class='table_files'>
+            <h3 class='dir'>Répertoire $actual_dir</h3>
+            <tbody>";
             $cpt = 0;
             $files = list_dir("log/ticket");
             foreach ($files as &$file){

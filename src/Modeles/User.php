@@ -176,11 +176,11 @@ class User
                     write("log/ticket/", $logTicket, $message);
                 }
                 $this->tickets[] = $ticket;
-                return true;
+                return $stmt->affected_rows == 1;
             }
             catch (Exception $e)
             {
-                echo "Erreur de création du ticket : ", $e;
+                throw new Exception("Erreur de création du ticket");
             }
         }
         return false;
@@ -211,13 +211,14 @@ class User
                 while($row = $result->fetch_assoc())
                 {
                     $login = $row["login"];
+                    return (string)$login;
                 }
             }
-            return (string)$login;
+            
         }
         catch (Exception $e)
         {
-            echo "Erreur de sélection : ", $e;
+            throw new Exception("Erreur de sélection");
         }
         return "unknown user";
     }

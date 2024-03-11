@@ -182,13 +182,12 @@ class Ticket{
             $actualDate = date("d-m-Y");
             $logTicket = "historyTicket".$actualDate.".csv";
             write("log/ticket/", $logTicket, $message);
-            return true;
+            return $stmt->affected_rows==1;
         }
         catch (Exception $e)
         {
-            echo "Erreur d'actualisation de la colonne : ", $e;
+            throw new Exception("Erreur d'actualisation de la colonne");
         }
-        return false;
     }
 
     /**
@@ -288,11 +287,11 @@ class Ticket{
             $actualDate = date("d-m-Y");
             $logTicket = "historyTicket".$actualDate.".csv";
             write("log/ticket/", $logTicket, $message);
-            return true;
+            return $stmt->affected_rows == 1;
         }
         catch (Exception $e)
         {
-            echo "Erreur d'actualisation de la colonne : ", $e;
+            throw new Exception("Erreur d'actualisation de la colonne");
         }
         return false;
     }

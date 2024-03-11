@@ -6,15 +6,24 @@
  *
  * @return void
  */
-function archive($id): void
+function archive($id): bool
 {
     $request = "UPDATE Label
-                SET archivé = 1
-                WHERE Label_ID = ?";
+    SET archivé = 1
+    WHERE Label_ID = ?";
     $conn = Connexion::getConn();
-    $stmt = $conn->prepare($request);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
+    try
+    {
+        $stmt = $conn->prepare($request);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        return $stmt->affected_rows==1;
+    }
+    catch (Exception $e)
+    {
+        echo "erreur";
+        //throw new Exception("Erreur lors de l'archivage du label");
+    }
 }
 
 /**
@@ -28,9 +37,16 @@ function addLabel($name): void
 {
     $request = "CALL addLabel(?);";
     $conn = Connexion::getConn();
-    $stmt = $conn->prepare($request);
-    $stmt->bind_param("s", $name);
-    $stmt->execute();
+    try
+    {
+        $stmt = $conn->prepare($request);
+        $stmt->bind_param("s", $name);
+        $stmt->execute();
+    }
+    catch(Exception $e)
+    {
+        throw new Exception("Erreur lors de l'ajout du label");
+    }
 }
 
 /**
@@ -43,6 +59,8 @@ function addLabel($name): void
  */
 function updateLabel($name, $id): void
 {
+    try
+    {
     $request = "UPDATE Label
                 SET name = ?
                 WHERE Label_ID = ?";
@@ -50,6 +68,11 @@ function updateLabel($name, $id): void
     $stmt = $conn->prepare($request);
     $stmt->bind_param("si", $name, $id);
     $stmt->execute();
+    }
+    catch (Exception $e)
+    {
+        throw new Exception("Erreur lors de la mise à jour du label");
+    }
 }
 
 /**
@@ -72,8 +95,8 @@ function getLabelNameById($id): ?string
         while($row = $result->fetch_assoc())
         {
             $name = $row['name'];
+            return $name;
         }
-        return $name;
     }
     return null;
 }

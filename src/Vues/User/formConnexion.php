@@ -7,6 +7,8 @@
         <label for='pwd'>Mot de passe</label>
         <input id='pwd' name='pwd' type='password'placeholder="Mot de passe">
         <br>
+        <a href="index.php?uc=inscription&action=formInscription">Créer un compte</a>
+        <br>
         <?php
                 $num1 = rand(1, 10);
                 $num2 = rand(1, 10);

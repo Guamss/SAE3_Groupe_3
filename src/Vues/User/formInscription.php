@@ -6,9 +6,6 @@
         <br>
         <label for='pwd'>Mot de passe (au moins 5 caractères)</label>
         <input id='pwd' name='pwd' type='password' placeholder="Mot de passe" required oninput="checkForm()">
-        <br>
-        <a href="index.php?uc=inscription&action=formConnexion">Déjà un compte?</a>
-        <br>
         <?php
         $num1 = rand(1, 10);
         $num2 = rand(1, 10);

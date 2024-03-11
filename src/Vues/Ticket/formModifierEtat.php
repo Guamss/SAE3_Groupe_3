@@ -25,7 +25,7 @@
         <option value='' disabled selected>".$_POST['status']."</option>";
         
                 $ticket = new Ticket($_POST['uid'], $_POST['urgence_level'], $_POST['Label_ID'], $_POST['concernee'], $_POST['desc'], $_POST['IP'], $_POST['date'], $_POST['status'], $_POST['tec']);
-                foreach ($states as $state) 
+                foreach ($states as $state)
                 {
                     if ($state != "Ouvert" && $_POST['status'] != $state)
                     { 

@@ -1,5 +1,5 @@
 <?php
-$action = empty($_GET['action']) ?  "formInscription" : $_GET['action'];
+$action = empty($_GET['action']) ?  "formConnexion" : $_GET['action'];
 switch($action)
 {
 

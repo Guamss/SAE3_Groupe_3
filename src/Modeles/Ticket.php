@@ -83,7 +83,7 @@ class Ticket{
         $this->concernee = $concernee;
         $this->description = $description;
         $this->IP = $IP;
-        $this->creation_date = $date ?: date("Y-m-d H:i:s");
+        $this->creation_date = date("d/m/Y H:i:s", strtotime($date)) ?: date("d/m/Y H:i:s");
     }
 
     /* ------------------------METHODES------------------------------- */
@@ -155,7 +155,7 @@ class Ticket{
             $ip = $this->IP;
             $urgence = $this->urgence_level;
             $label = $this->label_ID;
-            $date = $this->creation_date;
+            $date = date("Y-m-d H:i:s", strtotime($this->creation_date));
             $status = $this->status;
             $desc = htmlspecialchars($this->description);
             $concernee = $this->concernee;
@@ -178,7 +178,7 @@ class Ticket{
                 4 => 'Faible');
             $ip = $_SERVER['REMOTE_ADDR'];
             $details = 'L\'administrateur web a attribué un ticket d\'urgence '.$niveauxUrgence[$urgence].' concernant '.User::getLoginByUID($concernee).' au sujet de '.getLabelNameById($label).' au technicien '.User::getLoginByUID($argtechnician_ID).'';
-            $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Ticket', $details, $ip);
+            $message = getLogMessage(date('d/m/Y H:i:s'), 'INFO', 'Ticket', $details, $ip);
             $actualDate = date("d-m-Y");
             $logTicket = "historyTicket".$actualDate.".csv";
             write("log/ticket/", $logTicket, $message);
@@ -259,7 +259,7 @@ class Ticket{
             $uid = $this->UID;
             $urgence = $this->urgence_level;
             $label = $this->label_ID;
-            $date = $this->creation_date;
+            $date = date("Y-m-d H:i:s", strtotime($this->creation_date));
             $tec = $this->technician_ID;
             $desc = htmlspecialchars($this->description);
             $concernee = $this->concernee;
@@ -283,7 +283,7 @@ class Ticket{
                 4 => 'Faible');
             $ip = $_SERVER['REMOTE_ADDR'];
             $details = 'Un technicien a changé l\'état en "'.$status.'" d\'un ticket d\'urgence '.$niveauxUrgence[$urgence].' concernant '.User::getLoginByUID($concernee).' au sujet de '.getLabelNameById($label).'';
-            $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Ticket', $details, $ip);
+            $message = getLogMessage(date('d/m/Y H:i:s'), 'INFO', 'Ticket', $details, $ip);
             $actualDate = date("d-m-Y");
             $logTicket = "historyTicket".$actualDate.".csv";
             write("log/ticket/", $logTicket, $message);
@@ -336,11 +336,10 @@ class Ticket{
     public static function getLastTickets(): array
     {
         $tickets = array();
-        $requete = "SELECT * 
-                    FROM Ticket
-                    WHERE status != 'Fermé'
-                    ORDER BY creation_date DESC
-                    LIMIT 10;";
+        $requete = "SELECT * FROM Ticket
+        WHERE status != 'Fermé'
+        ORDER BY creation_date DESC
+        LIMIT 10;";
 
         $conn = Connexion::getConn();
         try

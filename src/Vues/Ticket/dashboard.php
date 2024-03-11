@@ -16,7 +16,6 @@ if(isset($_SESSION['user']))
         <div class='element-flexible list'>
           <h1>Tableau de bord</h1>
           <input type='text' onkeyup='searchTable()' id='searchInput' placeholder='Chercher un ticket...'>
-          <input type='text' id='searchInput' placeholder='Search...'>
           <div class='cadre-table-scroll'>
             <table id='item-table' class='table table-scroll'>
               <thead>

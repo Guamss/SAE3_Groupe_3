@@ -170,7 +170,7 @@ class User
                         3 => 'Moyen',
                         4 => 'Faible');
                     $details = 'L\'utilisateur '.$this->login.' a créé un ticket d\'urgence '.$niveauxUrgence[$urgence].' concernant '.User::getLoginByUID($concernee).' au sujet de '.getLabelNameById($label).'';
-                    $message = getLogMessage(date('Y-m-d H:i:s'), 'INFO', 'Ticket', $details, $ip);
+                    $message = getLogMessage(date('d/m/Y H:i:s'), 'INFO', 'Ticket', $details, $ip);
                     $actualDate = date("d-m-Y");
                     $logTicket = "historyTicket".$actualDate.".csv";
                     write("log/ticket/", $logTicket, $message);

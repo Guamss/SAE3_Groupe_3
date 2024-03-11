@@ -6,3 +6,13 @@ Nous sommes TicketOpia et ceci est notre site de ticketing
 
 
 une [video de présentation](https://www.youtube.com/watch?v=6UX6LIYDnxc) est disponible sur youtube 
+
+
+## Tests unitaire
+
+Les tests unitaire de nos fonctions/methodes sont testés en utilisant une méthode boite blanche (voir documentation dossier de test).
+Ils sont situés dans le dossier `tests/` et peuvent être exécutés soit individuellement 
+```bash
+phpunit chemin/vers/le/fichier.php
+```
+ou bien peuvent être éxécutés par le script bash `tests/test_script.sh` prévu à cet effet. <br>( /!\ attention à bien être dans le dossier `test/` avant de l'éxécuter /!\ )

@@ -78,41 +78,27 @@ switch($action)
         break;
 
     case 'validerFormConnexion' :
-        if (isset($_POST['login'], $_POST['pwd'], $_POST['captcha'], $_POST['num1'], $_POST['num2']) && (empty($_SESSION["user"]) && !empty($_POST["pwd"]) && !empty($_POST["login"]) && !empty($_POST["num1"]) & !empty($_POST["num2"]) & !empty($_POST["captcha"])))
+        if (isset($_POST['login'], $_POST['pwd']) && (empty($_SESSION["user"])))
         {
-            include("Modeles/rc4.php");
-            $num1 = $_POST["num1"];
-            $num2 = $_POST["num2"];
-            $captcha = $_POST['captcha'];
-            if ($num1+$num2 == $captcha)
+        include("Modeles/rc4.php");
+            $_POST['pwd'] = rc4Encrypt($_POST['pwd']);
+            $conn = Connexion::getConn();
+            $stmt = $conn->prepare('SELECT UID, role FROM User WHERE login=? AND password=?;');
+            $stmt->bind_param("ss", $_POST['login'], $_POST['pwd']);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows == 1)
             {
-                $_POST['pwd'] = rc4Encrypt($_POST['pwd']);
-                $conn = Connexion::getConn();
-                $stmt = $conn->prepare('SELECT UID, role FROM User WHERE login=? AND password=?;');
-                $stmt->bind_param("ss", $_POST['login'], $_POST['pwd']);
-                $stmt->execute();
-                $result = $stmt->get_result();
-                if ($result->num_rows == 1)
-                {
-                    $row = $result->fetch_assoc();
-                    $uid = $row['UID'];
-                    $role = $row['role'];
-                }
-                else
-                {
-                    $_SESSION['login_cpy'] = $_POST['login'];
-                    $_SESSION['pwd_cpy'] = rc4Decrypt($_POST['pwd']);
-                    header('Location: index.php?uc=inscription&action=errorConnexion');
-                }
+                $row = $result->fetch_assoc();
+                $uid = $row['UID'];
+                $role = $row['role'];
             }
             else
             {
+                $_SESSION['login_cpy'] = $_POST['login'];
+                $_SESSION['pwd_cpy'] = rc4Decrypt($_POST['pwd']);
                 header('Location: index.php?uc=inscription&action=errorConnexion');
             }
-        }
-        else if (isset($_SESSION['user']))
-        {
-            header('Location: index.php');
         }
         else
         {

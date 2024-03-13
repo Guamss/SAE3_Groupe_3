@@ -1,3 +1,7 @@
+th, td{
+  padding: 10px;
+}
+
 * {
   scroll-behavior: smooth;
   color:#656565;
@@ -318,6 +322,10 @@ margin-left:1em;
   overflow-y: scroll;
 }
 
+thead{
+  max-height: 100px;
+}
+
 .table-scroll thead th {
   position: sticky;
   top: 0px;
@@ -330,6 +338,8 @@ margin-left:1em;
 }
 
 th{
+  height: 10px;
+  max-height: 100px;
   background-color: #444c5b;
   border-radius: 5px;
   color: #ffffff;
@@ -601,9 +611,6 @@ footer p{
 
 
 
-
-
-
 @media screen and (max-width: 530px) {
   /* Cacher la colonne de description sur les écrans étroits */
   .table .description-column {
@@ -745,6 +752,7 @@ footer p{
   
 
   tbody {
+    padding:30%;
     max-height: 2px;
     overflow: hidden;
   }

@@ -83,7 +83,7 @@ class Ticket{
         $this->concernee = $concernee;
         $this->description = $description;
         $this->IP = $IP;
-        $this->creation_date = date("d/m/Y H:i:s", strtotime($date)) ?: date("d/m/Y H:i:s");
+        $this->creation_date = null ?: date("d/m/Y H:i:s");
     }
 
     /* ------------------------METHODES------------------------------- */

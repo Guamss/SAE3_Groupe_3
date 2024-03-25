@@ -48,7 +48,7 @@
 
 $today_date = date("d-m-Y");
 $today_user_log = "historyUser_".$today_date.".csv";
-$today_ticket_log = "historyTicket_".$today_date.".csv"; 
+$today_ticket_log = "historyTicket".$today_date.".csv"; 
 $actual_dir = empty($_GET['dir']) ?  "" : $_GET['dir'];
 
 if (file_exists("log/") && (file_exists("log/user") && file_exists("log/ticket")))

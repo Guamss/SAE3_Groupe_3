@@ -45,7 +45,7 @@ if(isset($_SESSION['user']))
               <td class="description-column">'.$ticket->getDescription().'</td>
               <td>'.User::getLoginByUID($ticket->getUID()).'</td>
               <td>'.User::getLoginByUID($id).'</td>
-              <td>'.$ticket->getDate().'</td>
+              <td>'.date("d/m/Y H:i:s",strtotime($ticket->getDate())).'</td>
               <td>'.$niveauxUrgence[$urgence].'</td>
               <td>'.$technician.'</td>
               <td>'.$ticket->getStatus().'</td>
@@ -105,7 +105,7 @@ if(isset($_SESSION['user']))
             <td class="description-column">'.$ticket->getDescription().'</td>
             <td>'.User::getLoginByUID($ticket->getUID()).'</td>
             <td>'.User::getLoginByUID($id).'</td>
-            <td>'.$ticket->getDate().'</td>
+            <td>'.date("d/m/Y H:i:s",strtotime($ticket->getDate())).'</td>
             <td>'.$niveauxUrgence[$urgence].'</td>
             <td>'.$technician.'</td>
             <td>'.$ticket->getStatus().'</td>
@@ -160,7 +160,7 @@ if(isset($_SESSION['user']))
                   <td class="description-column">'.$ticket->getDescription().'</td>
                   <td>'.User::getLoginByUID($ticket->getUID()).'</td>
                   <td>'.User::getLoginByUID($id).'</td>
-                  <td>'.$ticket->getDate().'</td>
+                  <td>'.date("d/m/Y H:i:s",strtotime($ticket->getDate())).'</td>
                   <td>'.$niveauxUrgence[$urgence].'</td>
                   <td>'.$ticket->getIP().'</td>
                   <td>
@@ -226,7 +226,7 @@ if(isset($_SESSION['user']))
                   <td class="description-column">'.$ticket->getDescription().'</td>
                   <td>'.User::getLoginByUID($ticket->getUID()).'</td>
                   <td>'.User::getLoginByUID($id).'</td>
-                  <td>'.$ticket->getDate().'</td>
+                  <td>'.date("d/m/Y H:i:s",strtotime($ticket->getDate())).'</td>
                   <td>'.$niveauxUrgence[$urgence].'</td>
                   <td>'.$ticket->getIP().'</td>
                   <td>
@@ -290,7 +290,7 @@ else
             <td class="description-column">'.$ticket->getDescription().'</td>
             <td>'.User::getLoginByUID($ticket->getUID()).'</td>
             <td>'.User::getLoginByUID($id).'</td>
-            <td>'.$ticket->getDate().'</td>
+            <td>'.date("d/m/Y H:i:s",strtotime($ticket->getDate())).'</td>
           </tr>';
       }
       echo '</tbody>

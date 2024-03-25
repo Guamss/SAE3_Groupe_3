@@ -83,7 +83,7 @@ class Ticket{
         $this->concernee = $concernee;
         $this->description = $description;
         $this->IP = $IP;
-        $this->creation_date = ($date === null) ? date("d/m/Y H:i:s") : $date;
+        $this->creation_date = ($date === null) ? date("Y-m-d H:i:s") : $date;
     }
 
     /* ------------------------METHODES------------------------------- */
@@ -155,7 +155,7 @@ class Ticket{
             $ip = $this->IP;
             $urgence = $this->urgence_level;
             $label = $this->label_ID;
-            $date = date("Y-m-d H:i:s", strtotime($this->creation_date));
+            $date = $this->creation_date;
             $status = $this->status;
             $desc = htmlspecialchars($this->description);
             $concernee = $this->concernee;

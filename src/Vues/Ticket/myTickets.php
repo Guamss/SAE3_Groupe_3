@@ -37,7 +37,7 @@ if (isset($_SESSION['user']) && unserialize($_SESSION['user'])->getRole()=='tech
                     <td>'.getLabelNameById($label).'</td>
                     <td class="description-column">'.$ticket->getDescription().'</td>
                     <td>'.$login.'</td>
-                    <td>'.$ticket->getDate().'</td>
+                    <td>'.date("d/m/Y H:i:s",strtotime($ticket->getDate())).'</td>
                     <td>'.$niveauxUrgence[$urgence].'</td>
                     <td>'.$ticket->getStatus().'</td>
                     <td>'.$ticket->getIP().'</td>
